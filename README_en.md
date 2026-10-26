@@ -1,4 +1,6 @@
-[![orange-new-tab](https://socialify.git.ci/L1uZQ/orange-new-tab/image?custom_description=A+simple+local+new+tab+extension&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FL1uZQ%2Forange-new-tab%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)](https://github.com/L1uZQ/orange-new-tab)
+<p align="center">
+  <img src="./assets/readme-banner.png" alt="orange-new-tab" width="100%" />
+</p>
 
 <div align="center">
 

@@ -1,8 +1,10 @@
-[![orange-new-tab](https://socialify.git.ci/L1uZQ/orange-new-tab/image?custom_description=%E4%B8%80%E4%B8%AA%E7%AE%80%E7%BA%A6%E7%9A%84%E7%BA%AF%E6%9C%AC%E5%9C%B0%E6%96%B0%E6%A0%87%E7%AD%BE%E9%A1%B5%E6%89%A9%E5%B1%95&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FL1uZQ%2Forange-new-tab%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)](https://github.com/L1uZQ/orange-new-tab)
+<p align="center">
+  <img src="./assets/readme-banner.png" alt="orange-new-tab" width="100%" />
+</p>
 
 <div align="center">
 
-[Enlgish](README_en.md) | 简体中文  
+[English](README_en.md) | 简体中文  
 [服务条款](docs/TERMS_OF_SERVICE.md) | [隐私政策](docs/PRIVACY_POLICY.md)
 
 </div>
