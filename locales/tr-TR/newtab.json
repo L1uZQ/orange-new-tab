@@ -268,5 +268,44 @@
   "title": "Yeni Sekme",
   "yiyan": {
     "copied": "Panoya kopyalandı"
+  },
+  "layout": {
+    "title": "Düzen yöneticisi",
+    "manage": "Düzeni yönet",
+    "mode": "Düzen modu",
+    "managed": "Hizalı",
+    "free": "Serbest",
+    "addWidget": "Bileşen ekle",
+    "addWidgetDescription": "Düzene eklenecek bileşeni seçin.",
+    "addContainer": "Yatay kapsayıcı ekle",
+    "components": "Bileşenler",
+    "componentsDescription": "Bileşenleri etkinleştirin, sıralayın veya kaldırın.",
+    "modeDescription": "Hizalı mod düzeni korur. Serbest mod mantıksal piksel konumlarını saklar.",
+    "reset": "Düzeni sıfırla",
+    "moveUp": "Yukarı",
+    "moveDown": "Aşağı",
+    "remove": "Kaldır",
+    "searchBoxSettings": "Arama kutusu ayarları",
+    "searchEngine": "Arama motoru",
+    "widgets": {
+      "search": "Arama kutusu",
+      "clock": "Saat",
+      "yiyan": "Alıntı",
+      "quickLinks": "Hızlı Bağlantılar"
+    },
+    "widgetDescriptions": {
+      "search": "Bağımsız arama motoru seçilebilen bir arama kutusu ekleyin.",
+      "clock": "Saat ve tarihi gösterin.",
+      "yiyan": "Günlük bir alıntı gösterin.",
+      "quickLinks": "Hızlı Bağlantılarınızı gösterin."
+    },
+    "spacing": "Aralık",
+    "containerGap": "Kapsayıcı aralığı (px)",
+    "horizontalContainer": "Yatay kapsayıcı",
+    "items": "bileşen",
+    "useContainer": "Bu kapsayıcıyı kullan",
+    "moveIntoContainer": "Yatay kapsayıcıya taşı",
+    "movedIntoContainer": "Yatay kapsayıcıya taşındı",
+    "chooseContainerFirst": "Önce bir yatay kapsayıcı oluşturun"
   }
 }

@@ -4,6 +4,7 @@ import { normalizeSuggestionProviders } from '../searchSuggestionProviders.ts'
 
 import { BLUR_RANGE, EFFECT_SURFACES, TRANSPARENCY_RANGE } from './constraints.ts'
 import { defaultSettings } from './default.ts'
+import { normalizeLayoutState } from '../layout/normalize.ts'
 
 type RecordValue = Record<string, unknown>
 
@@ -71,6 +72,7 @@ export function isSyncedSetting(path: string): boolean {
 }
 
 export function settingLeaves(value: unknown, prefix = ''): Array<[string, unknown]> {
+  if (prefix === 'layout.manager') return [[prefix, value]]
   if (!isSettingsObject(value)) return [[prefix, value]]
   return Object.entries(value).flatMap(([key, item]) =>
     settingLeaves(item, prefix ? `${prefix}.${key}` : key),
@@ -94,6 +96,7 @@ function validLeaf(value: unknown, fallback: unknown, path: string): boolean {
 }
 
 function normalizeLeaf(value: unknown, path: string): unknown {
+  if (path === 'layout.manager') return normalizeLayoutState(value)
   if (path === 'search.suggestionProviders') return normalizeSuggestionProviders(value as string[])
   const range = INTEGER_RANGES[path]
   if (range && typeof value === 'number')
@@ -121,6 +124,17 @@ export function projectSettings(
     for (const [key, fallback] of Object.entries(template)) {
       const path = prefix ? `${prefix}.${key}` : key
       const present = Object.hasOwn(source, key) && source[key] !== undefined
+      if (path === 'layout.manager') {
+        if (present) {
+          const valid = isSettingsObject(source[key])
+          if (!valid && strict) throw new TypeError(`Invalid setting: ${path}`)
+          if (valid) result[key] = normalizeLeaf(source[key], path)
+          else if (defaults) result[key] = structuredClone(fallback)
+        } else if (defaults) {
+          result[key] = structuredClone(fallback)
+        }
+        continue
+      }
       if (isSettingsObject(fallback)) {
         if (present && !isSettingsObject(source[key]) && strict)
           throw new TypeError(`Invalid setting: ${path}`)

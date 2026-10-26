@@ -2,6 +2,7 @@
 import { useTranslation } from 'i18next-vue'
 import HeartFilled from '~icons/ant-design/heart-filled'
 import Apps24Regular from '~icons/fluent/apps-24-regular'
+import DashboardOutlined from '~icons/ic/outline-dashboard'
 import AccessTimeFilledRound from '~icons/ic/round-access-time-filled'
 import HelpFilled from '~icons/ic/round-help'
 import InfoRound from '~icons/ic/round-info'
@@ -71,6 +72,9 @@ function sponsorMessage() {
       <el-dropdown-menu class="noselect">
         <el-dropdown-item :icon="SettingsRound" @click="dialogs.open('settings')">
           <span>{{ t('settings:title') }}</span>
+        </el-dropdown-item>
+        <el-dropdown-item :icon="DashboardOutlined" @click="dialogs.open('layoutSettings')">
+          <span>{{ t('newtab:layout.title') }}</span>
         </el-dropdown-item>
         <el-dropdown-item :icon="SearchRound" @click="dialogs.open('searchEngines')">
           <span>{{ t('menu.searchEnginePreference') }}</span>

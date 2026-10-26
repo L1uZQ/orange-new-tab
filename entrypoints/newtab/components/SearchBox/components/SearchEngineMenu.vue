@@ -18,7 +18,9 @@ const { t } = useTranslation()
 
 const props = defineProps<{
   borderRadius: string
+  engine?: string
 }>()
+const emit = defineEmits<{ 'update:engine': [engine: string] }>()
 
 const focusStore = useFocusState()
 const settings = useSettingsStore()
@@ -26,6 +28,7 @@ const customSearchEngineStore = useCustomSearchEngineStore()
 const searchEngineMenu = ref<TooltipInstance>()
 const dialogs = useAppDialogs()
 const { getCustomEngineFavicon } = useCustomEngineFavicon()
+const activeEngine = computed(() => props.engine || settings.search.engine)
 const visibleBuiltInKeys = computed(() =>
   getVisibleBuiltInSearchEngineKeys(
     settings.search.builtInEngineOrder,
@@ -34,19 +37,24 @@ const visibleBuiltInKeys = computed(() =>
 )
 
 const isBuiltInEngine = computed(() => {
-  return settings.search.engine in searchEngines
+  return activeEngine.value in searchEngines
 })
 
 const currentCustomEngine = computed(() => {
   if (isBuiltInEngine.value) {
     return null
   } else {
-    return customSearchEngineStore.items.find((engine) => engine.id === settings.search.engine)
+    return customSearchEngineStore.items.find((engine) => engine.id === activeEngine.value)
   }
 })
 
 function hide() {
   searchEngineMenu.value?.hide()
+}
+
+function selectEngine(engine: string) {
+  if (props.engine) emit('update:engine', engine)
+  else settings.search.engine = engine
 }
 
 function openPreference() {
@@ -63,7 +71,7 @@ const { start: hideToastLater } = useTimeoutFn(() => (showingToast.value = false
 function showEngineToast() {
   // 获取当前搜索引擎的名字
   if (isBuiltInEngine.value) {
-    const engine = searchEngines[settings.search.engine as keyof typeof searchEngines]
+    const engine = searchEngines[activeEngine.value as keyof typeof searchEngines]
     currentEngineName.value = t(engine.nameKey)
   } else {
     currentEngineName.value = currentCustomEngine.value?.name || ''
@@ -107,9 +115,9 @@ defineExpose({ hide, showEngineToast })
           :key="key"
           class="search-engine-menu-item"
           :class="{
-            'search-engine-menu-item--active': settings.search.engine === key,
+            'search-engine-menu-item--active': activeEngine === key,
           }"
-          @click="settings.search.engine = key"
+          @click="selectEngine(key)"
         >
           <div style="display: flex; align-items: center">
             <el-icon class="search-engine-menu-item__icon"
@@ -118,7 +126,7 @@ defineExpose({ hide, showEngineToast })
             <span>{{ t(searchEngines[key].nameKey) }}</span>
           </div>
           <div
-            v-if="key === settings.search.engine"
+            v-if="key === activeEngine"
             style="font-size: 11px; color: var(--el-text-color-secondary)"
           >
             {{ t('search.engineMenu.current') }}
@@ -133,9 +141,9 @@ defineExpose({ hide, showEngineToast })
             :key="engine.id"
             class="search-engine-menu-item"
             :class="{
-              'search-engine-menu-item--active': settings.search.engine === engine.id,
+              'search-engine-menu-item--active': activeEngine === engine.id,
             }"
-            @click="settings.search.engine = engine.id"
+            @click="selectEngine(engine.id)"
           >
             <div style="display: flex; align-items: center">
               <div
@@ -147,7 +155,7 @@ defineExpose({ hide, showEngineToast })
               <span>{{ engine.name }}</span>
             </div>
             <div
-              v-if="engine.id === settings.search.engine"
+              v-if="engine.id === activeEngine"
               style="font-size: 11px; color: var(--el-text-color-secondary)"
             >
               {{ t('search.engineMenu.current') }}
@@ -170,7 +178,7 @@ defineExpose({ hide, showEngineToast })
         </div>
       </template>
       <el-icon v-if="isBuiltInEngine" class="search-engine-menu__icon">
-        <component :is="searchEngines[settings.search.engine as keyof typeof searchEngines].icon" />
+        <component :is="searchEngines[activeEngine as keyof typeof searchEngines].icon" />
       </el-icon>
       <el-icon v-else-if="!currentCustomEngine" class="search-engine-menu__icon">
         <search />

@@ -99,6 +99,7 @@ const SETTING_TITLE_ALIASES: Partial<Record<SettingPath, string>> = {
 function settingTitleKey(path: string): string {
   if (/^perf\.[^.]+\.(transparency|blurIntensity)$/.test(path))
     return 'perf.' + path.slice(path.lastIndexOf('.') + 1)
+  if (path === 'layout.manager') return 'layout.title'
   return (
     SETTING_TITLE_ALIASES[path as SettingPath] ??
     (path.endsWith('.enabled') ? 'newtab:common.enable' : path)

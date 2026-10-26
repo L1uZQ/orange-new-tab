@@ -53,6 +53,17 @@ const searchEngineMenuRef = ref<typeof SearchEngineMenu>()
 const searchSuggestionListId = 'search-suggestion-list'
 const activeSuggestionOptionId = ref<string>()
 const searchSuggestionsExpanded = ref(false)
+const props = withDefaults(
+  defineProps<{
+    widgetId?: string
+    engine?: string
+    compact?: boolean
+    className?: string
+  }>(),
+  { compact: false },
+)
+const emit = defineEmits<{ 'update:engine': [engine: string] }>()
+const hasOwnEngine = computed(() => Boolean(props.engine))
 
 const { t } = useTranslation()
 
@@ -69,6 +80,12 @@ const customSearchEngineStore = useCustomSearchEngineStore()
 const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
 const { addHistory } = useSearchHistoryCache()
+const activeEngine = computed(() => props.engine || settings.search.engine)
+const searchBoxClass = computed(() => [
+  'search-box',
+  props.className,
+  { 'search-box--compact': props.compact },
+])
 
 const SEARCH_FORM_FALLBACK_HEIGHT = 44
 
@@ -180,14 +197,14 @@ function handleDown() {
 }
 
 function handleTabNavigation(direction: 1 | -1) {
-  const currentKey = settings.search.engine
+  const currentKey = activeEngine.value
   const allEngineKeys = getAvailableSearchEngineIds(
     settings.search.builtInEngineOrder,
     settings.search.hiddenBuiltInEngines,
     customSearchEngineStore.items.map((engine) => engine.id),
   )
 
-  if (allEngineKeys.length === 0) {
+  if (hasOwnEngine.value || allEngineKeys.length === 0) {
     return
   }
 
@@ -195,12 +212,16 @@ function handleTabNavigation(direction: 1 | -1) {
 
   // 如果当前引擎不在列表中（可能被删除了），从第一个开始
   if (currentIndex === -1) {
-    settings.search.engine = allEngineKeys[0]!
+    if (props.engine) {
+      ElMessage.warning('此搜索框的搜索引擎无效，请在布局管理中重新选择')
+    } else settings.search.engine = allEngineKeys[0]!
     return
   }
 
   const newIndex = (currentIndex + direction + allEngineKeys.length) % allEngineKeys.length
-  settings.search.engine = allEngineKeys[newIndex]!
+  if (props.engine) {
+    ElMessage.warning('请在此搜索框的组件设置中切换搜索引擎')
+  } else settings.search.engine = allEngineKeys[newIndex]!
   searchEngineMenuRef.value?.showEngineToast()
 }
 
@@ -227,13 +248,13 @@ const doSearchWithText = async (text: string, newtab: boolean = false) => {
 
   await saveSearchHistory(text)
 
-  if (!(settings.search.engine in searchEngines)) {
+  if (!(activeEngine.value in searchEngines)) {
     await customSearchEngineStore.init()
   }
 
-  const searchUrl = getSearchEngineUrl(settings.search.engine)
+  const searchUrl = getSearchEngineUrl(activeEngine.value)
   if (!searchUrl) {
-    console.error('Invalid search engine:', settings.search.engine)
+    console.error('Invalid search engine:', activeEngine.value)
     ElMessage.error(t('search.searchEngineNotFound'))
     return
   }
@@ -273,7 +294,7 @@ onMounted(() => {
 <template>
   <section
     ref="searchBox"
-    class="search-box"
+    :class="searchBoxClass"
     :style="{ '--search-border-radius': searchBorderRadius }"
   >
     <form
@@ -287,7 +308,12 @@ onMounted(() => {
       }"
       @submit.prevent="doSearch"
     >
-      <search-engine-menu ref="searchEngineMenuRef" :border-radius="searchBorderRadius" />
+      <search-engine-menu
+        ref="searchEngineMenuRef"
+        :border-radius="searchBorderRadius"
+        :engine="props.engine"
+        @update:engine="emit('update:engine', $event)"
+      />
       <input
         ref="searchInput"
         name="search-input"
@@ -325,6 +351,7 @@ onMounted(() => {
       :list-id="searchSuggestionListId"
       :search-text="searchText"
       :search-form-width="searchFormWidth"
+      :engine="activeEngine"
       @do-search-with-text="doSearchWithText"
       @navigate-to-url="navigateToUrl"
       @active-option-change="activeSuggestionOptionId = $event"

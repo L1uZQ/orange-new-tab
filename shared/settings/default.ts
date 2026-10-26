@@ -1,4 +1,5 @@
 import { BgType, ClockWeight } from '../enums.ts'
+import { createDefaultLayout } from '../layout/default.ts'
 import { BUILT_IN_SEARCH_ENGINE_KEYS } from '../searchEngines.ts'
 import { SEARCH_SUGGESTION_PROVIDER_IDS } from '../searchSuggestionProviders.ts'
 
@@ -249,6 +250,7 @@ export const defaultSettings = {
     actionBtnBorderRadius: 50,
     globalBorderRadius: 20,
     minimalModeOnDoubleClick: false,
+    manager: createDefaultLayout(),
   },
 
   hideMajorChangelog: true,

@@ -268,5 +268,44 @@
   "title": "New Tab",
   "yiyan": {
     "copied": "Copied to clipboard"
+  },
+  "layout": {
+    "title": "Layout manager",
+    "manage": "Manage layout",
+    "mode": "Layout mode",
+    "managed": "Managed",
+    "free": "Free",
+    "addWidget": "Add component",
+    "addWidgetDescription": "Choose a component to add to the layout.",
+    "addContainer": "Add horizontal container",
+    "components": "Components",
+    "componentsDescription": "Enable, reorder, or remove component instances.",
+    "modeDescription": "Managed mode keeps alignment. Free mode stores logical-pixel positions.",
+    "reset": "Reset layout",
+    "moveUp": "Up",
+    "moveDown": "Down",
+    "remove": "Remove",
+    "searchBoxSettings": "Search box settings",
+    "searchEngine": "Search engine",
+    "widgets": {
+      "search": "Search box",
+      "clock": "Clock",
+      "yiyan": "Quote",
+      "quickLinks": "Quick Links"
+    },
+    "widgetDescriptions": {
+      "search": "Add another independently configured search box.",
+      "clock": "Show time and date.",
+      "yiyan": "Show a daily quote.",
+      "quickLinks": "Show your Quick Links."
+    },
+    "spacing": "Spacing",
+    "containerGap": "Container spacing (px)",
+    "horizontalContainer": "Horizontal container",
+    "items": "components",
+    "useContainer": "Use this container",
+    "moveIntoContainer": "Move into horizontal container",
+    "movedIntoContainer": "Moved into horizontal container",
+    "chooseContainerFirst": "Create a horizontal container first"
   }
 }

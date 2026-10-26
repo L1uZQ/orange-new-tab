@@ -7,6 +7,8 @@
 - 入口：[entrypoints/background](entrypoints/background)（Service Worker）、[entrypoints/newtab](entrypoints/newtab)（主界面）、[entrypoints/popup](entrypoints/popup)（弹窗）；启动链 [init.ts](entrypoints/newtab/init.ts) → [main.ts](entrypoints/newtab/main.ts) → [App.vue](entrypoints/newtab/App.vue)。
 - 别名：`@/` → 仓库根（[shared](shared) 为跨入口共享），`@newtab/` → `entrypoints/newtab`（页面专用代码）。
 - 设置：[shared/settings](shared/settings)；i18n：[shared/i18n.ts](shared/i18n.ts) + [locales](locales)；Manifest：[wxt.config.ts](wxt.config.ts)。
+- 布局：[shared/layout](shared/layout) 定义组件实例、对齐布局树和自由逻辑像素；[WidgetLayout](entrypoints/newtab/components/WidgetLayout) 负责画布、管理模式、自由拖动与布局管理器。
+- 组件只能通过独立 `WidgetInstance` 挂载；搜索框的引擎属于实例配置，不要重新改成全局单实例状态。
 - [types/auto-imports.d.ts](types/auto-imports.d.ts)、[types/components.d.ts](types/components.d.ts) 是生成文件，禁止手改。
 
 ## 约定
@@ -17,6 +19,8 @@
 - 设置项：在 [default.ts](shared/settings/default.ts)、[types](shared/settings/types)、[normalize.ts](shared/settings/normalize.ts) 与 [projection.ts](shared/settings/projection.ts) 同步登记。本项目只维护当前结构，不写历史版本迁移；`CURRENT_CONFIG_VERSION` 仅在需要作废旧数据时递增。
 - 新增或修改 i18n 键时同步 `locales` 下全部语言，命名空间保持一致。
 - 后台同步以最新快照为准，保持 [entrypoints/background/index.ts](entrypoints/background/index.ts) 现有合并行为。
+- 自由布局保存的是相对画布原点的逻辑像素 x/y，不能改成视口坐标或逐组件百分比。
+- 管理布局以根垂直容器和嵌套横向容器表达；容器移动时必须保持内部对齐。
 
 ## 验证
 

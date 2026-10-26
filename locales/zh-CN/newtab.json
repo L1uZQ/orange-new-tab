@@ -268,5 +268,44 @@
   "title": "新标签页",
   "yiyan": {
     "copied": "已复制到剪贴板"
+  },
+  "layout": {
+    "title": "布局管理器",
+    "manage": "管理布局",
+    "mode": "布局模式",
+    "managed": "对齐布局",
+    "free": "自由拖动",
+    "addWidget": "添加组件",
+    "addWidgetDescription": "选择要加入页面的组件实例。",
+    "addContainer": "添加横向容器",
+    "components": "组件列表",
+    "componentsDescription": "启用、排序或删除当前页面的组件。",
+    "modeDescription": "对齐布局用于稳定排列；自由拖动按逻辑像素保存位置。",
+    "reset": "恢复默认布局",
+    "moveUp": "上移",
+    "moveDown": "下移",
+    "remove": "删除",
+    "searchBoxSettings": "搜索框设置",
+    "searchEngine": "搜索引擎",
+    "widgets": {
+      "search": "搜索框",
+      "clock": "时钟",
+      "yiyan": "一言",
+      "quickLinks": "快速导航"
+    },
+    "widgetDescriptions": {
+      "search": "添加一个可独立选择搜索引擎的搜索框。",
+      "clock": "显示时间和日期。",
+      "yiyan": "显示每日诗词或语录。",
+      "quickLinks": "显示快速导航链接。"
+    },
+    "spacing": "间距",
+    "containerGap": "容器内间距（px）",
+    "horizontalContainer": "横向容器",
+    "items": "个组件",
+    "useContainer": "使用此容器",
+    "moveIntoContainer": "移入横向容器",
+    "movedIntoContainer": "已移入横向容器",
+    "chooseContainerFirst": "请先创建横向容器"
   }
 }

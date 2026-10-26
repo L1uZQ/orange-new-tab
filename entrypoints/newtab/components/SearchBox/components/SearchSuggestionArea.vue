@@ -51,7 +51,12 @@ const {
   clearHistories: clearHistoryCache,
 } = useSearchHistoryCache()
 
-const props = defineProps<{ searchText: string; searchFormWidth: number; listId: string }>()
+const props = defineProps<{
+  searchText: string
+  searchFormWidth: number
+  listId: string
+  engine?: string
+}>()
 const emit = defineEmits<{
   doSearchWithText: [text: string]
   navigateToUrl: [url: string]

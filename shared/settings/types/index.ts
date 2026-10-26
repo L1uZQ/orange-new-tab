@@ -1,4 +1,5 @@
 import type { BgType, ClockWeight } from '@/shared/enums'
+import type { LayoutState } from '@/shared/layout'
 import type { BuiltInSearchEngineKey } from '@/shared/searchEngines'
 import type { SearchSuggestionProviderId } from '@/shared/searchSuggestionProviders'
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
@@ -180,6 +181,7 @@ export interface SettingsSchema {
     actionBtnBorderRadius: number
     globalBorderRadius: number
     minimalModeOnDoubleClick: boolean
+    manager: LayoutState
   }
 
   hideMajorChangelog: boolean

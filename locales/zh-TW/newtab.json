@@ -268,5 +268,44 @@
   "title": "新分頁",
   "yiyan": {
     "copied": "已複製到剪貼板"
+  },
+  "layout": {
+    "title": "版面管理員",
+    "manage": "管理版面",
+    "mode": "版面模式",
+    "managed": "對齊版面",
+    "free": "自由拖曳",
+    "addWidget": "新增元件",
+    "addWidgetDescription": "選擇要加入頁面的元件執行個體。",
+    "addContainer": "新增橫向容器",
+    "components": "元件清單",
+    "componentsDescription": "啟用、排序或刪除目前頁面的元件。",
+    "modeDescription": "對齊版面用於穩定排列；自由拖曳按邏輯像素儲存位置。",
+    "reset": "恢復預設版面",
+    "moveUp": "上移",
+    "moveDown": "下移",
+    "remove": "刪除",
+    "searchBoxSettings": "搜尋框設定",
+    "searchEngine": "搜尋引擎",
+    "widgets": {
+      "search": "搜尋框",
+      "clock": "時鐘",
+      "yiyan": "一言",
+      "quickLinks": "快速連結"
+    },
+    "widgetDescriptions": {
+      "search": "新增一個可獨立選擇搜尋引擎的搜尋框。",
+      "clock": "顯示時間和日期。",
+      "yiyan": "顯示每日詩詞或語錄。",
+      "quickLinks": "顯示快速連結。"
+    },
+    "spacing": "間距",
+    "containerGap": "容器內間距（px）",
+    "horizontalContainer": "橫向容器",
+    "items": "個元件",
+    "useContainer": "使用此容器",
+    "moveIntoContainer": "移入橫向容器",
+    "movedIntoContainer": "已移入橫向容器",
+    "chooseContainerFirst": "請先建立橫向容器"
   }
 }

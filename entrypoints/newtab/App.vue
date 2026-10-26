@@ -5,7 +5,7 @@ import { type StyleValue } from 'vue'
 import { useTranslation } from 'i18next-vue'
 
 import { BgType } from '@/shared/enums'
-import { defaultSettings, useSettingsStore } from '@/shared/settings'
+import { useSettingsStore } from '@/shared/settings'
 
 import { FOCUS_STATE } from '@newtab/shared/keys'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
@@ -15,11 +15,8 @@ import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
 import SettingsBtn from './components/ActionBtn/SettingsBtn.vue'
 import AppDialogHost from './components/AppDialogHost.vue'
 import Background from './components/Background.vue'
-import Clock from './components/Clock.vue'
 import Dock from './components/QuickLinks/Dock.vue'
-import QuickLinks from './components/QuickLinks/index.vue'
-import SearchBox from './components/SearchBox/index.vue'
-import YiYan from './components/YiYan.vue'
+import WidgetLayout from './components/WidgetLayout/index.vue'
 import { APP_DIALOGS, createAppDialogs } from './composables/appDialogs'
 import { useAppNotifications } from './composables/useAppNotifications'
 import { useElementLang } from './composables/useElementLang'
@@ -28,7 +25,6 @@ import { useQuickLinksBootstrap } from './composables/useQuickLinksBootstrap'
 import { useThemeWatcher } from './composables/useThemeWatcher'
 
 const BackgroundRef = ref<InstanceType<typeof Background>>()
-const QuickLinksRef = ref<InstanceType<typeof QuickLinks>>()
 const DockRef = ref<InstanceType<typeof Dock>>()
 const { t } = useTranslation()
 
@@ -135,36 +131,16 @@ const actionClass = computed(() => {
   }
 })
 
-const quickLinksScrollEnabled = computed(
-  () => settings.quickLinks.enabled && settings.quickLinks.useScroll,
-)
-
-watch(
-  quickLinksScrollEnabled,
-  (enabled) => {
-    if (!enabled || settings.layout.mainPosition.type !== 'center') return
-    settings.layout.mainPosition = {
-      type: 'dvh',
-      value: defaultSettings.layout.mainPosition.value,
-    }
-  },
-  { immediate: true },
-)
-
 const mainClass = computed(() => ({
-  'app--quick-links-scroll': quickLinksScrollEnabled.value,
+  'app--quick-links-scroll':
+    settings.quickLinks.enabled &&
+    settings.quickLinks.useScroll &&
+    settings.layout.manager.mode === 'managed',
   'app--bottom': settings.layout.mainPosition.type.startsWith('bottom-'),
   'app--minimal': minimalMode.value,
 }))
 
 const mainStyle = computed<StyleValue>(() => {
-  if (quickLinksScrollEnabled.value && settings.layout.mainPosition.type === 'center') {
-    return [
-      { paddingTop: `${defaultSettings.layout.mainPosition.value}vh` },
-      { paddingTop: `${defaultSettings.layout.mainPosition.value}dvh` },
-    ]
-  }
-
   const pos = settings.layout.mainPosition
   if (pos.type === 'center') {
     return { justifyContent: 'center' }
@@ -177,7 +153,7 @@ const mainStyle = computed<StyleValue>(() => {
 })
 
 async function refreshQuickLinks() {
-  await Promise.all([QuickLinksRef.value?.refresh(), DockRef.value?.refresh()])
+  await DockRef.value?.refresh()
 }
 
 function toggleMinimalMode() {
@@ -207,7 +183,6 @@ function toggleMinimalMode() {
       @contextmenu.prevent="handleBackgroundContextMenu"
       @dblclick.self="toggleMinimalMode"
     >
-      <clock v-if="settings.clock.enabled" @contextmenu.stop />
       <div
         class="app__content"
         :style="contentStyle"
@@ -216,15 +191,8 @@ function toggleMinimalMode() {
         @click.self="handleBackgroundClick"
         @dblclick.self="toggleMinimalMode"
       >
-        <search-box v-if="settings.search.enabled" @contextmenu.stop />
-        <quick-links
-          v-if="settings.quickLinks.enabled"
-          ref="QuickLinksRef"
-          :ready="quickLinksReady"
-          @contextmenu.stop
-        />
+        <widget-layout :ready="quickLinksReady" @refresh="refreshQuickLinks" />
         <dock v-if="settings.dock.enabled" ref="DockRef" :ready="quickLinksReady" />
-        <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />
       </div>
     </main>
     <background ref="BackgroundRef" />
