@@ -1,16 +1,16 @@
-# Lemon New Tab Terms of Service
+# Orange New Tab Terms of Service
 
 > Last updated: 2026-10-02
 
-These Terms of Service ("**Terms**") apply to the browser extension **Lemon New Tab**, its distribution channels, and its related public source code repository.
+These Terms of Service ("**Terms**") apply to the browser extension **Orange New Tab**, its distribution channels, and its related public source code repository.
 
 By installing, accessing, using, copying, or distributing the extension, you acknowledge that you have read, understood, and agreed to be bound by these Terms and the related Privacy Policy. If you do not agree, do not install or use the extension.
 
-Contact email: <lemon@redlnn.top>
+Contact: open an issue at <https://github.com/L1uZQ/orange-new-tab/issues>
 
 ## 1. Service Description
 
-Lemon New Tab is a **local-first** browser new tab extension that provides page customization, Quick Links, bookmark display, frequently visited sites display, search, wallpapers, poetry/quote display, and related features. To support site display features, the extension may also locally read or process **page titles, page URLs / hostnames, and favicon information** from tabs you visit.
+Orange New Tab is a **local-first** browser new tab extension that provides page customization, Quick Links, bookmark display, frequently visited sites display, search, wallpapers, poetry/quote display, and related features. To support site display features, the extension may also locally read or process **page titles, page URLs / hostnames, and favicon information** from tabs you visit.
 
 Some features depend on browser platform capabilities or third-party services, including without limitation search suggestions, Bing wallpapers, Jinrishici, Hitokoto, third-party favicon services, online resources configured by you, and a WebDAV provider you affirmatively choose. The current version may also temporarily access sync data retained by the browser vendor from older versions so that you can download or clear it. Those third-party services are not controlled by the developer and do not constitute services independently guaranteed by the developer under these Terms.
 
@@ -131,7 +131,7 @@ If the developer reasonably believes that you have violated these Terms, applica
 
 These Terms will be governed by the laws applicable through the developer's jurisdiction and any mandatory conflict-of-law rules, provided that mandatory consumer protection, privacy, or other laws in your own jurisdiction will prevail where they apply and require a higher standard.
 
-In the event of a dispute, the parties should first attempt to resolve it in good faith. You may first contact the developer at <lemon@redlnn.top>.
+In the event of a dispute, the parties should first attempt to resolve it in good faith. You may first contact the developer via <https://github.com/L1uZQ/orange-new-tab/issues>.
 
 ## 15. Severability
 

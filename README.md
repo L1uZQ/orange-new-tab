@@ -1,4 +1,4 @@
-[![lemon-new-tab](https://socialify.git.ci/redlnn/lemon-new-tab/image?custom_description=%E4%B8%80%E4%B8%AA%E7%AE%80%E7%BA%A6%E7%9A%84%E7%BA%AF%E6%9C%AC%E5%9C%B0%E6%96%B0%E6%A0%87%E7%AD%BE%E9%A1%B5%E6%89%A9%E5%B1%95&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FRedlnn%2Flemon-new-tab%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)](https://lemon.redln.top)
+[![orange-new-tab](https://socialify.git.ci/L1uZQ/orange-new-tab/image?custom_description=%E4%B8%80%E4%B8%AA%E7%AE%80%E7%BA%A6%E7%9A%84%E7%BA%AF%E6%9C%AC%E5%9C%B0%E6%96%B0%E6%A0%87%E7%AD%BE%E9%A1%B5%E6%89%A9%E5%B1%95&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FL1uZQ%2Forange-new-tab%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)](https://github.com/L1uZQ/orange-new-tab)
 
 <div align="center">
 
@@ -10,23 +10,27 @@
 > [!IMPORTANT]
 > 本项目（orange-new-tab）基于 [lemon-new-tab](https://github.com/Redlnn/lemon-new-tab) 二次开发。
 > 上游项目由 [Red_lnn](https://github.com/Redlnn) 创作，并以 AGPL-3.0 许可证开源。
-> 本仓库为其派生版本，沿用上游许可证、版权声明与项目来源信息。
+> 本仓库为其派生版本，保留上游许可证与版权声明；页面名称、图标与联系方式等品牌信息已替换。
 > 上游仓库地址：<https://github.com/Redlnn/lemon-new-tab>
 
 ## 安装
 
-目前扩展已在 [Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb)
-、[Microsoft Edge Add-Ons](https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh)
-和 [Firefox Browser Add-Ons](https://addons.mozilla.org/firefox/addon/lemon-new-tab/)
-上架
+本项目为个人二次开发版本，未上架应用商店。可 Clone 后手动 Build 使用：
 
-> 你也可以 Clone 下来手动 Build 一份来使用
+```sh
+git clone https://github.com/L1uZQ/orange-new-tab.git
+cd orange-new-tab
+pnpm install
+pnpm build
+```
+
+然后在浏览器的扩展管理页以「加载已解压的扩展程序」载入 `.output/chrome-mv3`。
 
 ## 特性
 
 让每次打开新标签页，都成为一次轻快、顺手又赏心悦目的开始。
 
-柠檬起始页是一款本地优先的开源浏览器扩展，无需额外注册账号。核心设置和个性化内容保存在浏览器中，页面加载迅速、界面简洁，也没有资讯流和广告干扰。
+橙子起始页是一款本地优先的开源浏览器扩展，无需额外注册账号。核心设置和个性化内容保存在浏览器中，页面加载迅速、界面简洁，也没有资讯流和广告干扰。
 
 **🔍 灵活搜索**  
 &emsp;&ensp;支持 Bing、Google、百度、DuckDuckGo、Yandex 等搜索引擎，提供搜索联想、搜索历史和自定义搜索引擎，让你用熟悉的方式快速找到内容。
@@ -53,7 +57,7 @@
 &emsp;&ensp;支持导入、导出扩展设置，方便备份当前内容或迁移到其他设备
 
 **⚛️ 使用更放心**  
-&emsp;&ensp;柠檬起始页以 AGPL-3.0 许可证完整开源所有代码，不会主动收集、发送任何隐私。支持 Chrome、Edge、Firefox，无论用什么浏览器都能获得一致的体验
+&emsp;&ensp;橙子起始页以 AGPL-3.0 许可证完整开源所有代码，不会主动收集、发送任何隐私。支持 Chrome、Edge、Firefox，无论用什么浏览器都能获得一致的体验
 
 ## 更新日志（Changelog）
 
@@ -70,7 +74,7 @@
 |             Edge Mobile              |  ❌  |  无法取代原生新标签页  |
 | 其他基于 Chromium<br/>的移动端浏览器 |  ❓  |        未经测试        |
 
-> 柠檬起始页自适应横竖屏模式，但未在移动端浏览器上测试及上架，故不保证兼容性
+> 橙子起始页自适应横竖屏模式，但未在移动端浏览器上测试及上架，故不保证兼容性
 
 ## 预览图
 
@@ -190,5 +194,15 @@ git push origin master      # 推送到本仓库
 ## License
 
 本项目以 AGPL-3.0 许可证开源，`entrypoints/newtab/assets` 中的涉及到商标的图片除外
+
+### 修改声明
+
+**本作品由 [L1uZQ](https://github.com/L1uZQ) 修改，修改日期 2026-10-26。**
+上游原作品 [lemon-new-tab](https://github.com/Redlnn/lemon-new-tab) 的版权归
+[Red_lnn](https://github.com/Redlnn) 所有。
+
+依据 AGPL-3.0 第 5 条，本衍生版本在保留上游版权声明与许可证的前提下修改了：
+名称与界面文案、应用图标、`wxt.config.ts` 中的作者与主页、关于/帮助对话框中的开发者
+链接与联系方式、WebDAV 同步库与备份文件的默认目录及产品标识。完整修改历史见本仓库 Git 记录。
 
 > 本项目自 v3.2.3 版本（commit 65a894c0d8009d274618c5004a634d7359b2b0a6）起采用 AGPL-3.0 许可证开源，之前版本采用 MIT 许可证开源

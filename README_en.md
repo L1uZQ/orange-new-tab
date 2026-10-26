@@ -1,4 +1,4 @@
-[![lemon-new-tab](https://socialify.git.ci/redlnn/lemon-new-tab/image?custom_description=A+simple+local+new+tab+extension&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FRedlnn%2Flemon-new-tab%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)](https://lemon.redln.top)
+[![orange-new-tab](https://socialify.git.ci/L1uZQ/orange-new-tab/image?custom_description=A+simple+local+new+tab+extension&description=1&font=Jost&language=1&logo=https%3A%2F%2Fraw.githubusercontent.com%2FL1uZQ%2Forange-new-tab%2Frefs%2Fheads%2Fmaster%2Fassets%2Ficon.svg&owner=1&pattern=Circuit+Board&stargazers=1&theme=Auto)](https://github.com/L1uZQ/orange-new-tab)
 
 <div align="center">
 
@@ -11,23 +11,28 @@
 > This project (orange-new-tab) is a derivative work based on
 > [lemon-new-tab](https://github.com/Redlnn/lemon-new-tab), created by
 > [Red_lnn](https://github.com/Redlnn) and released under the AGPL-3.0 license.
-> The upstream license, copyright notices, and origin information are preserved.
+> The upstream license and copyright notices are preserved; the page name, icon,
+> and contact details have been replaced with this derivative's own branding.
 > Upstream repository: <https://github.com/Redlnn/lemon-new-tab>
 
 ## Installation
 
-The extension is now available on
-[Chrome Web Store](https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb),
-[Microsoft Edge Add-Ons](https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh), and
-[Firefox Browser Add-Ons](https://addons.mozilla.org/firefox/addon/lemon-new-tab/).
+This is a personal derivative build and is not published to any extension store. Clone and build it manually:
 
-> You can also clone this repo and build it manually.
+```sh
+git clone https://github.com/L1uZQ/orange-new-tab.git
+cd orange-new-tab
+pnpm install
+pnpm build
+```
+
+Then load `.output/chrome-mv3` via "Load unpacked" in your browser's extension page.
 
 ## Features
 
 Make every new tab feel fast, effortless, and enjoyable.
 
-Lemon New Tab is a local-first, open-source browser extension with no additional account required. Your core settings and personalized content stay in your browser, giving you fast loading, a clean interface, and no distracting news feed or ads.
+Orange New Tab is a local-first, open-source browser extension with no additional account required. Your core settings and personalized content stay in your browser, giving you fast loading, a clean interface, and no distracting news feed or ads.
 
 **🔍 Flexible Search**  
 &emsp;&ensp;Use Bing, Google, Baidu, DuckDuckGo, Yandex, and other search engines. Search suggestions, search history, and custom search engines help you quickly find what you need using a familiar workflow.
@@ -54,7 +59,7 @@ Lemon New Tab is a local-first, open-source browser extension with no additional
 &emsp;&ensp;Import or export extension settings to back up your current data or move it to another device.
 
 **⚛️ Built for Trust**  
-&emsp;&ensp;Lemon New Tab makes all of its source code available under the AGPL-3.0 license and does not actively collect or send private data. It supports Chrome, Edge, and Firefox, providing a consistent experience across browsers.
+&emsp;&ensp;Orange New Tab makes all of its source code available under the AGPL-3.0 license and does not actively collect or send private data. It supports Chrome, Edge, and Firefox, providing a consistent experience across browsers.
 
 > [!NOTE]  
 > Contributions via PRs are welcome. Issues may not always be implemented.
@@ -164,5 +169,17 @@ git push origin master      # Push to this repository
 ## License
 
 This project is open-sourced under the AGPL-3.0 License, except for trademark-related images in `entrypoints/newtab/assets`.
+
+### Modification Notice
+
+**This work was modified by [L1uZQ](https://github.com/L1uZQ) on 2026-10-26.**
+The upstream [lemon-new-tab](https://github.com/Redlnn/lemon-new-tab) is copyright
+[Red_lnn](https://github.com/Redlnn).
+
+In accordance with section 5 of the AGPL-3.0, this derivative keeps all upstream copyright notices and the
+license while modifying the following: product name and UI copy, application icon, author and homepage in
+`wxt.config.ts`, developer links and contact details in the About/Help dialogs, and the default directory and
+product identifier used for WebDAV sync vaults and backups. The complete modification history is in this
+repository's Git log.
 
 > This project has been open-sourced under the AGPL-3.0 License since version v3.2.3 (commit 65a894c0d8009d274618c5004a634d7359b2b0a6). Previous versions were open-sourced under the MIT License.

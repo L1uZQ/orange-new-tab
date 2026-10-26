@@ -2,6 +2,15 @@
 
 > Translated by AI from Chinese.
 
+> Entries for 4.1.0 and earlier come from the upstream
+> [lemon-new-tab](https://github.com/Redlnn/lemon-new-tab) project and are kept as-is for traceability.
+> Changes to Orange New Tab are recorded under "Unreleased" below.
+
+## Unreleased
+
+- **Branding:** Renamed to "Orange New Tab", replaced the icon, author, homepage, and contact details, and kept
+  the upstream attribution
+
 ## A fresh page, more possibilities 🍋
 
 Lemon New Tab 4.x is here! Capture an idea, change the scenery, find what you need with smarter search. More to enjoy in a familiar place—let's turn a fresh page together.
