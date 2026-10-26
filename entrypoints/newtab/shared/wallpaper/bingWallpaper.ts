@@ -390,7 +390,8 @@ class BingWallpaperURLGetter {
       const data = await enhancedFetch<BingWallpaperResp>(
         'https://www.bing.com/HPImageArchive.aspx?format=js&idx=0&n=1',
         // 添加 mkt 会使部分地区后续访问 www.bing.com 时发生域名跳转。
-        { timeout: 1000 },
+        // 走系统代理时首包可能超过 1s，超时太短会直接丢掉当天壁纸。
+        { timeout: 8000 },
       )
       const image = data.images[0]
       if (!image) throw new Error('Bing returned no wallpaper')
