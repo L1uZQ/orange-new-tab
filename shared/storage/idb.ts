@@ -25,7 +25,7 @@ export interface BookmarkCacheMetadata {
 
 export type BookmarkCacheEntry = BookmarkCacheMetadata | Browser.bookmarks.BookmarkTreeNode[]
 
-export interface LemonDBSchema extends DBSchema {
+export interface OrangeDBSchema extends DBSchema {
   favicon: {
     key: string
     value: FaviconCacheEntry
@@ -60,7 +60,7 @@ export interface LemonDBSchema extends DBSchema {
   }
 }
 
-const DB_NAME = '柠檬起始页'
+const DB_NAME = 'orange-new-tab'
 const DB_VERSION = 1
 const REQUIRED_STORES: readonly StoreName[] = [
   'favicon',
@@ -73,7 +73,7 @@ const REQUIRED_STORES: readonly StoreName[] = [
   'wallpaperLibrary',
 ]
 
-let dbPromise: Promise<IDBPDatabase<LemonDBSchema>> | null = null
+let dbPromise: Promise<IDBPDatabase<OrangeDBSchema>> | null = null
 
 /**
  * 探测已有数据库的版本和 store 情况。
@@ -104,7 +104,7 @@ export function getDB() {
         ? Math.max(existingVersion + 1, DB_VERSION)
         : existingVersion
 
-      const db = await openDB<LemonDBSchema>(DB_NAME, targetVersion, {
+      const db = await openDB<OrangeDBSchema>(DB_NAME, targetVersion, {
         upgrade(db) {
           for (const store of REQUIRED_STORES) {
             if (!db.objectStoreNames.contains(store)) db.createObjectStore(store)
@@ -143,7 +143,7 @@ export type StoreName =
 export async function idbGet<S extends StoreName>(
   storeName: S,
   key: string,
-): Promise<LemonDBSchema[S]['value'] | undefined> {
+): Promise<OrangeDBSchema[S]['value'] | undefined> {
   const db = await getDB()
   return db.get(storeName, key)
 }
@@ -152,7 +152,7 @@ export async function idbGet<S extends StoreName>(
 export async function idbSet<S extends StoreName>(
   storeName: S,
   key: string,
-  value: LemonDBSchema[S]['value'],
+  value: OrangeDBSchema[S]['value'],
 ): Promise<void> {
   const db = await getDB()
   await db.put(storeName, value, key)
@@ -161,7 +161,7 @@ export async function idbSet<S extends StoreName>(
 /** 在一个事务中批量写入同一 store，避免为缓存整理创建大量事务。 */
 export async function idbSetMany<S extends StoreName>(
   storeName: S,
-  entries: ReadonlyArray<readonly [string, LemonDBSchema[S]['value']]>,
+  entries: ReadonlyArray<readonly [string, OrangeDBSchema[S]['value']]>,
 ): Promise<void> {
   if (entries.length === 0) return
   const db = await getDB()
@@ -175,7 +175,7 @@ export async function idbSetMany<S extends StoreName>(
 /** 返回指定 store 的全部字符串键值对。 */
 export async function idbGetAllEntries<S extends StoreName>(
   storeName: S,
-): Promise<Array<[string, LemonDBSchema[S]['value']]>> {
+): Promise<Array<[string, OrangeDBSchema[S]['value']]>> {
   const db = await getDB()
   const transaction = db.transaction(storeName, 'readonly')
   const [keys, values] = await Promise.all([

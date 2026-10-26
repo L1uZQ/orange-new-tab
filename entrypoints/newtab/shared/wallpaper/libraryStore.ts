@@ -26,7 +26,7 @@ export const useLocalWallpaperStore = defineStore('localWallpaperLibrary', () =>
   let selectionTask: Promise<void> | undefined
   const allocations = new Map<WallpaperVariant, Promise<string>>()
   const urls = new Map<string, Promise<string>>()
-  const channel = new BroadcastChannel('lemon-wallpaper-library')
+  const channel = new BroadcastChannel('orange-wallpaper-library')
   channel.onmessage = () => {
     void reload()
   }

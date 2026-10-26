@@ -8,7 +8,7 @@ type YiyanCache = {
   ts: number
 }
 
-const LAST_GOOD_KEY = 'local:lemon:yiyan:lastGood'
+const LAST_GOOD_KEY = 'local:orange:yiyan:lastGood'
 const REFRESH_TTL = 10 * 60 * 1000
 
 const yiyanLastGoodStorage = storage.defineItem<YiyanCache | null>(LAST_GOOD_KEY, {

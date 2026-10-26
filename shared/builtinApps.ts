@@ -2,7 +2,7 @@ import { markRaw } from 'vue'
 
 import NoteIcon from '@newtab/assets/note.svg?component'
 
-export const BUILT_IN_APP_URL_PREFIX = 'lemon-new-tab://app/'
+export const BUILT_IN_APP_URL_PREFIX = 'orange-new-tab://app/'
 export type BuiltInAppId = 'note'
 
 export const builtInApps = {

@@ -4,7 +4,7 @@ import { hex2rgba } from './utils'
 export const WHITE_COLOR = { r: 255, g: 255, b: 255, a: 255 } as Rgba
 export const BLACK_COLOR = { r: 0, g: 0, b: 0, a: 255 } as Rgba
 
-export const THEME_STYLE_ELEMENT_ID = 'lemon-element-plus-theme'
+export const THEME_STYLE_ELEMENT_ID = 'orange-element-plus-theme'
 export const LIGHT_SELECTOR = 'html.light'
 export const DARK_SELECTOR = 'html.dark'
 

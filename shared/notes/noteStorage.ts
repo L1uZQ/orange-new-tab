@@ -27,7 +27,7 @@ export const noteStorage = storage.defineItem<NoteSnapshot>('local:notes', {
 
 /** 所有便签写入共用跨页面/后台锁；同步调用方需从本机校验前持锁到落盘完成。 */
 export function withNotesLock<T>(operation: () => Promise<T>): Promise<T> {
-  return navigator.locks.request('lemon-notes', operation)
+  return navigator.locks.request('orange-notes', operation)
 }
 
 /** 在便签锁内清理存储，避免只清理同步副本造成反复发布。 */

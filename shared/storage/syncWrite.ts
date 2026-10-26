@@ -3,7 +3,7 @@ import { jsonEquals } from '../json.ts'
 import { rebaseLocalChanges } from './localChanges.ts'
 
 export function withSyncWriteLock<T>(operation: () => Promise<T>): Promise<T> {
-  return navigator.locks.request('lemon-sync-data', operation)
+  return navigator.locks.request('orange-sync-data', operation)
 }
 
 interface ValueStorage<T> {
