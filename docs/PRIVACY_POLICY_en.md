@@ -35,7 +35,7 @@ This Policy covers five categories of processing:
 The extension store the following data locally on your device:
 
 - extension settings and UI preferences, such as theme, layout, search engine configuration, and background settings;
-- Quick Links, bookmark display settings, and local state related to frequently visited sites;
+- Quick Links and local state related to frequently visited sites;
 - tab title, page URL, hostname, and favicon-related cache processed locally to display Quick Links, frequently visited sites, or related site cards;
 - search history, if that local feature is enabled;
 - local wallpapers, video wallpapers, cached Bing wallpapers, and related metadata;
@@ -50,7 +50,6 @@ This data is generally stored in your browser environment and is controlled by y
 
 According to the extension manifest, the extension may access:
 
-- **bookmarks**: to display, search, or open your browser bookmarks;
 - **optional history permission**: only after you enable and authorize browser history suggestions, to match browsing records locally by title or URL. This feature is off by default; you can uncheck it or revoke the permission in your browser at any time.
 - **topSites / browsing activity related capabilities**: to show frequently visited sites;
 - **storage**: to save settings and cache, and to temporarily detect, download, or clear sync data left by older versions;
@@ -66,7 +65,7 @@ Titles, URLs, visit times, and suggestion results accessed by browser history su
 Except as otherwise described in this Policy, the extension developer does **not** proactively collect, sell, rent, or upload the following information to developer-operated servers:
 
 - your identity information, contact details, or payment information;
-- the contents of your bookmarks, browsing history, or search terms;
+- the contents of your browsing history or search terms;
 - the contents of your local images, videos, or files;
 - copies of page titles, page URLs, site hostnames, or favicon data from your tabs, except where your browser sends the relevant request directly to a third-party service;
 - your extension settings, Quick Links, or wallpaper files, **except that content you explicitly select is sent directly to your chosen WebDAV provider when you enable WebDAV sync; it is not sent to the developer's servers**.
@@ -144,7 +143,7 @@ Risk notes:
 
 - Default: **off**. The extension connects only after you provide a server address, username, and password and confirm setup.
 - Purpose: two-way synchronization between your devices of selected settings, Quick Links, custom search engines, UI preferences, and optionally hidden sites, online wallpaper addresses, user-selected icons, and current static image wallpapers.
-- Never uploaded: WebDAV passwords, independent sync encryption passwords, browser permissions, browser bookmarks, browser history and its suggestion results, video wallpapers, Bing/online wallpaper caches, favicon caches, object URLs, or retired browser-sync data.
+- Never uploaded: WebDAV passwords, independent sync encryption passwords, browser permissions, browser history and its suggestion results, video wallpapers, Bing/online wallpaper caches, favicon caches, object URLs, or retired browser-sync data.
 - Provider-visible data: even with client-side encryption, a WebDAV provider can generally see your account, connection IP, request time, directory existence, file counts, and transfer sizes.
 - Encryption boundary: client-side encryption is off by default. If enabled when the vault is created, selected content is encrypted before upload using your independent password. The encryption mode and password cannot be changed after creation, and the developer cannot recover a forgotten password.
 - HTTP risk: HTTPS is required by default. Only LAN addresses may use HTTP after explicit acknowledgement; public HTTP is unsupported. LAN HTTP can still expose credentials and unencrypted content to others on the same network. Client content encryption does not protect the WebDAV login or all network metadata.
@@ -167,7 +166,7 @@ Where the GDPR or similar laws apply, the developer relies, within the scope act
 
 ### 8.1 Necessity for providing the requested service
 
-Processing necessary for the extension's core local functionality, such as saving settings, reading local extension state, showing bookmarks or frequently visited sites, and rendering the page layout or background you selected, is treated as necessary to provide the functionality you requested.
+Processing necessary for the extension's core local functionality, such as saving settings, reading local extension state, showing frequently visited sites, and rendering the page layout or background you selected, is treated as necessary to provide the functionality you requested.
 
 ### 8.2 Consent
 

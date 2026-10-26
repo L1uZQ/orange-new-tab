@@ -1,7 +1,5 @@
 import { type DBSchema, type IDBPDatabase, openDB } from 'idb'
 
-import type { Browser } from 'wxt/browser'
-
 /** favicon 缓存条目（与 faviconCache.ts 保持一致） */
 export interface FaviconCacheEntry {
   /** base64 数据 URL（例如 "data:image/...;base64,..."）或普通 HTTP/HTTPS 链接 */
@@ -17,13 +15,6 @@ export interface CachedImage {
   blob: Blob
   timestamp: number
 }
-
-export interface BookmarkCacheMetadata {
-  schemaVersion: number
-  state: 'ready' | 'oversize'
-}
-
-export type BookmarkCacheEntry = BookmarkCacheMetadata | Browser.bookmarks.BookmarkTreeNode[]
 
 export interface OrangeDBSchema extends DBSchema {
   favicon: {
@@ -46,10 +37,6 @@ export interface OrangeDBSchema extends DBSchema {
     key: string
     value: CachedImage
   }
-  bookmarkCache: {
-    key: string
-    value: BookmarkCacheEntry
-  }
   webdavSync: {
     key: string
     value: unknown
@@ -68,7 +55,6 @@ const REQUIRED_STORES: readonly StoreName[] = [
   'wallpaperBing',
   'wallpaperDark',
   'onlineWallpaperCache',
-  'bookmarkCache',
   'webdavSync',
   'wallpaperLibrary',
 ]
@@ -113,7 +99,7 @@ export function getDB() {
       })
 
       // 新增 store 会触发其它扩展页面的版本升级请求。主动关闭旧连接，
-      // 避免它们阻塞后台打开新版本数据库，进而让书签读取请求永久等待。
+      // 避免它们阻塞后台打开新版本数据库，进而让页面请求永久等待。
       db.addEventListener('versionchange', () => {
         db.close()
         dbPromise = null
@@ -135,7 +121,6 @@ export type StoreName =
   | 'wallpaperBing'
   | 'wallpaperDark'
   | 'onlineWallpaperCache'
-  | 'bookmarkCache'
   | 'webdavSync'
   | 'wallpaperLibrary'
 

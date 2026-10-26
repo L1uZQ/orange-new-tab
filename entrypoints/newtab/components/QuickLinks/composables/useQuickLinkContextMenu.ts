@@ -1,5 +1,3 @@
-import { useTranslation } from 'i18next-vue'
-
 import { browser } from '#imports'
 
 import { resolveBuiltInAppId, type BuiltInAppId } from '@/shared/builtinApps'
@@ -27,7 +25,6 @@ export function useQuickLinkContextMenu(options: {
   onPin?: (item: CtxQuickLinkItem) => Promise<void> | void
   onMove?: (item: CtxQuickLinkItem) => Promise<void> | void
 }) {
-  const { t } = useTranslation()
   const quickLinksStore = useQuickLinksStore()
   const { refreshFn } = options
   const dialogs = useAppDialogs()
@@ -79,22 +76,6 @@ export function useQuickLinkContextMenu(options: {
       navigator.clipboard.writeText(ctxItem.value.url)
   }
 
-  const ctxCreateBookmark = async (): Promise<void> => {
-    if (!ctxItem.value || resolveBuiltInAppId(ctxItem.value)) return
-    const { url, title } = ctxItem.value
-    if (!isSafeUrl(url)) return
-    const res = await browser.bookmarks.search({ url })
-    if (res.length !== 0) {
-      ElMessage.info(t('quickLinks.bookmark.existing'))
-      return
-    }
-    const created = await browser.bookmarks.create({ title, url })
-    if (!created.parentId) return
-    const nodes = await browser.bookmarks.get(created.parentId)
-    const folderTitle = nodes[0]?.title ?? null
-    ElMessage.success(t('quickLinks.bookmark.success', { folder: folderTitle }))
-  }
-
   const ctxUnpin = async (): Promise<void> => {
     if (!ctxItem.value?.isPinned || !ctxItem.value.id) return
     const target = quickLinksStore.findQuickLinkTargetById(ctxItem.value.id)
@@ -136,7 +117,6 @@ export function useQuickLinkContextMenu(options: {
     ctxOpenInNewWindow,
     ctxOpenInIncognitoWindow,
     ctxCopyLink,
-    ctxCreateBookmark,
     ctxUnpin,
     ctxPin,
     ctxMove,

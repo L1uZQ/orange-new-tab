@@ -93,15 +93,6 @@ html.colorful .action-btn-container {
   }
 }
 
-.bookmark-btn {
-  &:hover,
-  &:focus-visible {
-    .el-icon {
-      transform: scaleX(-1);
-    }
-  }
-}
-
 .refresh-btn {
   &:hover,
   &:focus-visible {

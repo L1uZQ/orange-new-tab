@@ -1,4 +1,4 @@
-import { BgType, ClockWeight, DrawerDirection, SortMode } from '../enums.ts'
+import { BgType, ClockWeight } from '../enums.ts'
 import { BUILT_IN_SEARCH_ENGINE_KEYS } from '../searchEngines.ts'
 import { SEARCH_SUGGESTION_PROVIDER_IDS } from '../searchSuggestionProviders.ts'
 
@@ -201,12 +201,6 @@ export const defaultSettings = {
     bgSwitchAnim: true,
     dockEnterAnim: true,
     dockScale: true,
-    bookmark: {
-      transparent: true,
-      transparency: 15,
-      blur: true,
-      blurIntensity: 10,
-    },
     dialog: {
       transparent: true,
       transparency: 15,
@@ -255,14 +249,6 @@ export const defaultSettings = {
     actionBtnBorderRadius: 50,
     globalBorderRadius: 20,
     minimalModeOnDoubleClick: false,
-  },
-
-  bookmark: {
-    direction: DrawerDirection.rtl,
-    rightClickToOpen: true,
-    showBtn: true,
-    defaultSortMode: SortMode.Original,
-    drawerWidth: 400,
   },
 
   hideMajorChangelog: true,

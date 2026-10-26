@@ -36,7 +36,7 @@ export function isValidUrl(url: string) {
 }
 
 /**
- * 校验是否为安全 URL（http/https/ftp/ftps），用于书签、窗口创建等浏览器敏感 API。
+ * 校验是否为安全 URL（http/https/ftp/ftps），用于窗口创建等浏览器敏感 API。
  */
 export function isSafeUrl(url: string) {
   try {

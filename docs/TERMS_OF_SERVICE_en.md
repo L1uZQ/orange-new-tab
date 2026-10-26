@@ -10,7 +10,7 @@ Contact: open an issue at <https://github.com/L1uZQ/orange-new-tab/issues>
 
 ## 1. Service Description
 
-Orange New Tab is a **local-first** browser new tab extension that provides page customization, Quick Links, bookmark display, frequently visited sites display, search, wallpapers, poetry/quote display, and related features. To support site display features, the extension may also locally read or process **page titles, page URLs / hostnames, and favicon information** from tabs you visit.
+Orange New Tab is a **local-first** browser new tab extension that provides page customization, Quick Links, frequently visited sites display, search, wallpapers, poetry/quote display, and related features. To support site display features, the extension may also locally read or process **page titles, page URLs / hostnames, and favicon information** from tabs you visit.
 
 Some features depend on browser platform capabilities or third-party services, including without limitation search suggestions, Bing wallpapers, Jinrishici, Hitokoto, third-party favicon services, online resources configured by you, and a WebDAV provider you affirmatively choose. The current version may also temporarily access sync data retained by the browser vendor from older versions so that you can download or clear it. Those third-party services are not controlled by the developer and do not constitute services independently guaranteed by the developer under these Terms.
 

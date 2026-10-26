@@ -88,13 +88,11 @@ const SETTING_TITLE_ALIASES: Partial<Record<SettingPath, string>> = {
   'layout.mainPosition.value': 'layout.mainPosition.label',
   'layout.actionBtnPosition': 'layout.actionBtn.label',
   'layout.actionBtnBorderRadius': 'layout.actionBtn.borderRadius',
-  'bookmark.direction': 'bookmark.direction.title',
-  'bookmark.defaultSortMode': 'bookmark.defaultSort',
   hideMajorChangelog: 'settings:other.changelog.label',
   disableSettingsScrollRestore: 'other.disableSettingsScrollRestore',
   faviconCacheEnabled: 'other.faviconCache.label',
   'dock.launchpad.iconSize': 'quickLinks.iconSize',
-  'dock.launchpad.rightClickToOpen': 'bookmark.rightClickToOpen',
+  'dock.launchpad.rightClickToOpen': 'dock.launchpad.rightClickToOpen',
   'perf.dockEnterAnim': 'perf.dock.enterAnim',
 }
 
@@ -109,7 +107,6 @@ function settingTitleKey(path: string): string {
 
 const SETTING_SECTION_KEYS: Record<string, string> = {
   background: 'background.title',
-  bookmark: 'bookmark.title',
   clock: 'clock.title',
   dock: 'dock.title',
   faviconCacheEnabled: 'other.title',

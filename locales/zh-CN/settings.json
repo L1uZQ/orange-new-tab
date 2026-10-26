@@ -104,19 +104,6 @@
       "unknownSource": "使用未知来源的图片作为背景可能会使你的设备遭到攻击，是否继续？"
     }
   },
-  "bookmark": {
-    "defaultSort": "默认排序方式",
-    "direction": {
-      "ltr": "从左到右",
-      "rtl": "从右到左",
-      "title": "打开方向"
-    },
-    "rightClickDisabledNote": "已启用右键背景打开启动台，请先将其关闭。",
-    "rightClickToOpen": "右键背景打开",
-    "showBtn": "显示右下角入口",
-    "syncNote": "浏览器书签由浏览器管理，不通过 WebDAV 同步。",
-    "title": "书签栏"
-  },
   "clock": {
     "blink": "闪烁时间分隔符",
     "blinkingTip": "关闭可缓解持续性的 GPU 占用",
@@ -202,9 +189,9 @@
     "actionBtnNote": "开启 Dock 后，功能按钮只能放在顶部（可在「布局」中选择左/右）",
     "borderRadius": "圆角",
     "launchpad": {
-      "rightClickDisabledNote": "已启用右键背景打开书签栏，请先将其关闭。",
       "show": "在 Dock 中启用启动台",
-      "title": "启动台"
+      "title": "启动台",
+      "rightClickToOpen": "右键背景打开"
     },
     "limitCount": "限制最大数量",
     "maxCount": "最大数量",
@@ -328,10 +315,6 @@
     },
     "bgSwitchAnim": "壁纸切换动画",
     "blurIntensity": "背景模糊度",
-    "bookmark": {
-      "blur": "书签栏背景模糊",
-      "transparent": "书签栏背景透明"
-    },
     "dialog": {
       "animation": "弹窗动画",
       "blur": "弹窗背景模糊",
@@ -449,7 +432,6 @@
   "sync": {
     "availability": {
       "blockedTopSitesScopeDisabled": "隐藏记录仅保存在此设备。可在 WebDAV 同步范围中开启。",
-      "bookmarksBrowserManaged": "书签由浏览器管理，不通过 WebDAV 同步。",
       "faviconCacheLocal": "网站图标缓存可重新生成，不会上传。图标缓存开关本身会同步。",
       "onlineWallpaperCacheLocal": "缓存文件只保存在本机；启用偏好会同步。",
       "onlineWallpaperUrlScopeDisabled": "在线/API 壁纸地址仅保存在此设备。可在高级同步范围中开启。",

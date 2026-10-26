@@ -5,13 +5,11 @@ import { type StyleValue } from 'vue'
 import { useTranslation } from 'i18next-vue'
 
 import { BgType } from '@/shared/enums'
-import { DEFAULT_QUICK_LINK_GROUP_ID } from '@/shared/quickLinks'
 import { defaultSettings, useSettingsStore } from '@/shared/settings'
 
-import { FOCUS_STATE, GET_ACTIVE_QUICK_LINK_GROUP_ID } from '@newtab/shared/keys'
+import { FOCUS_STATE } from '@newtab/shared/keys'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
-import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
 import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
 import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
 import SettingsBtn from './components/ActionBtn/SettingsBtn.vue'
@@ -85,8 +83,6 @@ function handleBackgroundContextMenu() {
     settings.dock.launchpad.rightClickToOpen
   ) {
     DockRef.value?.toggleLaunchpad()
-  } else if (settings.bookmark.rightClickToOpen) {
-    dialogs.open('bookmark')
   }
 }
 
@@ -109,11 +105,6 @@ function handleBackgroundClick() {
     handleBackgroundContextMenu()
   }
 }
-provide(
-  GET_ACTIVE_QUICK_LINK_GROUP_ID,
-  () => QuickLinksRef.value?.getActiveGroupId() ?? DEFAULT_QUICK_LINK_GROUP_ID,
-)
-
 // 应用级通知（欢迎、缓存提示、版本更新）
 useAppNotifications(() => dialogs.open('changelog'))
 
@@ -244,11 +235,6 @@ function toggleMinimalMode() {
       :aria-label="t('a11y.actions')"
     >
       <settings-btn />
-      <bookmark-btn
-        v-if="settings.bookmark.showBtn"
-        v-show="!minimalMode"
-        @open-bookmark-sidebar="dialogs.open('bookmark')"
-      />
       <refresh-bg-btn
         v-if="
           settings.background.bgType === BgType.Online ||

@@ -12,7 +12,6 @@ type DialogRequests = {
   about: undefined
   searchEngines: undefined
   background: undefined
-  bookmark: undefined
   note: undefined
   builtinApps: undefined
   quickLink: QuickLinkDialogRequest

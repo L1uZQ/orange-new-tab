@@ -104,19 +104,6 @@
       "unknownSource": "Using images from unknown sources as backgrounds may expose your device to attacks. Do you want to continue?"
     }
   },
-  "bookmark": {
-    "defaultSort": "Default sorting",
-    "direction": {
-      "ltr": "Left to right",
-      "rtl": "Right to left",
-      "title": "Open direction"
-    },
-    "rightClickDisabledNote": "Right-click to open Launchpad is enabled. Turn it off first.",
-    "rightClickToOpen": "Right click on background to open",
-    "showBtn": "Show bottom-right button",
-    "syncNote": "Browser bookmarks are managed by the browser and are not synced through WebDAV.",
-    "title": "Bookmarks bar"
-  },
   "clock": {
     "blink": "Blinking colon",
     "blinkingTip": "Turning this off can reduce sustained GPU usage.",
@@ -202,9 +189,9 @@
     "actionBtnNote": "When Dock is enabled, the button bar can only be placed at the top (choose left/right in Layout settings)",
     "borderRadius": "Radius",
     "launchpad": {
-      "rightClickDisabledNote": "Right-click to open bookmarks is enabled. Turn it off first.",
       "show": "Show Launchpad in Dock",
-      "title": "Launchpad"
+      "title": "Launchpad",
+      "rightClickToOpen": "Open on background right-click"
     },
     "limitCount": "Limit maximum count",
     "maxCount": "Maximum count",
@@ -328,10 +315,6 @@
     },
     "bgSwitchAnim": "Wallpaper switch animation",
     "blurIntensity": "Background blur",
-    "bookmark": {
-      "blur": "Bookmarks sidebar blur",
-      "transparent": "Bookmarks sidebar transparency"
-    },
     "dialog": {
       "animation": "Dialog animation",
       "blur": "Dialog blur",
@@ -449,7 +432,6 @@
   "sync": {
     "availability": {
       "blockedTopSitesScopeDisabled": "Hidden-site records stay on this device. You can include them in the WebDAV sync scope.",
-      "bookmarksBrowserManaged": "Bookmarks are managed by the browser and are not synced through WebDAV.",
       "faviconCacheLocal": "The website icon cache can be rebuilt and is never uploaded. Its enable preference is synced.",
       "onlineWallpaperCacheLocal": "Cached files stay on this device; the enable preference is synced.",
       "onlineWallpaperUrlScopeDisabled": "The online/API wallpaper address stays on this device. You can include it in Advanced sync scope.",

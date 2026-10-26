@@ -11,7 +11,6 @@
     "moveGroupUp": "Move group {{name}} up",
     "nextPage": "Next page",
     "openActionsMenu": "Open page actions menu",
-    "openBookmarks": "Open bookmarks",
     "previousPage": "Previous page",
     "quickLinksGroups": "Quick Links groups",
     "quickLinksPagination": "Quick Links pagination",
@@ -23,32 +22,6 @@
   "about": {
     "upstream": "This project is a derivative work of {link}",
     "yiyanProvider": "Chinese poetry API provided by {api}"
-  },
-  "bookmark": {
-    "404": "Nothing found",
-    "addToQuickLinks": "Add to Quick Links",
-    "added": "Added to Quick Links",
-    "collapse": {
-      "all": "Collapse All at Level",
-      "other": "Collapse Other at Level"
-    },
-    "delete": {
-      "confirm": "Are you sure you want to delete “{{name}}”?",
-      "confirmFolder": "“{{name}}” is a folder. Deleting it will also delete all bookmarks inside it. Are you sure?",
-      "success": "“{{title}}” has been deleted"
-    },
-    "expandHint": "Please expand the sidebar to view bookmarks",
-    "moveError": "Failed to move bookmark",
-    "sortBy": "Sort by",
-    "sortMode": {
-      "createdAsc": "Newest",
-      "createdDesc": "Oldest",
-      "nameAsc": "Name A–Z",
-      "nameDesc": "Name Z–A",
-      "origin": "Original"
-    },
-    "title": "Bookmark",
-    "tooSmall": "Sidebar is too narrow"
   },
   "builtinApps": {
     "add": "Add",
@@ -226,11 +199,6 @@
       "uploadFaviconAlert": "If you don't upload an icon, consider enabling Settings → Other → Icon cache to automatically fetch icons."
     },
     "addLink": "Add Link",
-    "bookmark": {
-      "add": "Add to Bookmarks",
-      "existing": "This bookmark already exists",
-      "success": "Saved to “{{folder}}”"
-    },
     "editLink": "Edit Link",
     "groups": {
       "default": "Default",

@@ -26,8 +26,6 @@ import {
 } from '@/shared/webdavSync/settingsWhitelist'
 import type { LocalSyncStateV1 } from '@/shared/webdavSync/types'
 
-import { initializeBookmarkCache } from './bookmarkCache'
-
 function routeWebDavMessage(handler: (message: WebDavSyncMessage) => Promise<unknown>) {
   return (message: unknown, sender: Browser.runtime.MessageSender) => {
     if (sender.id && sender.id !== browser.runtime.id) return undefined
@@ -66,8 +64,6 @@ export default defineBackground(() => {
   browser.runtime.onMessage.addListener(
     routeExtensionUpdateMessage(() => runExtensionUpdateTask(consumeExtensionUpdateNotice)),
   )
-
-  initializeBookmarkCache()
 
   let applyingRemote = false
   let configured = false

@@ -1,4 +1,4 @@
-import { BgType, ClockWeight, DrawerDirection, SortMode } from '../enums.ts'
+import { BgType, ClockWeight } from '../enums.ts'
 import { BUILT_IN_SEARCH_ENGINE_KEYS, normalizeBuiltInSearchEngineOrder } from '../searchEngines.ts'
 import { normalizeSuggestionProviders } from '../searchSuggestionProviders.ts'
 
@@ -22,7 +22,6 @@ const SYNC_GROUPS = new Set([
   'yiyan',
   'perf',
   'layout',
-  'bookmark',
   'hideMajorChangelog',
   'disableSettingsScrollRestore',
   'faviconCacheEnabled',
@@ -35,7 +34,6 @@ const LOCAL_PATHS = new Set([
   'background.online.url',
   'background.rotation.enabled',
   'background.rotation.order',
-  'bookmark.drawerWidth',
 ])
 const ENUMS: Record<string, readonly unknown[]> = {
   'background.bgType': Object.values(BgType),
@@ -44,8 +42,6 @@ const ENUMS: Record<string, readonly unknown[]> = {
   'background.rotation.order': ['random', 'ordered'],
   'clock.weight.time': Object.values(ClockWeight),
   'clock.weight.date': Object.values(ClockWeight),
-  'bookmark.direction': Object.values(DrawerDirection),
-  'bookmark.defaultSortMode': Object.values(SortMode),
   'search.suggestionAPI': ['bing', 'baidu', 'google'],
   'yiyan.provider': ['jinrishici', 'hitokoto', 'custom'],
   'layout.mainPosition.type': ['center', 'dvh', 'px', 'bottom-dvh', 'bottom-px'],
@@ -64,7 +60,6 @@ const INTEGER_RANGES: Record<string, readonly [number, number]> = {
   'dock.maxCount': [3, 20],
   'dock.folderCount': [1, Number.MAX_SAFE_INTEGER],
   'dock.launchpad.iconSize': [40, 96],
-  'bookmark.drawerWidth': [200, Number.MAX_SAFE_INTEGER],
 }
 for (const surface of EFFECT_SURFACES) {
   INTEGER_RANGES[`perf.${surface}.transparency`] = TRANSPARENCY_RANGE
@@ -143,8 +138,5 @@ export function projectSettings(
   }
   if (!isSettingsObject(input)) throw new TypeError('Settings must be an object')
   const result = visit(defaultSettings, input, '')
-  const bookmark = result.bookmark as RecordValue | undefined
-  const launchpad = (result.dock as RecordValue | undefined)?.launchpad as RecordValue | undefined
-  if (bookmark?.rightClickToOpen === true && launchpad) launchpad.rightClickToOpen = false
   return result
 }

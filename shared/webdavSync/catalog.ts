@@ -38,7 +38,6 @@ export type SyncCatalogKey =
   | 'wallpaper.light'
   | 'wallpaper.dark'
   | 'faviconCache'
-  | 'bookmarks'
   | 'onlineWallpaperCache'
   | 'permission.monet'
   | 'permission.favicon'
@@ -176,9 +175,6 @@ export function getSyncAvailability(
   }
   if (key === 'faviconCache') {
     return excludedByDesign('sync.availability.faviconCacheLocal')
-  }
-  if (key === 'bookmarks') {
-    return excludedByDesign('sync.availability.bookmarksBrowserManaged')
   }
   if (key === 'onlineWallpaperCache') {
     return excludedByDesign('sync.availability.onlineWallpaperCacheLocal')

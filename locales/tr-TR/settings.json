@@ -104,19 +104,6 @@
       "unknownSource": "Bilinmeyen kaynaklardan alınan görselleri arka plan olarak kullanmak cihazınızı saldırılara maruz bırakabilir. Devam etmek istiyor musunuz?"
     }
   },
-  "bookmark": {
-    "defaultSort": "Varsayılan sıralama",
-    "direction": {
-      "ltr": "Soldan sağa",
-      "rtl": "Sağdan sola",
-      "title": "Açılış yönü"
-    },
-    "rightClickDisabledNote": "Başlatıcı'yı açmak için sağ tıklama etkinleştirildi. Önce kapatın.",
-    "rightClickToOpen": "Açmak için arka plana sağ tıklayın",
-    "showBtn": "Sağ alt düğmesini göster",
-    "syncNote": "Tarayıcı yer imleri tarayıcı tarafından yönetilir ve WebDAV üzerinden eşitlenmez.",
-    "title": "Yer imleri çubuğu"
-  },
   "clock": {
     "blink": "Yanıp sönen iki nokta üst üste",
     "blinkingTip": "Bunu kapatmak sürekli GPU kullanımını azaltabilir.",
@@ -202,9 +189,9 @@
     "actionBtnNote": "Dock etkinleştirildiğinde, düğme çubuğu yalnızca üste yerleştirilebilir (Düzen ayarlarında sol/sağ seçin)",
     "borderRadius": "Köşe yarıçapı",
     "launchpad": {
-      "rightClickDisabledNote": "Yer imlerini açmak için sağ tıklama etkinleştirildi. Önce kapatın.",
       "show": "Başlatıcı'yı Dock'ta Göster",
-      "title": "Başlatıcı"
+      "title": "Başlatıcı",
+      "rightClickToOpen": "Açmak için arka plana sağ tıklayın"
     },
     "limitCount": "Maksimum sayıyı sınırla",
     "maxCount": "Maksimum sayı",
@@ -328,10 +315,6 @@
     },
     "bgSwitchAnim": "Duvar kağıdı geçiş animasyonu",
     "blurIntensity": "Arka plan bulanıklığı",
-    "bookmark": {
-      "blur": "Yer imleri yan çubuğu bulanıklığı",
-      "transparent": "Yer imleri yan çubuğu saydamlığı"
-    },
     "dialog": {
       "animation": "İletişim kutusu animasyonu",
       "blur": "İletişim kutusu bulanıklığı",
@@ -449,7 +432,6 @@
   "sync": {
     "availability": {
       "blockedTopSitesScopeDisabled": "Gizlenen site kayıtları yalnızca bu cihazda tutulur. Bunları WebDAV eşitleme kapsamına ekleyebilirsiniz.",
-      "bookmarksBrowserManaged": "Yer imleri tarayıcı tarafından yönetilir ve WebDAV üzerinden eşitlenmez.",
       "faviconCacheLocal": "Site simgesi önbelleği yeniden oluşturulabilir ve yüklenmez. Önbelleği etkinleştirme tercihi eşitlenir.",
       "onlineWallpaperCacheLocal": "Önbellek dosyaları yalnızca bu cihazda tutulur; etkinleştirme tercihi eşitlenir.",
       "onlineWallpaperUrlScopeDisabled": "Çevrimiçi/API duvar kâğıdı adresi yalnızca bu cihazda tutulur. Gelişmiş eşitleme kapsamına ekleyebilirsiniz.",

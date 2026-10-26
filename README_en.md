@@ -42,9 +42,6 @@ Orange New Tab is a local-first, open-source browser extension with no additiona
 **🧭 Quick Links**  
 &emsp;&ensp;Automatically display your most-visited sites, or add, pin, and rearrange your own links. Organize them into groups, browse with pages or scrolling, and switch to Dock or Launchpad layouts to keep favorite sites within easy reach.
 
-**🔖 Browser Bookmarks**  
-&emsp;&ensp;Search, open, edit, delete, and rearrange your browser bookmarks without leaving the new tab page.
-
 **🖼️ Rich Wallpaper Options**  
 &emsp;&ensp;Use Bing's daily image, an online image API, or local images and videos as your wallpaper. Extensive customization options help bring your background to life.
 
@@ -81,7 +78,7 @@ Orange New Tab is a local-first, open-source browser extension with no additiona
 |               Edge Mobile                |    ❌     | Unable to replace native new tab |
 | Other Chromium-based<br/>Mobile Browsers |    ❓     |             untested             |
 
-> Lemon Start Page adapts to both landscape and portrait modes,
+> Orange New Tab adapts to both landscape and portrait modes,
 > but has not been tested or published on mobile browsers, so compatibility is not guaranteed.
 
 ## Preview

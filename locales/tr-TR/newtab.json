@@ -11,7 +11,6 @@
     "moveGroupUp": "{{name}} grubunu yukarı taşı",
     "nextPage": "Sonraki sayfa",
     "openActionsMenu": "Sayfa eylemleri menüsünü aç",
-    "openBookmarks": "Yer imlerini aç",
     "previousPage": "Önceki sayfa",
     "quickLinksGroups": "Hızlı Bağlantı grupları",
     "quickLinksPagination": "Hızlı Bağlantı sayfalandırması",
@@ -23,32 +22,6 @@
   "about": {
     "upstream": "Bu proje {link} temel alınarak geliştirilmiştir",
     "yiyanProvider": "Çin şiiri API'si {api} tarafından sağlanmaktadır"
-  },
-  "bookmark": {
-    "404": "Hiçbir şey bulunamadı",
-    "addToQuickLinks": "Hızlı Bağlantılara Ekle",
-    "added": "Hızlı Bağlantılara eklendi",
-    "collapse": {
-      "all": "Düzeyde Tümünü Daralt",
-      "other": "Düzeyde Diğerlerini Daralt"
-    },
-    "delete": {
-      "confirm": "“{{name}}” öğesini silmek istediğinizden emin misiniz?",
-      "confirmFolder": "“{{name}}” bir klasördür. Silinmesi, içindeki tüm yer imlerini de silecektir. Emin misiniz?",
-      "success": "“{{title}}” silindi"
-    },
-    "expandHint": "Yer imlerini görüntülemek için lütfen yan çubuğu genişletin",
-    "moveError": "Yer imi taşınamadı",
-    "sortBy": "Sıralama ölçütü",
-    "sortMode": {
-      "createdAsc": "En yeni",
-      "createdDesc": "En eski",
-      "nameAsc": "Ada Göre A–Z",
-      "nameDesc": "Ada Göre Z–A",
-      "origin": "Orijinal"
-    },
-    "title": "Yer İmi",
-    "tooSmall": "Yan çubuk çok dar"
   },
   "builtinApps": {
     "add": "Ekle",
@@ -226,11 +199,6 @@
       "uploadFaviconAlert": "Bir simge yüklemezseniz, simgeleri otomatik olarak almak için Ayarlar → Diğer → Simge önbelleği seçeneğini etkinleştirmeyi düşünün."
     },
     "addLink": "Bağlantı Ekle",
-    "bookmark": {
-      "add": "Yer İmlerine Ekle",
-      "existing": "Bu yer imi zaten mevcut",
-      "success": "“{{folder}}” klasörüne kaydedildi"
-    },
     "editLink": "Bağlantıyı Düzenle",
     "groups": {
       "default": "Varsayılan",

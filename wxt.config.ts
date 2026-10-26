@@ -43,7 +43,7 @@ const baseManifest = {
 
 const firefoxManifest = {
   ...baseManifest,
-  permissions: ['topSites', 'storage', 'bookmarks', 'activeTab', 'tabs', 'alarms'],
+  permissions: ['topSites', 'storage', 'activeTab', 'tabs', 'alarms'],
   optional_permissions: ['webRequest', 'history', '*://*/*'],
   chrome_settings_overrides: {
     homepage: 'newtab.html',
@@ -52,7 +52,7 @@ const firefoxManifest = {
     gecko: {
       id: '{25566b3f-eaeb-4f05-aac6-da1efc2dc1fd}',
       data_collection_permissions: {
-        required: ['bookmarksInfo', 'browsingActivity'],
+        required: ['browsingActivity'],
       },
     },
   },
@@ -64,7 +64,6 @@ const chromeManifest = {
     'topSites',
     'storage',
     'favicon',
-    'bookmarks',
     'activeTab',
     'tabs',
     'scripting',

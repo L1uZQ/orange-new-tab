@@ -1,4 +1,4 @@
-import type { BgType, ClockWeight, DrawerDirection, SortMode } from '@/shared/enums'
+import type { BgType, ClockWeight } from '@/shared/enums'
 import type { BuiltInSearchEngineKey } from '@/shared/searchEngines'
 import type { SearchSuggestionProviderId } from '@/shared/searchSuggestionProviders'
 import type { YiyanProviderKey } from '@newtab/shared/yiyan'
@@ -143,7 +143,6 @@ export interface SettingsSchema {
     bgSwitchAnim: boolean
     dockEnterAnim: boolean
     dockScale: boolean
-    bookmark: { transparent: boolean; transparency: number; blur: boolean; blurIntensity: number }
     dialog: {
       transparent: boolean
       transparency: number
@@ -181,14 +180,6 @@ export interface SettingsSchema {
     actionBtnBorderRadius: number
     globalBorderRadius: number
     minimalModeOnDoubleClick: boolean
-  }
-
-  bookmark: {
-    direction: DrawerDirection
-    rightClickToOpen: boolean
-    showBtn: boolean
-    defaultSortMode: SortMode
-    drawerWidth: number
   }
 
   hideMajorChangelog: boolean

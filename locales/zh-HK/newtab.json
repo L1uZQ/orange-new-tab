@@ -11,7 +11,6 @@
     "moveGroupUp": "上移分組 {{name}}",
     "nextPage": "下一頁",
     "openActionsMenu": "開啟頁面操作選單",
-    "openBookmarks": "開啟書籤",
     "previousPage": "上一頁",
     "quickLinksGroups": "快速連結分組",
     "quickLinksPagination": "快速連結分頁",
@@ -23,32 +22,6 @@
   "about": {
     "upstream": "本項目基於 {link} 二次開發",
     "yiyanProvider": "一言API由 {api} 提供"
-  },
-  "bookmark": {
-    "404": "乜都搵唔到",
-    "addToQuickLinks": "新增至快速連結",
-    "added": "已新增至快速連結",
-    "collapse": {
-      "all": "摺疊本層全部",
-      "other": "摺疊同層其他"
-    },
-    "delete": {
-      "confirm": "你確定要刪除「{{name}}」嗎？",
-      "confirmFolder": "「{{name}}」係一個資料夾，刪除佢會將其中所有書籤一齊刪除，確定嗎？",
-      "success": "已刪除「 {{title}}」"
-    },
-    "expandHint": "請展開側欄以查看書籤",
-    "moveError": "書籤移動失敗",
-    "sortBy": "排序方式",
-    "sortMode": {
-      "createdAsc": "由新到舊",
-      "createdDesc": "由舊到新",
-      "nameAsc": "名稱由A到Z",
-      "nameDesc": "名稱由Z到A",
-      "origin": "原始順序"
-    },
-    "title": "書籤",
-    "tooSmall": "側欄寬度過細"
   },
   "builtinApps": {
     "add": "新增",
@@ -226,11 +199,6 @@
       "uploadFaviconAlert": "冇上載圖示時，建議開啟「設定-其他-圖示快取」以自動取得圖示"
     },
     "addLink": "新增連結",
-    "bookmark": {
-      "add": "加入書籤",
-      "existing": "此書籤已存在",
-      "success": "已加入「{{folder}}」"
-    },
     "editLink": "編輯連結",
     "groups": {
       "default": "預設",

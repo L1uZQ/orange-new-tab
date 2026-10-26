@@ -12,7 +12,6 @@ export const appDialogComponents = {
     () => import('../components/SearchEnginesSwitcher/index.vue'),
   ),
   background: defineAsyncComponent(() => import('../components/BackgroundSwitcher/index.vue')),
-  bookmark: defineAsyncComponent(() => import('../components/Bookmark/index.vue')),
   note: defineAsyncComponent(() => import('../components/Note/index.vue')),
   builtinApps: defineAsyncComponent(() => import('../components/BuiltinAppsDialog.vue')),
 } satisfies Record<SimpleDialogName, Component>

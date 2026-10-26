@@ -2,7 +2,6 @@ export const EFFECT_SURFACES = [
   'searchBar',
   'quickLinks',
   'yiyan',
-  'bookmark',
   'dialog',
   'actionBtns',
 ] as const
