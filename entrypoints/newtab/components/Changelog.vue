@@ -4,7 +4,7 @@ import { useTranslation } from 'i18next-vue'
 
 import { version } from '@/package.json'
 
-import { isChinese } from '@/shared/i18n'
+import { isChinese } from '@/shared/i18nState'
 import { useSettingsStore } from '@/shared/settings'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'

@@ -4,12 +4,14 @@ import i18next, { type BackendModule } from 'i18next'
 import LanguageDetector from 'i18next-browser-languagedetector'
 import I18NextVue from 'i18next-vue'
 
-import { browser } from 'wxt/browser'
-
+import { isChinese } from './i18nState'
 import { getUiPreferences, patchUiPreferences, uiPreferencesStorage } from './uiPreferences'
 
-export const getLang = () => i18next.language || browser.i18n.getUILanguage()
-export const isChinese = ref(getLang().startsWith('zh'))
+/** 模块初始化阶段 i18next 实例可能尚未就绪，这里必须容错。 */
+export const getLang = () =>
+  i18next?.language ||
+  (typeof chrome !== 'undefined' && chrome.i18n?.getUILanguage?.()) ||
+  navigator.language
 let stopUiPreferencesWatch: (() => void) | null = null
 
 function isHKorMO() {
@@ -53,6 +55,7 @@ const resourceBackend: BackendModule = {
 
 export async function initI18n() {
   const uiPreferences = await getUiPreferences()
+  isChinese.value = (getLang() || '').startsWith('zh')
   // 检测用户语言
   // 参考: https://github.com/i18next/i18next-browser-languageDetector
   await i18next

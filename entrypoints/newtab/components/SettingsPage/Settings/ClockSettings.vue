@@ -2,7 +2,7 @@
 import { useTranslation } from 'i18next-vue'
 
 import { ClockWeight } from '@/shared/enums'
-import { isChinese } from '@/shared/i18n'
+import { isChinese } from '@/shared/i18nState'
 import { useSettingsStore } from '@/shared/settings'
 
 import SettingsSection from './SettingsSection.vue'

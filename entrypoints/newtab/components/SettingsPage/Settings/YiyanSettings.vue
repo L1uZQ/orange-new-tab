@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
 
-import { isChinese } from '@/shared/i18n'
+import { isChinese } from '@/shared/i18nState'
 import { useSettingsStore } from '@/shared/settings'
 
 import { isProviderKey, yiyanProviders } from '@newtab/shared/yiyan'
