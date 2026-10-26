@@ -9,6 +9,10 @@ import { defaultFreeRect } from '@/shared/layout'
 import { useSettingsStore } from '@/shared/settings'
 
 import { useAppDialogs } from '@newtab/composables/appDialogs'
+import {
+  SettingsRoute,
+  useSettingsRouter,
+} from '@newtab/components/SettingsPage/composables/useSettingsRouter'
 
 import FreeCanvas from './FreeCanvas.vue'
 import ManagedTree from './ManagedTree.vue'
@@ -16,6 +20,7 @@ import ManagedTree from './ManagedTree.vue'
 const props = defineProps<{ ready: boolean }>()
 const settings = useSettingsStore()
 const dialogs = useAppDialogs()
+const settingsRouter = useSettingsRouter()
 const { t } = useTranslation()
 
 const persist = useDebounceFn(() => void settings.save(), 120)
@@ -38,7 +43,8 @@ watch(
 )
 
 function openAddWidget() {
-  dialogs.open('layoutSettings')
+  dialogs.open('settings')
+  settingsRouter.push(SettingsRoute.LAYOUT)
 }
 
 function widgetContextmenu(event: MouseEvent) {
@@ -53,7 +59,8 @@ function updateEngine(widgetId: string, engine: string) {
 
 function openLayoutMenu(event: MouseEvent) {
   event.preventDefault()
-  dialogs.open('layoutSettings')
+  dialogs.open('settings')
+  settingsRouter.push(SettingsRoute.LAYOUT)
 }
 
 function toggleMode() {

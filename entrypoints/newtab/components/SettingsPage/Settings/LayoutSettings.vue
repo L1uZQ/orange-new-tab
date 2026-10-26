@@ -1,9 +1,26 @@
 <script setup lang="ts">
 import { useTranslation } from 'i18next-vue'
+import Plus from '~icons/fa7-solid/plus'
 
+import {
+  WIDGET_TYPES,
+  collectWidgetNodes,
+  createContainerNode,
+  createDefaultLayout,
+  createWidgetNode,
+  defaultFreeRect,
+  findNode,
+  findNodeParent,
+  insertNode,
+  removeWidgetNode,
+  setNodeGap,
+  type WidgetInstance,
+  type WidgetType,
+} from '@/shared/layout'
 import { useSettingsStore } from '@/shared/settings'
 import type { ActionBtnPosition, MainPositionType } from '@/shared/settings/types'
 
+import { getVisibleBuiltInSearchEngineKeys } from '@newtab/shared/search'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 import SettingsSection from './SettingsSection.vue'
@@ -11,6 +28,151 @@ import SettingsSection from './SettingsSection.vue'
 const { t } = useTranslation('settings')
 
 const settings = useSettingsStore()
+const layout = computed(() => settings.layout.manager)
+
+// --- 组件管理 ---
+const selectedWidgetId = ref<string | null>(null)
+const selectedWidget = computed(() =>
+  layout.value.widgets.find((widget) => widget.id === selectedWidgetId.value),
+)
+const selectedNode = computed(() =>
+  selectedWidget.value
+    ? collectWidgetNodes(layout.value.managedRoot).find(
+        (node) => node.widgetId === selectedWidget.value?.id,
+      )
+    : undefined,
+)
+const selectedParent = computed(() =>
+  selectedNode.value ? findNodeParent(layout.value.managedRoot, selectedNode.value.id) : undefined,
+)
+const builtInEngineKeys = computed(() =>
+  getVisibleBuiltInSearchEngineKeys(
+    settings.search.builtInEngineOrder,
+    settings.search.hiddenBuiltInEngines,
+  ),
+)
+
+function widgetTitle(type: WidgetType) {
+  return t('newtab:layout.widgets.' + type)
+}
+
+function addWidget(type: WidgetType) {
+  const widget: WidgetInstance = {
+    id: type + '-' + crypto.randomUUID(),
+    type,
+    enabled: true,
+    ...(type === 'search'
+      ? { engine: settings.search.engine, width: 500, height: 44 }
+      : {}),
+  }
+  layout.value.widgets.push(widget)
+  const node = createWidgetNode(widget.id)
+  layout.value.managedRoot.children ??= []
+  layout.value.managedRoot.children.push(node)
+  layout.value.freeRects[widget.id] = defaultFreeRect(widget.id)
+  selectedWidgetId.value = widget.id
+}
+
+function removeWidget(widgetId: string) {
+  removeWidgetNode(layout.value.managedRoot, widgetId)
+  layout.value.widgets = layout.value.widgets.filter((widget) => widget.id !== widgetId)
+  delete layout.value.freeRects[widgetId]
+  const remaining = layout.value.widgets[0]?.id ?? null
+  if (selectedWidgetId.value === widgetId) selectedWidgetId.value = remaining
+}
+
+function addContainer() {
+  layout.value.managedRoot.children ??= []
+  const container = createContainerNode('horizontal')
+  layout.value.managedRoot.children.push(container)
+  pendingContainerId.value = container.id
+}
+
+const pendingContainerId = ref<string | null>(null)
+const pendingWidgetId = ref<string | null>(null)
+
+function selectContainer(containerId: string) {
+  pendingContainerId.value = containerId
+  if (pendingWidgetId.value) {
+    const moved = insertNode(
+      layout.value.managedRoot,
+      findNode(layout.value.managedRoot, pendingWidgetId.value)?.id ??
+        collectWidgetNodes(layout.value.managedRoot).find(
+          (node) => node.widgetId === pendingWidgetId.value,
+        )?.id ??
+        '',
+      containerId,
+      0,
+    )
+    if (moved) {
+      pendingWidgetId.value = null
+      ElMessage.success(t('newtab:layout.movedIntoContainer'))
+    }
+  }
+}
+
+function moveWidgetIntoContainer(widgetId: string, containerId: string) {
+  selectedWidgetId.value = widgetId
+  const node =
+    findNode(layout.value.managedRoot, widgetId) ??
+    collectWidgetNodes(layout.value.managedRoot).find((item) => item.widgetId === widgetId)
+  if (!node) return
+  if (insertNode(layout.value.managedRoot, node.id, containerId, 0)) {
+    pendingWidgetId.value = null
+    pendingContainerId.value = containerId
+    ElMessage.success(t('newtab:layout.movedIntoContainer'))
+  }
+}
+
+const containers = computed(() =>
+  layout.value.managedRoot.children?.filter((node) => node.direction) ?? [],
+)
+
+function moveWidget(widgetId: string, direction: -1 | 1) {
+  const root = layout.value.managedRoot
+  const node = collectWidgetNodes(root).find((item) => item.widgetId === widgetId)
+  if (!node) return
+  const parent = findNodeParent(root, node.id)
+  const siblings = parent?.children ?? root.children ?? []
+  const index = siblings.findIndex((item) => item.id === node.id)
+  if (index < 0) return
+  const next = index + direction
+  if (next < 0 || next >= siblings.length) return
+  const [item] = siblings.splice(index, 1)
+  if (item) siblings.splice(next, 0, item)
+}
+
+function resetLayout() {
+  settings.layout.manager = createDefaultLayout()
+  selectedWidgetId.value = null
+}
+
+function syncWidgetEngine(widget: WidgetInstance, engine: string) {
+  widget.engine = engine
+}
+
+function updateWidgetGap(value: number | undefined) {
+  const parent = selectedParent.value
+  if (!parent || typeof value !== 'number') return
+  setNodeGap(layout.value.managedRoot, parent.id, value)
+}
+
+function enableFreeMode() {
+  if (layout.value.mode !== 'free') layout.value.mode = 'free'
+  for (const widget of layout.value.widgets) {
+    if (!layout.value.freeRects[widget.id]) {
+      layout.value.freeRects[widget.id] = defaultFreeRect(widget.id)
+    }
+  }
+}
+
+function enableManagedMode() {
+  layout.value.mode = 'managed'
+}
+
+onMounted(() => {
+  selectedWidgetId.value = layout.value.widgets[0]?.id ?? null
+})
 
 const mainPositionOptions: { value: MainPositionType; label: string }[] = [
   { value: 'center', label: 'layout.mainPosition.center' },
@@ -51,15 +213,166 @@ function selectActionBtn(pos: ActionBtnPosition) {
   settings.layout.actionBtnPosition = pos
 }
 </script>
-
 <template>
   <div class="settings__items-container settings-page-grid">
+    <!-- 组件管理 -->
+    <SettingsSection
+      :title="t('newtab:layout.components')"
+      :summary="t('newtab:layout.componentsDescription')"
+      mobile-open
+    >
+      <div class="settings__item settings__item--vertical">
+        <div class="settings__label">{{ t('newtab:layout.addWidget') }}</div>
+        <div class="layout-widget-grid">
+          <button
+            v-for="type in WIDGET_TYPES"
+            :key="type"
+            type="button"
+            class="layout-widget-card"
+            @click="addWidget(type)"
+          >
+            <strong>{{ widgetTitle(type) }}</strong>
+            <span>{{ t('newtab:layout.widgetDescriptions.' + type) }}</span>
+          </button>
+        </div>
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <el-button :icon="Plus" type="primary" @click="addContainer">
+          {{ t('newtab:layout.addContainer') }}
+        </el-button>
+        <el-button type="danger" plain @click="resetLayout">
+          {{ t('newtab:layout.reset') }}
+        </el-button>
+      </div>
+      <div v-if="containers.length" class="settings__item settings__item--vertical">
+        <div class="settings__label">{{ t('newtab:layout.horizontalContainer') }}</div>
+        <div class="layout-container-list">
+          <div v-for="container in containers" :key="container.id" class="layout-container-item">
+            <span>{{ container.children?.length ?? 0 }} {{ t('newtab:layout.items') }}</span>
+            <el-button size="small" @click="selectContainer(container.id)">
+              {{ t('newtab:layout.useContainer') }}
+            </el-button>
+          </div>
+        </div>
+      </div>
+      <div class="settings__item settings__item--vertical">
+        <div class="settings__label">{{ t('newtab:layout.components') }}</div>
+        <div class="layout-widget-list">
+          <article
+            v-for="widget in layout.widgets"
+            :key="widget.id"
+            class="layout-widget-item"
+            :class="{ 'is-selected': widget.id === selectedWidgetId }"
+            @click="selectedWidgetId = widget.id"
+          >
+            <div class="layout-widget-item__main">
+              <strong>{{ widgetTitle(widget.type) }}</strong>
+              <span>{{ widget.id }}</span>
+            </div>
+            <div class="layout-widget-item__actions">
+              <el-switch v-model="widget.enabled" />
+              <el-button size="small" @click.stop="moveWidget(widget.id, -1)">
+                {{ t('newtab:layout.moveUp') }}
+              </el-button>
+              <el-button size="small" @click.stop="moveWidget(widget.id, 1)">
+                {{ t('newtab:layout.moveDown') }}
+              </el-button>
+              <el-button
+                v-if="containers.length"
+                size="small"
+                @click.stop="moveWidgetIntoContainer(widget.id, containers[0]!.id)"
+              >
+                {{ t('newtab:layout.moveIntoContainer') }}
+              </el-button>
+              <el-button size="small" type="danger" plain @click.stop="removeWidget(widget.id)">
+                {{ t('newtab:layout.remove') }}
+              </el-button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </SettingsSection>
+
+    <!-- 布局模式 -->
+    <SettingsSection :title="t('newtab:layout.mode')" :summary="t('newtab:layout.modeDescription')">
+      <div class="settings__item settings__item--horizontal">
+        <el-radio-group
+          :model-value="layout.mode"
+          @change="
+            (mode) => (String(mode) === 'free' ? enableFreeMode() : enableManagedMode())
+          "
+        >
+          <el-radio-button value="managed">{{ t('newtab:layout.managed') }}</el-radio-button>
+          <el-radio-button value="free">{{ t('newtab:layout.free') }}</el-radio-button>
+        </el-radio-group>
+      </div>
+    </SettingsSection>
+
+    <!-- 搜索框实例设置 -->
+    <SettingsSection
+      v-if="selectedWidget?.type === 'search'"
+      :title="t('newtab:layout.searchBoxSettings')"
+    >
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('newtab:layout.searchWidth') }}</div>
+        <el-input-number
+          :model-value="selectedWidget.width ?? 500"
+          :min="180"
+          :max="1200"
+          :step="10"
+          controls-position="right"
+          @update:model-value="(value) => selectedWidget && (selectedWidget.width = Number(value))"
+        />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('newtab:layout.searchHeight') }}</div>
+        <el-input-number
+          :model-value="selectedWidget.height ?? 44"
+          :min="32"
+          :max="160"
+          :step="1"
+          controls-position="right"
+          @update:model-value="(value) => selectedWidget && (selectedWidget.height = Number(value))"
+        />
+      </div>
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('newtab:layout.searchEngine') }}</div>
+        <el-select
+          :model-value="selectedWidget.engine"
+          style="width: 150px"
+          @update:model-value="
+            (value) => selectedWidget && syncWidgetEngine(selectedWidget, String(value))
+          "
+        >
+          <el-option
+            v-for="key in builtInEngineKeys"
+            :key="key"
+            :label="t('newtab:search.engines.' + key)"
+            :value="key"
+          />
+        </el-select>
+      </div>
+    </SettingsSection>
+
+    <!-- 容器间距 -->
+    <SettingsSection v-if="selectedParent" :title="t('newtab:layout.spacing')">
+      <div class="settings__item settings__item--horizontal">
+        <div class="settings__label">{{ t('newtab:layout.containerGap') }}</div>
+        <el-input-number
+          :model-value="selectedParent.gap ?? 24"
+          :min="0"
+          :max="200"
+          :step="2"
+          controls-position="right"
+          @update:model-value="updateWidgetGap"
+        />
+      </div>
+    </SettingsSection>
+
     <SettingsSection
       :title="t('common.sections.position')"
       :summary="t('common.sections.summary.position')"
-      mobile-open
     >
-      <!-- main 区域位置 -->
       <div class="settings__item settings__item--horizontal settings__item--with-note">
         <div class="settings__label">{{ t('layout.mainPosition.label') }}</div>
         <el-select
@@ -88,9 +401,7 @@ function selectActionBtn(pos: ActionBtnPosition) {
         v-if="settings.layout.mainPosition.type !== 'center'"
         class="settings__item settings__item--vertical"
       >
-        <div class="settings__label">
-          {{ t(mainPositionValueLabel) }}
-        </div>
+        <div class="settings__label">{{ t(mainPositionValueLabel) }}</div>
         <el-slider
           v-model="settings.layout.mainPosition.value"
           :min="0"
@@ -102,7 +413,6 @@ function selectActionBtn(pos: ActionBtnPosition) {
         />
       </div>
 
-      <!-- 功能按钮位置 -->
       <div class="settings__item settings__item--vertical">
         <div class="settings__label">{{ t('layout.actionBtn.label') }}</div>
         <div class="layout-corner-selector">
@@ -138,7 +448,6 @@ function selectActionBtn(pos: ActionBtnPosition) {
         <el-switch v-model="settings.layout.minimalModeOnDoubleClick" />
       </div>
 
-      <!-- 不活动时淡出（UI 仅在此处，storage path 仍为 theme.idleHide） -->
       <div class="settings__item settings__item--horizontal">
         <div class="settings__label">{{ t('theme.idleHide') }}</div>
         <el-switch v-model="settings.theme.idleHide" :disabled="isOnlyTouchDevice" />
@@ -159,7 +468,6 @@ function selectActionBtn(pos: ActionBtnPosition) {
       />
     </SettingsSection>
 
-    <!-- 圆角设置集中入口 -->
     <SettingsSection
       :title="t('common.sections.radius')"
       :summary="t('common.sections.summary.radius')"
@@ -240,7 +548,6 @@ function selectActionBtn(pos: ActionBtnPosition) {
     </SettingsSection>
   </div>
 </template>
-
 <style lang="scss" scoped>
 .layout-corner-selector {
   display: grid;
@@ -279,5 +586,91 @@ function selectActionBtn(pos: ActionBtnPosition) {
     background-color: var(--settings-option-background);
     opacity: 0.6;
   }
+}
+
+.layout-widget-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 8px;
+}
+
+.layout-widget-card {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 10px 12px;
+  text-align: left;
+  cursor: pointer;
+  background-color: var(--settings-option-background);
+  border: 1px solid var(--el-border-color);
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+
+  &:hover {
+    border-color: var(--el-color-primary);
+  }
+
+  span {
+    font-size: var(--el-font-size-small);
+    color: var(--el-text-color-secondary);
+  }
+}
+
+.layout-container-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.layout-container-item {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 6px 10px;
+  font-size: var(--el-font-size-small);
+  background-color: var(--settings-option-background);
+  border: 1px solid var(--el-border-color);
+  border-radius: 8px;
+}
+
+.layout-widget-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.layout-widget-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 12px;
+  cursor: pointer;
+  background-color: var(--settings-option-background);
+  border: 1px solid var(--el-border-color);
+  border-radius: 8px;
+  transition: border-color 0.2s ease;
+
+  &:hover,
+  &.is-selected {
+    border-color: var(--el-color-primary);
+  }
+}
+
+.layout-widget-item__main {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+
+  span {
+    font-size: var(--el-font-size-small);
+    color: var(--el-text-color-secondary);
+  }
+}
+
+.layout-widget-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  align-items: center;
 }
 </style>

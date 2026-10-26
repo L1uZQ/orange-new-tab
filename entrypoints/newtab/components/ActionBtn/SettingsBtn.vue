@@ -13,9 +13,14 @@ import WallpaperRound from '~icons/ic/round-wallpaper'
 import { useSettingsStore } from '@/shared/settings'
 
 import { useAppDialogs } from '@newtab/composables/appDialogs'
+import {
+  SettingsRoute,
+  useSettingsRouter,
+} from '@newtab/components/SettingsPage/composables/useSettingsRouter'
 import usePerfClasses from '@newtab/composables/usePerfClasses'
 
 const dialogs = useAppDialogs()
+const settingsRouter = useSettingsRouter()
 
 const { t } = useTranslation()
 const settings = useSettingsStore()
@@ -73,7 +78,10 @@ function sponsorMessage() {
         <el-dropdown-item :icon="SettingsRound" @click="dialogs.open('settings')">
           <span>{{ t('settings:title') }}</span>
         </el-dropdown-item>
-        <el-dropdown-item :icon="DashboardOutlined" @click="dialogs.open('layoutSettings')">
+        <el-dropdown-item
+          :icon="DashboardOutlined"
+          @click="dialogs.open('settings'), settingsRouter.push(SettingsRoute.LAYOUT)"
+        >
           <span>{{ t('newtab:layout.title') }}</span>
         </el-dropdown-item>
         <el-dropdown-item :icon="SearchRound" @click="dialogs.open('searchEngines')">
