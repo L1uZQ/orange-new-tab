@@ -20,7 +20,6 @@ import {
 import { useSettingsStore } from '@/shared/settings'
 import type { ActionBtnPosition, MainPositionType } from '@/shared/settings/types'
 
-import { getVisibleBuiltInSearchEngineKeys } from '@newtab/shared/search'
 import { isOnlyTouchDevice } from '@newtab/shared/touch'
 
 import SettingsSection from './SettingsSection.vue'
@@ -45,13 +44,6 @@ const selectedNode = computed(() =>
 const selectedParent = computed(() =>
   selectedNode.value ? findNodeParent(layout.value.managedRoot, selectedNode.value.id) : undefined,
 )
-const builtInEngineKeys = computed(() =>
-  getVisibleBuiltInSearchEngineKeys(
-    settings.search.builtInEngineOrder,
-    settings.search.hiddenBuiltInEngines,
-  ),
-)
-
 function widgetTitle(type: WidgetType) {
   return t('newtab:layout.widgets.' + type)
 }
@@ -145,10 +137,6 @@ function moveWidget(widgetId: string, direction: -1 | 1) {
 function resetLayout() {
   settings.layout.manager = createDefaultLayout()
   selectedWidgetId.value = null
-}
-
-function syncWidgetEngine(widget: WidgetInstance, engine: string) {
-  widget.engine = engine
 }
 
 function updateWidgetGap(value: number | undefined) {
@@ -305,52 +293,6 @@ function selectActionBtn(pos: ActionBtnPosition) {
           <el-radio-button value="managed">{{ t('newtab:layout.managed') }}</el-radio-button>
           <el-radio-button value="free">{{ t('newtab:layout.free') }}</el-radio-button>
         </el-radio-group>
-      </div>
-    </SettingsSection>
-
-    <!-- 搜索框实例设置 -->
-    <SettingsSection
-      v-if="selectedWidget?.type === 'search'"
-      :title="t('newtab:layout.searchBoxSettings')"
-    >
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:layout.searchWidth') }}</div>
-        <el-input-number
-          :model-value="selectedWidget.width ?? 500"
-          :min="180"
-          :max="1200"
-          :step="10"
-          controls-position="right"
-          @update:model-value="(value) => selectedWidget && (selectedWidget.width = Number(value))"
-        />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:layout.searchHeight') }}</div>
-        <el-input-number
-          :model-value="selectedWidget.height ?? 44"
-          :min="32"
-          :max="160"
-          :step="1"
-          controls-position="right"
-          @update:model-value="(value) => selectedWidget && (selectedWidget.height = Number(value))"
-        />
-      </div>
-      <div class="settings__item settings__item--horizontal">
-        <div class="settings__label">{{ t('newtab:layout.searchEngine') }}</div>
-        <el-select
-          :model-value="selectedWidget.engine"
-          style="width: 150px"
-          @update:model-value="
-            (value) => selectedWidget && syncWidgetEngine(selectedWidget, String(value))
-          "
-        >
-          <el-option
-            v-for="key in builtInEngineKeys"
-            :key="key"
-            :label="t('newtab:search.engines.' + key)"
-            :value="key"
-          />
-        </el-select>
       </div>
     </SettingsSection>
 

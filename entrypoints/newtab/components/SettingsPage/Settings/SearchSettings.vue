@@ -13,7 +13,11 @@ import { useSettingsStore } from '@/shared/settings'
 
 import { useAppDialogs } from '@newtab/composables/appDialogs'
 import { useBrowserHistoryPermission } from '@newtab/composables/useBrowserHistoryPermission'
-import { BUILT_IN_SEARCH_ENGINE_KEYS, searchSuggestAPIs } from '@newtab/shared/search'
+import {
+  BUILT_IN_SEARCH_ENGINE_KEYS,
+  getVisibleBuiltInSearchEngineKeys,
+  searchSuggestAPIs,
+} from '@newtab/shared/search'
 
 import SyncAvailabilityIcon from '../components/SyncAvailabilityIcon.vue'
 
@@ -82,6 +86,31 @@ const canRestoreBuiltInEngines = computed(
 function restoreBuiltInSearchEngines() {
   settings.search.builtInEngineOrder = [...BUILT_IN_SEARCH_ENGINE_KEYS]
   settings.search.hiddenBuiltInEngines = []
+}
+
+// --- 搜索框实例 ---
+const searchWidgets = computed(() =>
+  settings.layout.manager.widgets.filter((widget) => widget.type === 'search'),
+)
+const selectedSearchId = ref<string | null>(searchWidgets.value[0]?.id ?? null)
+const selectedSearchWidget = computed(
+  () => searchWidgets.value.find((widget) => widget.id === selectedSearchId.value) ?? null,
+)
+const builtInEngineKeys = computed(() =>
+  getVisibleBuiltInSearchEngineKeys(
+    settings.search.builtInEngineOrder,
+    settings.search.hiddenBuiltInEngines,
+  ),
+)
+
+watch(searchWidgets, (widgets) => {
+  if (!widgets.some((widget) => widget.id === selectedSearchId.value)) {
+    selectedSearchId.value = widgets[0]?.id ?? null
+  }
+})
+
+function syncWidgetEngine(engine: string) {
+  if (selectedSearchWidget.value) selectedSearchWidget.value.engine = engine
 }
 </script>
 
@@ -194,6 +223,66 @@ function restoreBuiltInSearchEngines() {
               :key="name"
               :label="t(searchSuggestAPIs[name as keyof typeof searchSuggestAPIs].nameKey)"
               :value="name"
+            />
+          </el-select>
+        </div>
+      </SettingsSection>
+
+      <SettingsSection
+        v-if="searchWidgets.length"
+        :title="t('newtab:layout.searchBoxSettings')"
+        :summary="t('newtab:layout.componentsDescription')"
+      >
+        <div v-if="searchWidgets.length > 1" class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('newtab:layout.components') }}</div>
+          <el-select
+            v-model="selectedSearchId"
+            style="width: 180px"
+            :show-arrow="false"
+            fit-input-width
+          >
+            <el-option
+              v-for="widget in searchWidgets"
+              :key="widget.id"
+              :label="widget.id"
+              :value="widget.id"
+            />
+          </el-select>
+        </div>
+        <div v-if="selectedSearchWidget" class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('newtab:layout.searchWidth') }}</div>
+          <el-input-number
+            v-model="selectedSearchWidget.width"
+            :min="180"
+            :max="1200"
+            :step="10"
+            controls-position="right"
+          />
+        </div>
+        <div v-if="selectedSearchWidget" class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('newtab:layout.searchHeight') }}</div>
+          <el-input-number
+            v-model="selectedSearchWidget.height"
+            :min="32"
+            :max="160"
+            :step="1"
+            controls-position="right"
+          />
+        </div>
+        <div v-if="selectedSearchWidget" class="settings__item settings__item--horizontal">
+          <div class="settings__label">{{ t('newtab:layout.searchEngine') }}</div>
+          <el-select
+            :model-value="selectedSearchWidget.engine"
+            style="width: 150px"
+            :show-arrow="false"
+            fit-input-width
+            @update:model-value="(value) => syncWidgetEngine(String(value))"
+          >
+            <el-option
+              v-for="key in builtInEngineKeys"
+              :key="key"
+              :label="t('newtab:search.engines.' + key)"
+              :value="key"
             />
           </el-select>
         </div>
