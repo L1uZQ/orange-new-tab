@@ -120,10 +120,16 @@ useEventListener(window, 'pointerup', () => {
           width: `${normalizeRectForRender(widget.id).width}px`,
           minHeight: `${normalizeRectForRender(widget.id).height}px`,
         }"
-        @pointerdown="startDrag($event, widget)"
         @contextmenu.stop.prevent="$emit('widgetContextmenu', $event, widget)"
       >
-        <div class="free-widget__handle" aria-hidden="true">⠿</div>
+        <button
+          type="button"
+          class="free-widget__handle"
+          :aria-label="`${widget.id} drag handle`"
+          @pointerdown.stop="startDrag($event, widget)"
+        >
+          ⠿
+        </button>
         <widget-host
           :widget="widget"
           :node="{ id: widget.id, widgetId: widget.id }"

@@ -5,8 +5,22 @@ export const DEFAULT_WIDGET_HEIGHT = 44
 export const DEFAULT_CONTAINER_GAP = 24
 
 const DEFAULT_WIDGETS: WidgetInstance[] = [
-  { id: 'search-main', type: 'search', enabled: true, engine: 'bing' },
-  { id: 'search-google', type: 'search', enabled: true, engine: 'google' },
+  {
+    id: 'search-main',
+    type: 'search',
+    enabled: true,
+    engine: 'bing',
+    width: 500,
+    height: 44,
+  },
+  {
+    id: 'search-google',
+    type: 'search',
+    enabled: true,
+    engine: 'google',
+    width: 500,
+    height: 44,
+  },
   { id: 'clock-main', type: 'clock', enabled: true },
   { id: 'yiyan-main', type: 'yiyan', enabled: true },
   { id: 'quick-links-main', type: 'quickLinks', enabled: true },

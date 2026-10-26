@@ -27,6 +27,12 @@ function normalizeWidget(value: unknown): WidgetInstance | null {
     type: input.type as WidgetInstance['type'],
     enabled: input.enabled !== false,
     ...(typeof input.engine === 'string' && input.engine ? { engine: input.engine } : {}),
+    ...(typeof input.width === 'number'
+      ? { width: finite(input.width, 500, 180, 1200) }
+      : {}),
+    ...(typeof input.height === 'number'
+      ? { height: finite(input.height, 44, 32, 160) }
+      : {}),
   }
 }
 

@@ -18,7 +18,7 @@
   --cubic-bezier: cubic-bezier(0.65, 0.05, 0.1, 1);
 
   &__form {
-    --height: 44px;
+    --height: var(--search-height, 44px);
     --width: 300px;
     --search-form-placeholder-color: var(--search-form-placeholder);
 

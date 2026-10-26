@@ -13,6 +13,9 @@ export interface WidgetInstance {
   enabled: boolean
   /** Search widgets use their own engine; an empty value inherits the global default. */
   engine?: string
+  /** Search box instance dimensions in CSS pixels; height is fixed by the instance. */
+  width?: number
+  height?: number
 }
 
 export interface ManagedLayoutNode {

@@ -287,6 +287,8 @@
     "remove": "删除",
     "searchBoxSettings": "搜索框设置",
     "searchEngine": "搜索引擎",
+    "searchWidth": "宽度 (px)",
+    "searchHeight": "高度 (px)",
     "widgets": {
       "search": "搜索框",
       "clock": "时钟",

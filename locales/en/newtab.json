@@ -287,6 +287,8 @@
     "remove": "Remove",
     "searchBoxSettings": "Search box settings",
     "searchEngine": "Search engine",
+    "searchWidth": "Width (px)",
+    "searchHeight": "Height (px)",
     "widgets": {
       "search": "Search box",
       "clock": "Clock",

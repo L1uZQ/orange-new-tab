@@ -287,6 +287,8 @@
     "remove": "Kaldır",
     "searchBoxSettings": "Arama kutusu ayarları",
     "searchEngine": "Arama motoru",
+    "searchWidth": "Genislik (px)",
+    "searchHeight": "Yukseklik (px)",
     "widgets": {
       "search": "Arama kutusu",
       "clock": "Saat",

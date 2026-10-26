@@ -110,26 +110,28 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  touch-action: none;
-  cursor: grab;
-
-  &--dragging {
-    z-index: 2;
-    cursor: grabbing;
-  }
 
   &__handle {
     position: absolute;
-    top: -18px;
+    top: -10px;
     left: 50%;
-    padding: 1px 7px;
-    font-size: 11px;
+    z-index: 3;
+    padding: 2px 8px;
+    font-size: 12px;
+    line-height: 1;
     color: var(--el-text-color-secondary);
-    pointer-events: none;
+    touch-action: none;
+    cursor: grab;
     background-color: var(--el-bg-color-overlay);
+    border: 1px solid var(--el-border-color-light);
     border-radius: 6px;
-    opacity: 0;
+    box-shadow: var(--el-box-shadow-light);
+    opacity: 0.35;
     transform: translateX(-50%);
+
+    &:active {
+      cursor: grabbing;
+    }
   }
 
   &:hover &__handle,
@@ -137,16 +139,9 @@
     opacity: 1;
   }
 
-  .layout-widget {
-    width: 100%;
-  }
-
-  .search-box__form {
-    width: 100% !important;
-
-    &:hover:not(.search-box__form--focus) {
-      --width: 100%;
-    }
+  &--dragging {
+    z-index: 2;
+    cursor: grabbing;
   }
 }
 

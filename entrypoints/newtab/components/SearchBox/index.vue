@@ -57,6 +57,8 @@ const props = withDefaults(
   defineProps<{
     widgetId?: string
     engine?: string
+    width?: number
+    height?: number
     compact?: boolean
     className?: string
   }>(),
@@ -74,24 +76,44 @@ const { isComposing, handleCompositionStart, handleCompositionEnd } = useComposi
   () => void nextTick(handleInput),
 )
 
-const focusStore = useFocusState()
+const globalFocusStore = useFocusState()
+const localFocusState = ref(false)
+const focusStore = {
+  get isFocused() {
+    return localFocusState.value
+  },
+  focus() {
+    localFocusState.value = true
+    globalFocusStore.focus()
+  },
+  blur() {
+    localFocusState.value = false
+  },
+}
 const settings = useSettingsStore()
 const customSearchEngineStore = useCustomSearchEngineStore()
 const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
 const { addHistory } = useSearchHistoryCache()
 const activeEngine = computed(() => props.engine || settings.search.engine)
+const searchWidth = computed(() =>
+  props.width ? `${props.width}px` : `${settings.search.expandWidth}px`,
+)
+const searchHeight = computed(() => (props.height ? `${props.height}px` : '44px'))
 const searchBoxClass = computed(() => [
   'search-box',
   props.className,
-  { 'search-box--compact': props.compact },
+  {
+    'search-box--compact': props.compact,
+    'search-box--custom-size': Boolean(props.width || props.height),
+  },
 ])
 
 const SEARCH_FORM_FALLBACK_HEIGHT = 44
 
 const { width: searchFormWidth, height: searchFormHeight } = useElementSize(searchForm)
 const searchBorderRadius = computed(() => {
-  const height = searchFormHeight.value || SEARCH_FORM_FALLBACK_HEIGHT
+  const height = props.height || searchFormHeight.value || SEARCH_FORM_FALLBACK_HEIGHT
   return `${Math.round((height * settings.search.borderRadius) / 100)}px`
 })
 
@@ -143,7 +165,11 @@ onClickOutside(searchBox, (e) => {
   }
 
   const target = e.target as Element | null
-  if (target?.closest('.yiyan')) {
+  if (
+    target?.closest('.yiyan') ||
+    target?.closest('.search-suggestion-area') ||
+    target?.closest('.el-popper')
+  ) {
     return
   }
   resetSearch()
@@ -304,7 +330,8 @@ onMounted(() => {
       :class="formPerfClass"
       :style="{
         '--width': settings.perf.searchBar.launchAnim ? (mounted ? undefined : '0') : undefined,
-        '--search-expand-width': `${settings.search.expandWidth}px`,
+        '--search-expand-width': searchWidth,
+        '--search-height': searchHeight,
       }"
       @submit.prevent="doSearch"
     >
@@ -352,10 +379,13 @@ onMounted(() => {
       :search-text="searchText"
       :search-form-width="searchFormWidth"
       :engine="activeEngine"
+      :height="props.height"
+      :floating="Boolean(props.width || props.height)"
       @do-search-with-text="doSearchWithText"
       @navigate-to-url="navigateToUrl"
       @active-option-change="activeSuggestionOptionId = $event"
       @expanded-change="searchSuggestionsExpanded = $event"
+      @pointerdown.stop
     />
   </section>
 </template>

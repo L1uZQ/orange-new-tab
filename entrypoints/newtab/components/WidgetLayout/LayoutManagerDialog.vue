@@ -57,7 +57,9 @@ function addWidget(type: WidgetType) {
     id: `${type}-${crypto.randomUUID()}`,
     type,
     enabled: true,
-    ...(type === 'search' ? { engine: settings.search.engine } : {}),
+    ...(type === 'search'
+      ? { engine: settings.search.engine, width: 500, height: 44 }
+      : {}),
   }
   layout.value.widgets.push(widget)
   const node = createWidgetNode(widget.id)
@@ -274,6 +276,32 @@ onMounted(() => {
 
       <section v-if="selectedWidget?.type === 'search'" class="layout-manager__section">
         <h3>{{ t('newtab:layout.searchBoxSettings') }}</h3>
+        <div class="layout-manager__field">
+          <label>{{ t('newtab:layout.searchWidth') }}</label>
+          <el-input-number
+            :model-value="selectedWidget.width ?? 500"
+            :min="180"
+            :max="1200"
+            :step="10"
+            controls-position="right"
+            @update:model-value="
+              (value) => selectedWidget && (selectedWidget.width = Number(value))
+            "
+          />
+        </div>
+        <div class="layout-manager__field">
+          <label>{{ t('newtab:layout.searchHeight') }}</label>
+          <el-input-number
+            :model-value="selectedWidget.height ?? 44"
+            :min="32"
+            :max="160"
+            :step="1"
+            controls-position="right"
+            @update:model-value="
+              (value) => selectedWidget && (selectedWidget.height = Number(value))
+            "
+          />
+        </div>
         <div class="layout-manager__field">
           <label>{{ t('newtab:layout.searchEngine') }}</label>
           <el-select

@@ -287,6 +287,8 @@
     "remove": "刪除",
     "searchBoxSettings": "搜尋框設定",
     "searchEngine": "搜尋引擎",
+    "searchWidth": "寬度 (px)",
+    "searchHeight": "高度 (px)",
     "widgets": {
       "search": "搜尋框",
       "clock": "時鐘",

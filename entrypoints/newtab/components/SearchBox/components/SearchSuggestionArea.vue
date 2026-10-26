@@ -41,7 +41,7 @@ import { parseNavigableUrl } from '@newtab/shared/search/url'
 import SuggestListItem from './SuggestListItem.vue'
 
 const { t } = useTranslation()
-const focusStore = useFocusState()
+useFocusState()
 const settings = useSettingsStore()
 const quickLinksStore = useQuickLinksStore()
 const { granted: historyGranted } = useBrowserHistoryPermission()
@@ -56,6 +56,8 @@ const props = defineProps<{
   searchFormWidth: number
   listId: string
   engine?: string
+  height?: number
+  floating?: boolean
 }>()
 const emit = defineEmits<{
   doSearchWithText: [text: string]
@@ -133,6 +135,8 @@ const activeOptionId = computed(() => {
     : undefined
 })
 const isExpanded = computed(() => displayedSuggestions.value.length > 0)
+watch(isExpanded, (expanded) => emit('expandedChange', expanded), { immediate: true })
+watch(activeOptionId, (id) => emit('activeOptionChange', id), { immediate: true })
 
 function cancelSuggestionRequest() {
   requestVersion++
@@ -169,7 +173,8 @@ async function refreshSuggestions(text = props.searchText) {
   clearSearchSuggestions()
   // 设置或权限变化只刷新原始查询；真实输入会先通过 clearActiveSuggest 重置它。
   navigationSourceText.value = sourceText
-  if (!focusStore.isFocused || !settings.search.suggestionsEnabled) return
+  if (!props.searchText && !props.floating) return
+  if (!settings.search.suggestionsEnabled) return
   const query = text.trim()
   const enabled = settings.search.suggestionProviders
   const current = requestVersion
@@ -267,13 +272,6 @@ async function showSearchHistories() {
   await refreshSuggestions()
 }
 watch(
-  () => focusStore.isFocused,
-  (focused) => {
-    if (focused) handleInput()
-    else clearSearchSuggestions()
-  },
-)
-watch(
   [
     () => settings.search.suggestionsEnabled,
     () => settings.search.suggestionAPI,
@@ -282,6 +280,7 @@ watch(
     historyGranted,
   ],
   () => {
+    if (props.floating && !props.searchText && !isShowSearchHistories.value) return
     // 使用键盘导航的原始查询刷新，不能把历史标题或 URL 送入远端接口。
     void refreshSuggestions(navigationSourceText.value ?? props.searchText)
   },
@@ -333,8 +332,6 @@ async function clearSearchHistories() {
   await clearHistoryCache()
   clearSearchSuggestions()
 }
-watch(activeOptionId, (id) => emit('activeOptionChange', id), { immediate: true })
-watch(isExpanded, (expanded) => emit('expandedChange', expanded), { immediate: true })
 defineExpose({
   clearActiveSuggest,
   clearSearchSuggestions,
@@ -357,6 +354,8 @@ defineExpose({
     :style="{
       width: `${searchFormWidth}px`,
       height: areaHeight,
+      top: props.height ? `${props.height + 8}px` : undefined,
+      'z-index': 10,
     }"
   >
     <suggest-list-item
