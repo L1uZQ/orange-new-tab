@@ -21,6 +21,7 @@
     "searchSuggestions": "Search suggestions"
   },
   "about": {
+    "upstream": "This project is a derivative work of {link}",
     "yiyanProvider": "Chinese poetry API provided by {api}"
   },
   "bookmark": {
@@ -48,14 +49,6 @@
     },
     "title": "Bookmark",
     "tooSmall": "Sidebar is too narrow"
-  },
-  "bootstrap": {
-    "invalidVer": {
-      "bak": "You may also click the button below to download a backup of the previous settings version (it cannot be imported into the current version).",
-      "btn": "Clear and Refresh",
-      "msg": "We’re sorry, but an unsupported legacy settings version was detected. To ensure the extension functions properly, please clear the extension data and refresh.",
-      "title": "Unsupported Settings Version"
-    }
   },
   "builtinApps": {
     "add": "Add",
@@ -222,8 +215,8 @@
       "title": "Failed to cache online wallpaper"
     },
     "welcome": {
-      "message": "Thanks for installing Lemon New Tab! Customize your new tab page in the settings (bottom-right corner).",
-      "title": "Welcome to Lemon New Tab"
+      "message": "Thanks for installing Orange New Tab! Customize your new tab page in the settings (bottom-right corner).",
+      "title": "Welcome to Orange New Tab"
     }
   },
   "quickLinks": {
@@ -294,7 +287,7 @@
     "searchEngineNotFound": "Search engine not found",
     "searchFor": "Search"
   },
-  "sponsor": "This extension was created by me in my spare time to solve my own needs, and I'm thrilled it helps you too! If you enjoy it, please consider giving it a ⭐ on GitHub—it means a lot to me. Feel free to share your ideas or feedback at: redlnn@outlook.com. Thank you!",
+  "sponsor": "This extension is a derivative of lemon-new-tab, built for my own needs. If it helps you too, a ⭐ on GitHub would mean a lot: https://github.com/L1uZQ/orange-new-tab . Ideas and bug reports are welcome via GitHub Issues.",
   "time": {
     "afternoon": "",
     "dawn": "",

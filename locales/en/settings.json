@@ -319,22 +319,6 @@
       "icon": "Purge favicon cache",
       "wallpaper": "Purge wallpaper cache"
     },
-    "syncRetirement": {
-      "acknowledge": "OK",
-      "clearCloudData": "Clean up cloud data",
-      "clearFailedMessage": "The old cloud data could not be deleted right now. It will not be uploaded or applied, and you will be reminded again after a future restart.",
-      "clearFailedTitle": "Unable to delete cloud data",
-      "clearSuccess": "The old cloud data has been cleared",
-      "downloadCloudData": "Download cloud data",
-      "downloadFailed": "Cloud data could not be read or downloaded. Please try again later.",
-      "downloadNote": "You can download the current cloud data, but this file cannot be imported back into the extension.",
-      "downloadStarted": "The cloud data file has started downloading",
-      "message": "Cloud Sync could sometimes replace current settings with older data. To protect your data, this feature has been removed and turned off automatically. Settings on this device are not affected.",
-      "noCloudData": "No cloud data was found to download",
-      "residualMessage": "Old cloud data was found. You can delete it without affecting the current settings on this device.",
-      "residualTitle": "Old cloud data found",
-      "title": "Cloud Sync is no longer supported"
-    },
     "title": "Other"
   },
   "perf": {
@@ -794,7 +778,7 @@
       "errors": {
         "authentication": "The password is incorrect or this account was denied. Check the username, password, or app password.",
         "encryption": "This vault is encrypted. Enter the correct independent sync encryption password under Advanced settings.",
-        "foreign": "This directory contains data not owned by Lemon New Tab. Use an empty or correct extension-only directory.",
+        "foreign": "This directory contains data not owned by Orange New Tab. Use an empty or correct extension-only directory.",
         "format": "This sync format was created by a newer extension. Upgrade the extension first.",
         "network": "The browser could not send the request. Open the server address in a normal tab to verify the address and HTTPS certificate, then check the network, proxy, and redirects.",
         "permission": "Access to this exact WebDAV server was not granted, so the connection was not saved.",
@@ -809,7 +793,7 @@
       "next": "Next",
       "scan": {
         "empty": "The directory is empty and can host a new sync vault",
-        "emptyNote": "LemonNewTab and its first version are only created after final confirmation.",
+        "emptyNote": "OrangeNewTab and its first version are only created after final confirmation.",
         "existing": "An existing sync vault was found",
         "existingNote": "Ownership and version integrity were verified. This device is compared next.",
         "remote-conflict": "The remote vault has multiple version branches",

@@ -21,6 +21,7 @@
     "searchSuggestions": "搜尋建議"
   },
   "about": {
+    "upstream": "本項目基於 {link} 二次開發",
     "yiyanProvider": "一言API由 {api} 提供"
   },
   "bookmark": {
@@ -48,14 +49,6 @@
     },
     "title": "書籤",
     "tooSmall": "側欄寬度過細"
-  },
-  "bootstrap": {
-    "invalidVer": {
-      "bak": "你亦可點擊下方按鈕以下載舊版本的設定備份（無法匯入至目前版本）。",
-      "btn": "清除並重新整理",
-      "msg": "很抱歉，偵測到不支援的舊版設定。為確保擴充功能能正常運作，請清除擴充功能資料並重新整理。",
-      "title": "不支援的設定版本"
-    }
   },
   "builtinApps": {
     "add": "新增",
@@ -222,8 +215,8 @@
       "title": "快取線上壁紙失敗"
     },
     "welcome": {
-      "message": "感謝安裝檸檬起始頁！你可以在右下角的設定中自訂你的新分頁。",
-      "title": "歡迎使用檸檬起始頁"
+      "message": "感謝安裝橙子起始頁！你可以在右下角的設定中自訂你的新分頁。",
+      "title": "歡迎使用橙子起始頁"
     }
   },
   "quickLinks": {
@@ -294,7 +287,7 @@
     "searchEngineNotFound": "找不到搜尋引擎",
     "searchFor": "搜尋"
   },
-  "sponsor": "呢個擴充功能是我利用業餘時間開發的小工具，好開心能幫到你！如果你鍾意佢嘅話，唔妨俾個 Star ⭐ 來支持一下，咁對我嚟講意義重大。如果有任何想法或建議，都歡迎透過郵箱聯繫我：redlnn@outlook.com。多謝你嘅信任！",
+  "sponsor": "呢個擴充功能基於 lemon-new-tab 二次開發，用嚟滿足個人需要；如果佢對你都有幫助，歡迎俾個 Star ⭐ 支持一下：https://github.com/L1uZQ/orange-new-tab 。有任何想法或問題可以喺 GitHub Issues 話我知。",
   "time": {
     "afternoon": "下午",
     "dawn": "凌晨",

@@ -319,22 +319,6 @@
       "icon": "清除图标缓存",
       "wallpaper": "清除壁纸缓存"
     },
-    "syncRetirement": {
-      "acknowledge": "好的",
-      "clearCloudData": "清理云端数据",
-      "clearFailedMessage": "旧的云端数据暂时没有删除成功。我们不会再上传或应用这些数据，下次启动时会再次提醒你。",
-      "clearFailedTitle": "未能删除云端数据",
-      "clearSuccess": "旧的云端数据已清除",
-      "downloadCloudData": "下载云端数据",
-      "downloadFailed": "无法读取或下载云端数据，请稍后重试",
-      "downloadNote": "您可以下载当前的云端数据，但该文件无法被重新导入扩展。",
-      "downloadStarted": "云端数据文件已开始下载",
-      "message": "云同步有时可能用较旧的内容覆盖当前设置。为了保护你的数据，这项功能已被移除并自动关闭。当前设备上的设置不会受到影响。",
-      "noCloudData": "没有找到需要下载的云端数据",
-      "residualMessage": "检测到以前留下的云端数据。你可以删除它，本设备上的当前设置不会受到影响。",
-      "residualTitle": "发现旧的云端数据",
-      "title": "云同步已停止支持"
-    },
     "title": "其他"
   },
   "perf": {
@@ -794,7 +778,7 @@
       "errors": {
         "authentication": "密码不正确，或服务商拒绝此账号访问。请检查用户名、密码或应用专用密码。",
         "encryption": "同步库已加密，请在高级设置中输入正确的独立同步加密密码。",
-        "foreign": "该目录包含不属于 Lemon New Tab 的数据。请改用空目录或正确的专属目录。",
+        "foreign": "该目录包含不属于 Orange New Tab 的数据。请改用空目录或正确的专属目录。",
         "format": "同步格式由更高版本扩展创建，请先升级扩展。",
         "network": "浏览器未能发出请求。请先在普通标签页打开服务器地址，确认地址和 HTTPS 证书有效，再检查网络、代理和跳转设置。",
         "permission": "未获得此 WebDAV 服务器的精确访问权限，连接没有保存。",
@@ -809,7 +793,7 @@
       "next": "下一步",
       "scan": {
         "empty": "目录为空，可以创建新同步库",
-        "emptyNote": "只有最终确认后才会创建 LemonNewTab 目录和第一个版本。",
+        "emptyNote": "只有最终确认后才会创建 OrangeNewTab 目录和第一个版本。",
         "existing": "找到一个已有同步库",
         "existingNote": "已验证所有权标记和版本完整性，下一步将比较本机数据。",
         "remote-conflict": "远端存在多个版本分支",

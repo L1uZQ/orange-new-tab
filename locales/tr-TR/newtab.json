@@ -21,6 +21,7 @@
     "searchSuggestions": "Arama önerileri"
   },
   "about": {
+    "upstream": "Bu proje {link} temel alınarak geliştirilmiştir",
     "yiyanProvider": "Çin şiiri API'si {api} tarafından sağlanmaktadır"
   },
   "bookmark": {
@@ -48,14 +49,6 @@
     },
     "title": "Yer İmi",
     "tooSmall": "Yan çubuk çok dar"
-  },
-  "bootstrap": {
-    "invalidVer": {
-      "bak": "Önceki ayarlar sürümünün bir yedeğini indirmek için aşağıdaki düğmeye de tıklayabilirsiniz (bu yedek mevcut sürüme aktarılamaz).",
-      "btn": "Temizle ve Yenile",
-      "msg": "Üzgünüz, ancak desteklenmeyen eski bir ayarlar sürümü tespit edildi. Uzantının düzgün çalışmasını sağlamak için lütfen uzantı verilerini temizleyin ve yenileyin.",
-      "title": "Desteklenmeyen Ayarlar Sürümü"
-    }
   },
   "builtinApps": {
     "add": "Ekle",
@@ -222,8 +215,8 @@
       "title": "Çevrimiçi duvar kağıdı önbelleğe alınamadı"
     },
     "welcome": {
-      "message": "Lemon New Tab'i kurduğunuz için teşekkürler! Yeni sekme sayfanızı ayarlardan (sağ alt köşe) özelleştirin.",
-      "title": "Lemon New Tab'e Hoş Geldiniz"
+      "message": "Orange New Tab'i kurduğunuz için teşekkürler! Yeni sekme sayfanızı ayarlardan (sağ alt köşe) özelleştirin.",
+      "title": "Orange New Tab'e Hoş Geldiniz"
     }
   },
   "quickLinks": {
@@ -294,7 +287,7 @@
     "searchEngineNotFound": "Arama motoru bulunamadı",
     "searchFor": "Ara"
   },
-  "sponsor": "Bu uzantı, kendi ihtiyaçlarımı çözmek için boş zamanlarımda tarafımdan oluşturuldu ve size de yardımcı olmasına çok sevindim! Beğendiyseniz, lütfen GitHub'da ⭐ vermeyi düşünün—bu benim için çok değerli. Fikirlerinizi veya geri bildirimlerinizi şu adrese göndermekten çekinmeyin: redlnn@outlook.com. Teşekkür ederim!",
+  "sponsor": "Bu uzantı lemon-new-tab temel alınarak kendi ihtiyaçlarım için geliştirilmiştir. Size de yardımcı olursa GitHub'da ⭐ vermeniz çok değerli: https://github.com/L1uZQ/orange-new-tab . Fikir ve hata bildirimleri için GitHub Issues kullanabilirsiniz.",
   "time": {
     "afternoon": "",
     "dawn": "",

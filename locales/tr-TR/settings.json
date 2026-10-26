@@ -319,22 +319,6 @@
       "icon": "Favicon önbelleğini temizle",
       "wallpaper": "Duvar kağıdı önbelleğini temizle"
     },
-    "syncRetirement": {
-      "acknowledge": "Tamam",
-      "clearCloudData": "Bulut verilerini temizle",
-      "clearFailedMessage": "Eski bulut verileri şu anda silinemedi. Yüklenmeyecek veya uygulanmayacak ve gelecekteki bir yeniden başlatmanın ardından size tekrar hatırlatılacaktır.",
-      "clearFailedTitle": "Bulut verileri silinemiyor",
-      "clearSuccess": "Eski bulut verileri temizlendi",
-      "downloadCloudData": "Bulut verilerini indir",
-      "downloadFailed": "Bulut verileri okunamadı veya indirilemedi. Lütfen daha sonra tekrar deneyin.",
-      "downloadNote": "Mevcut bulut verilerini indirebilirsiniz, ancak bu dosya uzantıya geri aktarılamaz.",
-      "downloadStarted": "Bulut veri dosyası indirilmeye başladı",
-      "message": "Bulut Senkronizasyonu bazen mevcut ayarları eski verilerle değiştirebiliyordu. Verilerinizi korumak için bu özellik kaldırıldı ve otomatik olarak kapatıldı. Bu cihazdaki ayarlar etkilenmedi.",
-      "noCloudData": "İndirilecek bulut verisi bulunamadı",
-      "residualMessage": "Eski bulut verileri bulundu. Mevcut cihazdaki ayarları etkilemeden silebilirsiniz.",
-      "residualTitle": "Eski bulut verileri bulundu",
-      "title": "Bulut Senkronizasyonu artık desteklenmiyor"
-    },
     "title": "Diğer"
   },
   "perf": {
@@ -794,7 +778,7 @@
       "errors": {
         "authentication": "Parola yanlış veya sağlayıcı bu hesaba erişimi reddetti. Kullanıcı adını, parolayı veya uygulama parolasını kontrol edin.",
         "encryption": "Bu kasa şifreli. Gelişmiş ayarlarda doğru bağımsız eşitleme şifreleme parolasını girin.",
-        "foreign": "Bu dizinde Lemon New Tab’a ait olmayan veriler var. Boş veya doğru uzantıya özel dizini kullanın.",
+        "foreign": "Bu dizinde Orange New Tab’a ait olmayan veriler var. Boş veya doğru uzantıya özel dizini kullanın.",
         "format": "Bu eşitleme biçimi uzantının daha yeni bir sürümüyle oluşturulmuş. Önce uzantıyı güncelleyin.",
         "network": "Tarayıcı isteği gönderemedi. Sunucu adresini normal bir sekmede açarak adresi ve HTTPS sertifikasını doğrulayın; ardından ağı, proxy’yi ve yönlendirmeleri kontrol edin.",
         "permission": "Bu WebDAV sunucusuna erişim izni verilmediği için bağlantı kaydedilmedi.",
@@ -809,7 +793,7 @@
       "next": "İleri",
       "scan": {
         "empty": "Dizin boş ve yeni bir eşitleme kasası oluşturulabilir",
-        "emptyNote": "LemonNewTab dizini ve ilk sürüm yalnızca son onaydan sonra oluşturulur.",
+        "emptyNote": "OrangeNewTab dizini ve ilk sürüm yalnızca son onaydan sonra oluşturulur.",
         "existing": "Mevcut bir eşitleme kasası bulundu",
         "existingNote": "Sahiplik işareti ve sürüm bütünlüğü doğrulandı. Sonraki adımda bu cihazdaki veriler karşılaştırılacak.",
         "remote-conflict": "Uzak kasada birden fazla sürüm dalı var",

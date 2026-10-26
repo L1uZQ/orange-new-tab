@@ -16,8 +16,9 @@ import { removeH1Plugin } from './scripts/mdit-remove-h1.ts'
 
 const baseManifest = {
   name: '__MSG_extension_name__',
-  author: 'Red_lnn<lemon@redlnn.top>',
+  author: 'L1uZQ',
   description: '__MSG_extension_description__',
+  homepage_url: 'https://github.com/L1uZQ/orange-new-tab',
   default_locale: 'en',
   icons: {
     16: '/icon-16.png',
