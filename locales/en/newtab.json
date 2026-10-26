@@ -1,0 +1,311 @@
+{
+  "a11y": {
+    "actions": "Page actions",
+    "addQuickLinksGroup": "Add Quick Links group",
+    "copyYiyan": "Copy quote",
+    "deleteGroup": "Delete group {{name}}",
+    "downloadBackground": "Download background",
+    "goToPage": "Go to page {{page}}",
+    "main": "New tab content",
+    "moveGroupDown": "Move group {{name}} down",
+    "moveGroupUp": "Move group {{name}} up",
+    "nextPage": "Next page",
+    "openActionsMenu": "Open page actions menu",
+    "openBookmarks": "Open bookmarks",
+    "previousPage": "Previous page",
+    "quickLinksGroups": "Quick Links groups",
+    "quickLinksPagination": "Quick Links pagination",
+    "refreshBackground": "Refresh background",
+    "renameGroup": "Rename group {{name}}",
+    "searchInput": "Search keywords",
+    "searchSuggestions": "Search suggestions"
+  },
+  "about": {
+    "yiyanProvider": "Chinese poetry API provided by {api}"
+  },
+  "bookmark": {
+    "404": "Nothing found",
+    "addToQuickLinks": "Add to Quick Links",
+    "added": "Added to Quick Links",
+    "collapse": {
+      "all": "Collapse All at Level",
+      "other": "Collapse Other at Level"
+    },
+    "delete": {
+      "confirm": "Are you sure you want to delete “{{name}}”?",
+      "confirmFolder": "“{{name}}” is a folder. Deleting it will also delete all bookmarks inside it. Are you sure?",
+      "success": "“{{title}}” has been deleted"
+    },
+    "expandHint": "Please expand the sidebar to view bookmarks",
+    "moveError": "Failed to move bookmark",
+    "sortBy": "Sort by",
+    "sortMode": {
+      "createdAsc": "Newest",
+      "createdDesc": "Oldest",
+      "nameAsc": "Name A–Z",
+      "nameDesc": "Name Z–A",
+      "origin": "Original"
+    },
+    "title": "Bookmark",
+    "tooSmall": "Sidebar is too narrow"
+  },
+  "bootstrap": {
+    "invalidVer": {
+      "bak": "You may also click the button below to download a backup of the previous settings version (it cannot be imported into the current version).",
+      "btn": "Clear and Refresh",
+      "msg": "We’re sorry, but an unsupported legacy settings version was detected. To ensure the extension functions properly, please clear the extension data and refresh.",
+      "title": "Unsupported Settings Version"
+    }
+  },
+  "builtinApps": {
+    "add": "Add",
+    "hidden": "App shortcut hidden.",
+    "note": "Note",
+    "remove": "Remove",
+    "title": "Built-in apps"
+  },
+  "changelog": {
+    "hideMajor": "Don't open the changelog on version upgrades",
+    "newVersionMsg": "Your start page has been updated!",
+    "otherVersions": {
+      "description": "Only the latest 5 versions are included. Click the links below to view the full changelog:",
+      "linkEn": "English",
+      "linkZhCN": "Chinese (Simplified)",
+      "title": "Other Versions?"
+    },
+    "title": "Changelog"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "confirm": "Yes",
+    "delete": "Delete",
+    "edit": "Edit",
+    "enable": "Enable",
+    "icon": "Icon (Optional)",
+    "itemUnavailable": "This item was deleted elsewhere. Your draft has been kept.",
+    "name": "Name",
+    "no": "No",
+    "save": "Save",
+    "tooLargeImageConfirm": "This image is large ({{size}}) and may affect performance and responsiveness. Continue?",
+    "undo": "Undo",
+    "url": "URL",
+    "warning": "Warning"
+  },
+  "customSearchEngine": {
+    "add": "Add Custom Search Engine",
+    "addDialog": {
+      "invalidUrlError": "Invalid URL or missing %s placeholder",
+      "nameRequiredError": "Name cannot be empty",
+      "urlHelp": "URL must contain %s as a placeholder for search keywords"
+    },
+    "deleteConfirm": "Are you sure you want to delete search engine \"{{name}}\"?",
+    "edit": "Edit Custom Search Engine",
+    "title": "Custom Search Engine"
+  },
+  "dock": {
+    "launchpad": {
+      "add": "Add",
+      "empty": "No results",
+      "search": "Search...",
+      "title": "Launchpad"
+    }
+  },
+  "note": {
+    "snapshotTooLarge": "Unable to save: the complete backup or sync snapshot exceeds 10 MiB. Reduce notes, custom icons, or other data; your draft is preserved.",
+    "saveFailed": "Unable to save the note. Your changes are still in the editor.",
+    "conflict": "This note was changed elsewhere. Your draft is preserved; copy it before reopening the note.",
+    "deleted": "This note was deleted elsewhere. Your draft is preserved; copy it into a new note.",
+    "tooLarge": "Unable to save: each note must be within 1 MiB and all notes within 8 MiB. Shorten the content or remove unused notes.",
+    "backToList": "Back to note list",
+    "create": "Create note",
+    "deleteConfirm": "Delete “{{title}}”?",
+    "discard": "Discard",
+    "edit": "Edit note",
+    "empty": "Choose a note from the list or create a new one.",
+    "export": "Export image",
+    "exportFailed": "Unable to export note image",
+    "exported": "Note image exported",
+    "listEmpty": "No notes yet",
+    "pin": "Pin",
+    "time": {
+      "dayBeforeYesterday": "The day before yesterday, {{time}}",
+      "today": "Today, {{time}}",
+      "yesterday": "Yesterday, {{time}}"
+    },
+    "title": "Note",
+    "toggleSource": "Toggle source editor",
+    "unpin": "Unpin",
+    "unsaved": "Save changes before leaving?",
+    "untitled": "Untitled note"
+  },
+  "menu": {
+    "about": "About",
+    "backgroundPreference": "Background Preference",
+    "help": "Help / Feedback",
+    "searchEnginePreference": "Search Engine Preference",
+    "sponsor": "Sponsor"
+  },
+  "notification": {
+    "bing": {
+      "message": "Please check the console output in developer tools.",
+      "title": "Failed to get Bing wallpaper"
+    },
+    "extensionUpdate": {
+      "message": "A new extension version is ready. Restart your browser to finish the update.",
+      "title": "Extension update available",
+      "toast": "Restart your browser to finish the extension update"
+    },
+    "faviconCacheHint": {
+      "message": "Enable favicon cache in \"Other\" settings for faster icon loading",
+      "title": "Tip: Favicon cache is disabled"
+    },
+    "greeting": {
+      "afternoon": [
+        "Good afternoon! Hope the rest of your day goes smoothly.",
+        "Good afternoon! A sip of water and a little breather might feel good.",
+        "Hope something small makes you smile this afternoon.",
+        "Been busy for a while? Give yourself a moment to stretch.",
+        "Good afternoon! It's okay to go at your own pace.",
+        "Here's to a little less rush and a little more ease this afternoon."
+      ],
+      "dawn": [
+        "The day is still quiet. Take good care of yourself.",
+        "It's quiet out there. Hope you can find a little peace, too.",
+        "If you're still busy, leave a little room for rest.",
+        "Just waking up or still awake? Be kind to yourself either way.",
+        "Before the day gets going, take a moment to look after yourself.",
+        "Hope these quiet hours give you a little time that's just yours."
+      ],
+      "dusk": [
+        "The day is winding down. Take a moment for yourself.",
+        "Hope you get a little time to unwind as the evening begins.",
+        "The day is nearly done. You don't have to finish everything at once.",
+        "Hope there's a good meal and something to smile about waiting for you.",
+        "It's been a long day. Relax your shoulders and take a breath.",
+        "As the light fades, save a little kindness for yourself."
+      ],
+      "evening": [
+        "Good evening! Hope you have a relaxing night.",
+        "Good evening! Make a little time for something you enjoy.",
+        "Hope you have a bit of the evening all to yourself.",
+        "Take it slow tonight. A warm drink might be a nice place to start.",
+        "Good evening! It's okay to set today's worries aside for a while.",
+        "Hope tonight brings a good chat or a little moment of joy."
+      ],
+      "lateNight": [
+        "It's getting late. Hope you can get some rest soon.",
+        "Hope you can let the day go and get a good night's sleep.",
+        "Still busy? Give your eyes a break and have a sip of water.",
+        "You've done plenty today. It's okay to leave a little for tomorrow.",
+        "Wishing you fewer worries tonight and sweeter dreams.",
+        "Good night. Take care of yourself; tomorrow can wait."
+      ],
+      "morning": [
+        "Good morning! Hope your day starts well.",
+        "Good morning! Hope you have time for breakfast and a gentle start.",
+        "A new day is here. Take it at a pace that feels right for you.",
+        "Hope today brings a pleasant surprise and a few little joys.",
+        "Morning! Give yourself a smile and ease into the day.",
+        "Take good care of yourself today. Hope it's a kind one."
+      ],
+      "noon": [
+        "Hope your day is going well. Take a break when you can.",
+        "It's lunchtime. Give yourself a proper break and something good to eat.",
+        "Hope lunch hits the spot and the afternoon feels a little lighter.",
+        "Time for a midday breather. Rest your eyes and take a moment for yourself.",
+        "After a busy morning, a little time to recharge can feel good.",
+        "Hope your lunch is lovely and your worries feel a little smaller."
+      ]
+    },
+    "wallpaperCache": {
+      "message": "Unable to cache online wallpaper: {error}",
+      "title": "Failed to cache online wallpaper"
+    },
+    "welcome": {
+      "message": "Thanks for installing Lemon New Tab! Customize your new tab page in the settings (bottom-right corner).",
+      "title": "Welcome to Lemon New Tab"
+    }
+  },
+  "quickLinks": {
+    "addDialog": {
+      "extensionIconTip": "You can also add the current page to Quick Links by clicking the icon in the browser extensions menu.",
+      "invalidUrlError": "Invalid URL. Please input a new one",
+      "uploadFaviconAlert": "If you don't upload an icon, consider enabling Settings → Other → Icon cache to automatically fetch icons."
+    },
+    "addLink": "Add Link",
+    "bookmark": {
+      "add": "Add to Bookmarks",
+      "existing": "This bookmark already exists",
+      "success": "Saved to “{{folder}}”"
+    },
+    "editLink": "Edit Link",
+    "groups": {
+      "default": "Default",
+      "defaultDeleteBlocked": "The default group cannot be deleted.",
+      "deleteConfirm": "Delete group “{{name}}” and all links inside it?",
+      "moveDown": "Move down",
+      "moveTo": "Move to Group",
+      "moveUp": "Move up",
+      "rename": "Rename",
+      "selectAddTarget": "Choose a group for the new link",
+      "selectMoveTarget": "Choose a group to move to",
+      "selectPinTarget": "Choose a group to save to",
+      "selectTitle": "Choose Group",
+      "topSites": "Most visited",
+      "untitled": "Group {{index}}"
+    },
+    "hide": "Hide",
+    "hideTopMessage": {
+      "content": "Most visited site hidden.",
+      "restoreDefault": "Restore default",
+      "restoreSuccess": "Default most visited site restored"
+    },
+    "moveError": "Move failed",
+    "moveLeft": "Move left",
+    "moveRight": "Move right",
+    "pin": "Pin",
+    "unpin": "Unpin",
+    "unpinMessage": "Link unpinned.",
+    "fetchingFavicon": "Fetching icon in background..."
+  },
+  "search": {
+    "browserHistory": "Visited",
+    "calculationResult": "Result",
+    "calculator": "Calculate",
+    "clickToCopy": "Copy",
+    "engineMenu": {
+      "current": "Current",
+      "tipPrefix": "Tip: Press",
+      "tipSuffix": "to switch search engine."
+    },
+    "engines": {
+      "baidu": "Baidu",
+      "bing": "Bing",
+      "duckduckgo": "DuckDuckGo",
+      "google": "Google",
+      "yandex": "Yandex"
+    },
+    "extensionSearchHistory": "Search",
+    "mostVisited": "Frequent",
+    "navigateTo": "Go to",
+    "placeholder": "Search",
+    "purgeSearchHistory": "Clear Search History",
+    "savedWebsite": "Saved",
+    "searchEngineNotFound": "Search engine not found",
+    "searchFor": "Search"
+  },
+  "sponsor": "This extension was created by me in my spare time to solve my own needs, and I'm thrilled it helps you too! If you enjoy it, please consider giving it a ⭐ on GitHub—it means a lot to me. Feel free to share your ideas or feedback at: redlnn@outlook.com. Thank you!",
+  "time": {
+    "afternoon": "",
+    "dawn": "",
+    "dusk": "",
+    "evening": "",
+    "lateNight": "",
+    "morning": "",
+    "noon": ""
+  },
+  "title": "New Tab",
+  "yiyan": {
+    "copied": "Copied to clipboard"
+  }
+}

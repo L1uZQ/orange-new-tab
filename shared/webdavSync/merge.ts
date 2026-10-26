@@ -1,0 +1,676 @@
+import { canonicalize, jsonEquals } from '../json.ts'
+
+import { SYNC_ENTITIES } from './domains.ts'
+import { pruneExpiredTombstones } from './lifecycle.ts'
+import { normalizeRemoteSyncSettings, pickSyncSettings } from './settingsWhitelist.ts'
+import { normalizeSnapshotOrder } from './snapshotOrder.ts'
+import type {
+  JsonObject,
+  JsonValue,
+  SyncConflict,
+  SyncConflictKind,
+  SyncCustomSearchEngineV1,
+  SyncQuickLinkGroupV1,
+  SyncQuickLinkV1,
+  SyncNoteV1,
+  SyncSnapshotV1,
+  ThreeWayMergeResult,
+  TombstoneV1,
+} from './types.ts'
+
+const MISSING = Symbol('missing')
+type MaybeJson = JsonValue | typeof MISSING
+
+function conflictValue(value: MaybeJson): JsonValue | undefined {
+  return value === MISSING ? undefined : value
+}
+
+function addConflict(
+  conflicts: SyncConflict[],
+  category: SyncConflict['category'],
+  kind: SyncConflictKind,
+  path: string,
+  base: MaybeJson,
+  local: MaybeJson,
+  remote: MaybeJson,
+  canKeepBoth = false,
+) {
+  conflicts.push({
+    id: `${category}:${path}:${kind}`,
+    category,
+    kind,
+    path,
+    base: conflictValue(base),
+    local: conflictValue(local),
+    remote: conflictValue(remote),
+    canKeepBoth,
+  })
+}
+
+function isObject(value: MaybeJson): value is JsonObject {
+  return value !== MISSING && value !== null && typeof value === 'object' && !Array.isArray(value)
+}
+
+function maybeEquals(left: MaybeJson, right: MaybeJson): boolean {
+  if (left === MISSING || right === MISSING) return left === right
+  return jsonEquals(left, right)
+}
+
+function mergeJson(
+  category: SyncConflict['category'],
+  path: string,
+  base: MaybeJson,
+  local: MaybeJson,
+  remote: MaybeJson,
+  conflicts: SyncConflict[],
+): MaybeJson {
+  if (maybeEquals(local, remote)) return local
+  if (maybeEquals(local, base)) return remote
+  if (maybeEquals(remote, base)) return local
+
+  if ((isObject(base) || base === MISSING) && isObject(local) && isObject(remote)) {
+    const result: JsonObject = {}
+    const keys = new Set([
+      ...(isObject(base) ? Object.keys(base) : []),
+      ...Object.keys(local),
+      ...Object.keys(remote),
+    ])
+    for (const key of [...keys].sort()) {
+      const merged = mergeJson(
+        category,
+        path ? `${path}.${key}` : key,
+        isObject(base) && key in base ? base[key]! : MISSING,
+        key in local ? local[key]! : MISSING,
+        key in remote ? remote[key]! : MISSING,
+        conflicts,
+      )
+      if (merged !== MISSING) result[key] = merged
+    }
+    return result
+  }
+
+  addConflict(conflicts, category, 'field', path, base, local, remote)
+  return local
+}
+
+function mergeAtomic(
+  category: SyncConflict['category'],
+  path: string,
+  base: MaybeJson,
+  local: MaybeJson,
+  remote: MaybeJson,
+  conflicts: SyncConflict[],
+): MaybeJson {
+  if (maybeEquals(local, remote)) return local
+  if (maybeEquals(local, base)) return remote
+  if (maybeEquals(remote, base)) return local
+  addConflict(conflicts, category, 'field', path, base, local, remote)
+  return local
+}
+
+type Entity = { id: string }
+
+function toEntityMap<T extends Entity>(items: readonly T[]): Map<string, T> {
+  return new Map(items.map((item) => [item.id, item]))
+}
+
+function mergeEntities<T extends Entity>(
+  category: SyncConflict['category'],
+  path: string,
+  baseItems: readonly T[],
+  localItems: readonly T[],
+  remoteItems: readonly T[],
+  conflicts: SyncConflict[],
+  canKeepBoth = true,
+): T[] {
+  const base = toEntityMap(baseItems)
+  const local = toEntityMap(localItems)
+  const remote = toEntityMap(remoteItems)
+  const ids = new Set([...base.keys(), ...local.keys(), ...remote.keys()])
+  const result: T[] = []
+
+  for (const id of [...ids].sort()) {
+    const baseItem = base.get(id)
+    const localItem = local.get(id)
+    const remoteItem = remote.get(id)
+    const itemPath = `${path}.${id}`
+
+    if (!baseItem) {
+      if (localItem && remoteItem) {
+        if (jsonEquals(localItem, remoteItem)) result.push(localItem)
+        else {
+          addConflict(
+            conflicts,
+            category,
+            'simultaneous-create',
+            itemPath,
+            MISSING,
+            localItem as unknown as JsonValue,
+            remoteItem as unknown as JsonValue,
+            canKeepBoth,
+          )
+          result.push(localItem)
+        }
+      } else if (localItem) result.push(localItem)
+      else if (remoteItem) result.push(remoteItem)
+      continue
+    }
+
+    if (!localItem && !remoteItem) continue
+    if (!localItem && remoteItem) {
+      if (!jsonEquals(baseItem, remoteItem)) {
+        addConflict(
+          conflicts,
+          category,
+          'delete-vs-modify',
+          itemPath,
+          baseItem as unknown as JsonValue,
+          MISSING,
+          remoteItem as unknown as JsonValue,
+          canKeepBoth,
+        )
+        result.push(remoteItem)
+      }
+      continue
+    }
+    if (localItem && !remoteItem) {
+      if (!jsonEquals(baseItem, localItem)) {
+        addConflict(
+          conflicts,
+          category,
+          'delete-vs-modify',
+          itemPath,
+          baseItem as unknown as JsonValue,
+          localItem as unknown as JsonValue,
+          MISSING,
+          canKeepBoth,
+        )
+        result.push(localItem)
+      }
+      continue
+    }
+
+    const merged = mergeJson(
+      category,
+      itemPath,
+      canonicalize(baseItem),
+      canonicalize(localItem!),
+      canonicalize(remoteItem!),
+      conflicts,
+    )
+    if (merged !== MISSING) result.push(merged as T)
+  }
+
+  return result
+}
+
+function normalizeOrder(order: readonly string[], validIds: ReadonlySet<string>): string[] {
+  const result: string[] = []
+  const seen = new Set<string>()
+  for (const id of order) {
+    if (validIds.has(id) && !seen.has(id)) {
+      seen.add(id)
+      result.push(id)
+    }
+  }
+  for (const id of [...validIds].sort()) {
+    if (!seen.has(id)) result.push(id)
+  }
+  return result
+}
+
+function mergeOrder(
+  category: SyncConflict['category'],
+  path: string,
+  base: readonly string[],
+  local: readonly string[],
+  remote: readonly string[],
+  validIds: ReadonlySet<string>,
+  conflicts: SyncConflict[],
+): string[] {
+  const baseOrder = normalizeOrder(base, validIds)
+  const localOrder = normalizeOrder(local, validIds)
+  const remoteOrder = normalizeOrder(remote, validIds)
+  if (jsonEquals(localOrder, remoteOrder)) return localOrder
+  if (jsonEquals(localOrder, baseOrder)) return remoteOrder
+  if (jsonEquals(remoteOrder, baseOrder)) return localOrder
+
+  addConflict(conflicts, category, 'order', path, baseOrder, localOrder, remoteOrder)
+  return localOrder
+}
+
+function mergeQuickLinks(
+  base: NonNullable<SyncSnapshotV1['quickLinks']>,
+  local: NonNullable<SyncSnapshotV1['quickLinks']>,
+  remote: NonNullable<SyncSnapshotV1['quickLinks']>,
+  conflicts: SyncConflict[],
+): NonNullable<SyncSnapshotV1['quickLinks']> {
+  const items = mergeEntities<SyncQuickLinkV1>(
+    'quick-links',
+    'quickLinks.items',
+    base.items,
+    local.items,
+    remote.items,
+    conflicts,
+  )
+  const itemIds = new Set(items.map((item) => item.id))
+  type GroupMetadata = Pick<SyncQuickLinkGroupV1, 'id' | 'name'>
+  const groups = mergeEntities<GroupMetadata>(
+    'quick-links',
+    'quickLinks.groups',
+    base.groups.map(({ id, name }) => ({ id, name })),
+    local.groups.map(({ id, name }) => ({ id, name })),
+    remote.groups.map(({ id, name }) => ({ id, name })),
+    conflicts,
+    false,
+  )
+  const groupIds = new Set(groups.map((group) => group.id))
+  const locations = new Map<string, string>()
+  const locationMap = (value: NonNullable<SyncSnapshotV1['quickLinks']>) => {
+    const result = new Map(value.rootOrder.map((id) => [id, 'root']))
+    for (const group of value.groups) {
+      for (const id of group.itemIds) result.set(id, group.id)
+    }
+    return result
+  }
+  const baseLocations = locationMap(base)
+  const localLocations = locationMap(local)
+  const remoteLocations = locationMap(remote)
+  for (const id of itemIds) {
+    const baseLocation = baseLocations.get(id) ?? MISSING
+    const localLocation = localLocations.get(id) ?? MISSING
+    const remoteLocation = remoteLocations.get(id) ?? MISSING
+    let location = mergeJson(
+      'quick-links',
+      `quickLinks.location.${id}`,
+      baseLocation,
+      localLocation,
+      remoteLocation,
+      conflicts,
+    )
+    if (location === MISSING || typeof location !== 'string' || !groupIds.has(location)) {
+      location = 'root'
+    }
+    locations.set(id, location)
+  }
+  const idsAt = (location: string) =>
+    new Set([...locations].filter(([, value]) => value === location).map(([id]) => id))
+  const orderAt = (value: NonNullable<SyncSnapshotV1['quickLinks']>, location: string) =>
+    location === 'root'
+      ? value.rootOrder
+      : (value.groups.find((group) => group.id === location)?.itemIds ?? [])
+  const rootIds = idsAt('root')
+  const rootOrder = mergeOrder(
+    'quick-links',
+    'quickLinks.rootOrder',
+    orderAt(base, 'root'),
+    orderAt(local, 'root'),
+    orderAt(remote, 'root'),
+    rootIds,
+    conflicts,
+  )
+  const mergedGroups: SyncQuickLinkGroupV1[] = groups.map((group) => {
+    const ids = idsAt(group.id)
+    return {
+      ...group,
+      itemIds: mergeOrder(
+        'quick-links',
+        `quickLinks.groups.${group.id}.itemIds`,
+        orderAt(base, group.id),
+        orderAt(local, group.id),
+        orderAt(remote, group.id),
+        ids,
+        conflicts,
+      ),
+    }
+  })
+  return {
+    items,
+    rootOrder,
+    groups: mergedGroups,
+    groupOrder: mergeOrder(
+      'quick-links',
+      'quickLinks.groupOrder',
+      base.groupOrder,
+      local.groupOrder,
+      remote.groupOrder,
+      groupIds,
+      conflicts,
+    ),
+  }
+}
+
+function mergeSearchEngines(
+  base: NonNullable<SyncSnapshotV1['customSearchEngines']>,
+  local: NonNullable<SyncSnapshotV1['customSearchEngines']>,
+  remote: NonNullable<SyncSnapshotV1['customSearchEngines']>,
+  conflicts: SyncConflict[],
+): NonNullable<SyncSnapshotV1['customSearchEngines']> {
+  const items = mergeEntities<SyncCustomSearchEngineV1>(
+    'search-engines',
+    'customSearchEngines.items',
+    base.items,
+    local.items,
+    remote.items,
+    conflicts,
+  )
+  return {
+    items,
+    order: mergeOrder(
+      'search-engines',
+      'customSearchEngines.order',
+      base.order,
+      local.order,
+      remote.order,
+      new Set(items.map((item) => item.id)),
+      conflicts,
+    ),
+  }
+}
+
+function mergeNotes(
+  base: NonNullable<SyncSnapshotV1['notes']>,
+  local: NonNullable<SyncSnapshotV1['notes']>,
+  remote: NonNullable<SyncSnapshotV1['notes']>,
+  conflicts: SyncConflict[],
+): NonNullable<SyncSnapshotV1['notes']> {
+  const baseById = toEntityMap(base.items)
+  const localById = toEntityMap(local.items)
+  const remoteById = toEntityMap(remote.items)
+  const normalizeMetadata = (items: readonly SyncNoteV1[]) =>
+    items.map((item) => {
+      const original = baseById.get(item.id)
+      return original
+        ? { ...item, createdAt: original.createdAt, updatedAt: original.updatedAt }
+        : item
+    })
+  const conflictOffset = conflicts.length
+  const items = mergeEntities<SyncNoteV1>(
+    'notes',
+    'notes.items',
+    base.items,
+    normalizeMetadata(local.items),
+    normalizeMetadata(remote.items),
+    conflicts,
+  )
+  // 字段冲突按便签合并；实体级的删除/修改与同时创建冲突保留原始语义。
+  const noteConflicts = new Map<string, SyncConflict>()
+  for (const conflict of conflicts.splice(conflictOffset)) {
+    const id = conflict.path.slice('notes.items.'.length).split('.')[0]!
+    noteConflicts.set(id, conflict)
+  }
+  for (const [id, conflict] of noteConflicts) {
+    addConflict(
+      conflicts,
+      'notes',
+      conflict.kind,
+      `notes.items.${id}`,
+      (baseById.get(id) ?? MISSING) as MaybeJson,
+      (localById.get(id) ?? MISSING) as MaybeJson,
+      (remoteById.get(id) ?? MISSING) as MaybeJson,
+      true,
+    )
+  }
+  return {
+    items: items.map((item) => {
+      const timestamps = [baseById.get(item.id), localById.get(item.id), remoteById.get(item.id)]
+        .filter((value): value is SyncNoteV1 => Boolean(value))
+        .map((value) => value.updatedAt)
+      return { ...item, updatedAt: timestamps.sort().at(-1) ?? item.updatedAt }
+    }),
+  }
+}
+
+function mergeOptional(
+  base: SyncSnapshotV1['optional'],
+  local: SyncSnapshotV1['optional'],
+  remote: SyncSnapshotV1['optional'],
+  conflicts: SyncConflict[],
+): SyncSnapshotV1['optional'] {
+  const result: NonNullable<SyncSnapshotV1['optional']> = {}
+  if (local?.blockedTopSites && remote?.blockedTopSites) {
+    const baseUrls = new Set(base?.blockedTopSites?.urls ?? [])
+    const localUrls = new Set(local.blockedTopSites.urls)
+    const remoteUrls = new Set(remote.blockedTopSites.urls)
+    const urls = new Set<string>()
+    for (const url of new Set([...baseUrls, ...localUrls, ...remoteUrls])) {
+      const inBase = baseUrls.has(url)
+      const inLocal = localUrls.has(url)
+      const inRemote = remoteUrls.has(url)
+      if (inLocal === inRemote ? inLocal : inLocal === inBase ? inRemote : inLocal) urls.add(url)
+    }
+    result.blockedTopSites = { urls: [...urls].sort() }
+  } else {
+    result.blockedTopSites = local?.blockedTopSites ?? remote?.blockedTopSites
+  }
+
+  if (local?.wallpapers && remote?.wallpapers) {
+    const wallpapers: NonNullable<SyncSnapshotV1['optional']>['wallpapers'] = {}
+    for (const variant of ['light', 'dark'] as const) {
+      const empty = { items: [], order: [], fixedId: '' }
+      const before = base?.wallpapers?.[variant] ?? empty
+      const ours = local.wallpapers[variant] ?? empty
+      const theirs = remote.wallpapers[variant] ?? empty
+      const path = `optional.wallpapers.${variant}`
+      const items = mergeEntities(
+        'wallpaper',
+        `${path}.items`,
+        before.items,
+        ours.items,
+        theirs.items,
+        conflicts,
+      )
+      const validIds = new Set(items.map((item) => item.id))
+      const sharedIds = new Set(
+        before.order.filter(
+          (id) => validIds.has(id) && ours.order.includes(id) && theirs.order.includes(id),
+        ),
+      )
+      const order = mergeOrder(
+        'wallpaper',
+        `${path}.order`,
+        before.order,
+        ours.order,
+        theirs.order,
+        sharedIds,
+        conflicts,
+      )
+      const fixedId = before.fixedId
+        ? (mergeAtomic(
+            'wallpaper',
+            `${path}.fixedId`,
+            before.fixedId,
+            ours.fixedId,
+            theirs.fixedId,
+            conflicts,
+          ) as string)
+        : ours.fixedId || theirs.fixedId
+      // 新增项保留在所属列表的相邻项旁，不能因三方合并被统一挪到末尾。
+      const mergedOrder = [...order]
+      for (const sequence of [ours.order, theirs.order]) {
+        for (const [index, id] of sequence.entries()) {
+          if (!validIds.has(id) || mergedOrder.includes(id)) continue
+          const next = sequence
+            .slice(index + 1)
+            .find((candidate) => mergedOrder.includes(candidate))
+          mergedOrder.splice(next ? mergedOrder.indexOf(next) : mergedOrder.length, 0, id)
+        }
+      }
+      wallpapers[variant] = {
+        items,
+        order: mergedOrder,
+        fixedId: validIds.has(fixedId) ? fixedId : (items[0]?.id ?? ''),
+      }
+    }
+    wallpapers.rotation = mergeJson(
+      'wallpaper',
+      'optional.wallpapers.rotation',
+      canonicalize(base?.wallpapers?.rotation ?? { enabled: false, order: 'random' }),
+      canonicalize(local.wallpapers.rotation ?? { enabled: false, order: 'random' }),
+      canonicalize(remote.wallpapers.rotation ?? { enabled: false, order: 'random' }),
+      conflicts,
+    ) as unknown as typeof wallpapers.rotation
+    result.wallpapers = wallpapers
+  } else {
+    result.wallpapers = local?.wallpapers ?? remote?.wallpapers
+  }
+
+  const onlineWallpaperUrl = mergeJson(
+    'settings',
+    'optional.onlineWallpaperUrl',
+    base?.onlineWallpaperUrl ?? MISSING,
+    local?.onlineWallpaperUrl ?? MISSING,
+    remote?.onlineWallpaperUrl ?? MISSING,
+    conflicts,
+  )
+  if (onlineWallpaperUrl !== MISSING && typeof onlineWallpaperUrl === 'string') {
+    result.onlineWallpaperUrl = onlineWallpaperUrl
+  }
+
+  return result.blockedTopSites || result.wallpapers || result.onlineWallpaperUrl !== undefined
+    ? result
+    : undefined
+}
+
+export function mergeSyncSnapshots(
+  base: SyncSnapshotV1,
+  local: SyncSnapshotV1,
+  remote: SyncSnapshotV1,
+  tombstones: readonly TombstoneV1[] = [],
+): ThreeWayMergeResult {
+  base = normalizeSnapshotOrder(base)
+  local = normalizeSnapshotOrder(local)
+  remote = normalizeSnapshotOrder(remote)
+  const conflicts: SyncConflict[] = []
+  const hasSettings = Boolean(base.settings || local.settings || remote.settings)
+  const normalizedRemoteSettings = normalizeRemoteSyncSettings(
+    base.settings ?? {},
+    remote.settings ?? {},
+  )
+  const settings = hasSettings
+    ? pickSyncSettings(
+        mergeJson(
+          'settings',
+          'settings',
+          pickSyncSettings(base.settings ?? {}),
+          pickSyncSettings(normalizeRemoteSyncSettings(base.settings ?? {}, local.settings ?? {})),
+          pickSyncSettings(normalizedRemoteSettings),
+          conflicts,
+        ) as JsonObject,
+      )
+    : MISSING
+  const ui = mergeJson(
+    'ui',
+    'ui',
+    base.ui ?? MISSING,
+    local.ui ?? MISSING,
+    remote.ui ?? MISSING,
+    conflicts,
+  )
+  const scope = { ...local.scope }
+  const quickLinks =
+    local.quickLinks && remote.quickLinks
+      ? mergeQuickLinks(
+          base.quickLinks ?? { items: [], rootOrder: [], groups: [], groupOrder: [] },
+          local.quickLinks,
+          remote.quickLinks,
+          conflicts,
+        )
+      : mergeJson(
+          'quick-links',
+          'quickLinks',
+          base.quickLinks ? canonicalize(base.quickLinks) : MISSING,
+          local.quickLinks ? canonicalize(local.quickLinks) : MISSING,
+          remote.quickLinks ? canonicalize(remote.quickLinks) : MISSING,
+          conflicts,
+        )
+  const searchEngines =
+    local.customSearchEngines && remote.customSearchEngines
+      ? mergeSearchEngines(
+          base.customSearchEngines ?? { items: [], order: [] },
+          local.customSearchEngines,
+          remote.customSearchEngines,
+          conflicts,
+        )
+      : mergeJson(
+          'search-engines',
+          'customSearchEngines',
+          base.customSearchEngines ? canonicalize(base.customSearchEngines) : MISSING,
+          local.customSearchEngines ? canonicalize(local.customSearchEngines) : MISSING,
+          remote.customSearchEngines ? canonicalize(remote.customSearchEngines) : MISSING,
+          conflicts,
+        )
+  const notes =
+    local.notes && remote.notes
+      ? mergeNotes(base.notes ?? { items: [] }, local.notes, remote.notes, conflicts)
+      : mergeJson(
+          'notes',
+          'notes',
+          base.notes ? canonicalize(base.notes) : MISSING,
+          local.notes ? canonicalize(local.notes) : MISSING,
+          remote.notes ? canonicalize(remote.notes) : MISSING,
+          conflicts,
+        )
+  let snapshot: SyncSnapshotV1 = {
+    scope,
+    optional: mergeOptional(base.optional, local.optional, remote.optional, conflicts),
+  }
+  if (settings !== MISSING) snapshot.settings = settings as JsonObject
+  if (quickLinks !== MISSING) snapshot.quickLinks = quickLinks as SyncSnapshotV1['quickLinks']
+  if (searchEngines !== MISSING) {
+    snapshot.customSearchEngines = searchEngines as SyncSnapshotV1['customSearchEngines']
+  }
+  if (notes !== MISSING) snapshot.notes = notes as SyncSnapshotV1['notes']
+  if (ui !== MISSING) snapshot.ui = ui as SyncSnapshotV1['ui']
+  // 没有实体基线时，无法判断本机副本是否在删除前修改过，必须显式选择。
+  const deleted = new Set(
+    pruneExpiredTombstones(tombstones).map((item) => `${item.entityType}\0${item.entityId}`),
+  )
+  if (deleted.size)
+    for (const entity of SYNC_ENTITIES) {
+      // 未携带类别表示不共享；显式空集合才表达实体删除。
+      if (!entity.items(remote)) continue
+      const known = new Set(
+        [...(entity.items(base) ?? []), ...(entity.items(remote) ?? [])].map((item) => item.id),
+      )
+      for (const item of entity.items(local) ?? []) {
+        if (!known.has(item.id) && deleted.has(`${entity.type}\0${item.id}`))
+          addConflict(
+            conflicts,
+            entity.category,
+            'delete-vs-modify',
+            `${entity.path}.${item.id}`,
+            MISSING,
+            canonicalize(item),
+            MISSING,
+            entity.canKeepBoth,
+          )
+      }
+    }
+  const usedImages = new Set(
+    [
+      ...(snapshot.quickLinks?.items.map((item) => item.faviconHash) ?? []),
+      ...(snapshot.customSearchEngines?.items.map((item) => item.iconHash) ?? []),
+    ].filter((hash): hash is string => Boolean(hash)),
+  )
+  const images = { ...base.inlineImages, ...local.inlineImages, ...remote.inlineImages }
+  snapshot.inlineImages = Object.fromEntries(
+    Object.entries(images).filter(([hash]) => usedImages.has(hash)),
+  )
+  if (Object.keys(snapshot.inlineImages).length === 0) delete snapshot.inlineImages
+  if (!snapshot.optional) delete snapshot.optional
+  snapshot = normalizeSnapshotOrder(snapshot)
+  return {
+    status: conflicts.length
+      ? 'conflict'
+      : jsonEquals(snapshot, local) && jsonEquals(snapshot, remote)
+        ? 'unchanged'
+        : jsonEquals(snapshot, local)
+          ? 'use-local'
+          : jsonEquals(snapshot, remote)
+            ? 'use-remote'
+            : 'merged',
+    snapshot,
+    conflicts,
+  }
+}

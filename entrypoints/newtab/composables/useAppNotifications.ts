@@ -1,0 +1,152 @@
+import { useTranslation } from 'i18next-vue'
+
+import { browser } from 'wxt/browser'
+
+import { version } from '@/package.json'
+
+import { requestExtensionUpdateNotice } from '@/shared/extensionUpdate'
+import { useSettingsStore } from '@/shared/settings'
+import type { LocalSyncStateV1 } from '@/shared/webdavSync/types'
+
+import { shownFaviconCacheHintStorage } from '@newtab/shared/storages/notificationStorage'
+import { getTimePeriod } from '@newtab/shared/timePeriod'
+
+import { shouldShowChangelog } from '../shared/utils'
+
+/**
+ * 处理应用级通知（欢迎、问候、图标缓存提示、版本更新）。
+ * @param showChangelog 用于自动弹出更新日志，调用方可在其中懒加载 Changelog。
+ */
+export function useAppNotifications(showChangelog: () => void | Promise<void>) {
+  const settings = useSettingsStore()
+  const { t } = useTranslation()
+  let mounted = false
+  const canShowGreeting = () => mounted && document.visibilityState === 'visible'
+  const showGreeting = async () => {
+    if (!canShowGreeting()) return
+    const { greetingShown } = await browser.storage.session.get('greetingShown')
+    if (!canShowGreeting()) return
+    document.removeEventListener('visibilitychange', showGreeting)
+    if (greetingShown || !settings.greetingEnabled) return
+    const greetings = t(`newtab:notification.greeting.${getTimePeriod(new Date().getHours())}`, {
+      returnObjects: true,
+    }) as string[]
+    ElMessage({
+      message: greetings[Math.floor(Math.random() * greetings.length)],
+      duration: 5000,
+    })
+    // 仅在可见页面创建问候后记录，后台恢复的标签页不会消耗展示机会。
+    await browser.storage.session.set({ greetingShown: true })
+  }
+
+  // 问候独立于其他通知的异步请求，在页面挂载且可见后展示。
+  onMounted(() => {
+    mounted = true
+    if (settings.greetingEnabled) {
+      document.addEventListener('visibilitychange', showGreeting)
+      void showGreeting()
+    }
+  })
+  const syncStateListener: Parameters<typeof browser.storage.onChanged.addListener>[0] = (
+    changes,
+    area,
+  ) => {
+    if (area === 'local' && changes.webdavSyncState) void showWebDavSyncNotification(t)
+  }
+
+  onMounted(async () => {
+    browser.storage.onChanged.addListener(syncStateListener)
+    await showExtensionUpdateNotification(t)
+    await showWebDavSyncNotification(t)
+    // 全新用户欢迎通知
+    if (settings.pluginVersion === '') {
+      ElNotification.success({
+        title: t('newtab:notification.welcome.title'),
+        message: t('newtab:notification.welcome.message'),
+        duration: 8000,
+      })
+    }
+
+    // 图标缓存提示通知（仅展示一次）
+    if (!settings.faviconCacheEnabled) {
+      const alreadyShown = await shownFaviconCacheHintStorage.getValue()
+      if (!alreadyShown) {
+        await shownFaviconCacheHintStorage.setValue(true)
+        ElNotification.info({
+          title: t('newtab:notification.faviconCacheHint.title'),
+          message: t('newtab:notification.faviconCacheHint.message'),
+          duration: 10000,
+        })
+      }
+    }
+
+    if (settings.pluginVersion !== version) {
+      settings.readChangeLog = false
+      ElMessage.primary(t('newtab:changelog.newVersionMsg', { version }))
+
+      const canAutoShow = shouldShowChangelog(
+        settings.pluginVersion,
+        version,
+        settings.hideMajorChangelog,
+      )
+
+      if (canAutoShow) {
+        void showChangelog()
+      } else {
+        settings.pluginVersion = version
+      }
+    }
+  })
+  onBeforeUnmount(() => {
+    mounted = false
+    document.removeEventListener('visibilitychange', showGreeting)
+    browser.storage.onChanged.removeListener(syncStateListener)
+  })
+}
+
+async function showExtensionUpdateNotification(t: (key: string) => string): Promise<void> {
+  const noticeType = await requestExtensionUpdateNotice()
+  if (noticeType === 'prompt') {
+    ElNotification.warning({
+      title: t('newtab:notification.extensionUpdate.title'),
+      message: t('newtab:notification.extensionUpdate.message'),
+      duration: 10_000,
+    })
+  } else if (noticeType === 'toast') {
+    ElMessage.info(t('newtab:notification.extensionUpdate.toast'))
+  }
+}
+
+async function showWebDavSyncNotification(t: (key: string) => string): Promise<void> {
+  const stored = await browser.storage.local.get('webdavSyncState')
+  const state = stored.webdavSyncState as LocalSyncStateV1 | undefined
+  if (!state?.configured) return
+  const category =
+    state.pauseReason === 'conflict'
+      ? 'conflict'
+      : state.pauseReason === 'corrupted-remote'
+        ? 'corrupted'
+        : state.lastError?.category === 'server'
+          ? 'server'
+          : undefined
+  if (!category) return
+
+  const key = `webdavSyncNotification:${category}`
+  const shown = (await browser.storage.session.get(key).catch(() => ({}))) as Record<
+    string,
+    unknown
+  >
+  if (shown[key]) return
+  await browser.storage.session.set({ [key]: true }).catch(() => undefined)
+  ElNotification.warning({
+    title: t('settings:webdavSync.title'),
+    message: t(
+      category === 'conflict'
+        ? 'settings:webdavSync.status.conflict'
+        : category === 'corrupted'
+          ? 'settings:webdavSync.status.corrupted'
+          : 'settings:webdavSync.errors.server',
+    ),
+    duration: 10_000,
+  })
+}

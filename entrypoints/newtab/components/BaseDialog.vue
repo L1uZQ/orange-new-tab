@@ -1,0 +1,123 @@
+<script setup lang="ts">
+import '@newtab/styles/dialog.scss'
+import { useElementVisibility, useWindowSize } from '@vueuse/core'
+import { useId } from 'vue'
+
+import { useLocale, type ScrollbarInstance } from 'element-plus'
+import CloseRound from '~icons/ic/round-close'
+
+import { useImeAwareDialog } from '@newtab/composables/useImeAwareDialog'
+
+interface Props {
+  title?: string
+  containerClass?: string
+  appendToBody?: boolean
+  destroyOnClose?: boolean
+  style?: object | string
+  width?: string | number
+  headerClass?: string
+}
+
+const props = defineProps<Props>()
+const model = defineModel<boolean>({ required: true })
+const emit = defineEmits<{
+  open: []
+  close: []
+  closed: []
+  scroll: [{ scrollLeft: number; scrollTop: number }]
+}>()
+
+const headerRef = useTemplateRef('headerRef')
+const scrollbarRef = ref<ScrollbarInstance>()
+const scrollClass = `base-dialog-scroll-${useId().replace(/[^a-zA-Z0-9_-]/g, '-')}`
+const scrollReady = computed(() => Boolean(scrollbarRef.value?.wrapRef))
+const { isComposing } = useImeAwareDialog()
+
+const headerIsVisible = useElementVisibility(headerRef)
+const { width: windowWidth } = useWindowSize({ type: 'visual' })
+const { t } = useLocale()
+
+function onClose() {
+  emit('close')
+  model.value = false
+}
+
+function onClosed() {
+  emit('closed')
+}
+
+function onOpen() {
+  emit('open')
+  scrollbarRef.value?.setScrollTop(0)
+  scrollbarRef.value?.update()
+}
+
+function onScroll(e: { scrollLeft: number; scrollTop: number }) {
+  emit('scroll', e)
+}
+</script>
+
+<template>
+  <el-dialog
+    v-model="model"
+    :width="windowWidth < 650 ? '93%' : (props.width ?? 600)"
+    :class="[containerClass, 'base-dialog']"
+    :style="style"
+    :show-close="false"
+    draggable
+    :append-to-body="appendToBody"
+    :destroy-on-close="destroyOnClose"
+    :header-class="headerClass"
+    :close-on-press-escape="!isComposing"
+    @open="onOpen"
+    @close="onClose"
+    @closed="onClosed"
+  >
+    <template #header="{ titleId }">
+      <div
+        :id="titleId"
+        class="base-dialog-title noselect"
+        :style="{ opacity: !headerIsVisible ? 1 : 0 }"
+      >
+        {{ title }}
+      </div>
+      <div
+        role="button"
+        tabindex="0"
+        :aria-label="t('el.dialog.close')"
+        class="base-dialog-close-btn"
+        @click="onClose"
+        @keydown.enter="onClose"
+        @keydown.space.prevent="onClose"
+      >
+        <component :is="CloseRound" />
+      </div>
+    </template>
+    <div
+      v-if="title"
+      class="base-dialog-divider"
+      :style="{ opacity: !headerIsVisible ? 1 : 0 }"
+    ></div>
+    <div class="base-dialog-container">
+      <el-scrollbar
+        ref="scrollbarRef"
+        class="base-dialog-scrollbar"
+        :wrap-class="scrollClass"
+        @scroll="onScroll"
+      >
+        <div ref="headerRef" class="base-dialog-list-title noselect">
+          {{ title }}
+        </div>
+        <slot></slot>
+        <div class="base-dialog-bottom-spacing"></div>
+        <el-backtop
+          v-if="scrollReady && model"
+          :target="`.${scrollClass}`"
+          style="position: absolute"
+          :right="15"
+          :bottom="20"
+        />
+      </el-scrollbar>
+    </div>
+  </el-dialog>
+</template>

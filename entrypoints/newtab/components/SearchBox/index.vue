@@ -1,0 +1,334 @@
+<script lang="ts" setup>
+import '@newtab/styles/search.scss'
+import {
+  onClickOutside,
+  useActiveElement,
+  useElementSize,
+  useTimeoutFn,
+  useWindowFocus,
+} from '@vueuse/core'
+
+import { useTranslation } from 'i18next-vue'
+import Search from '~icons/fa7-solid/magnifying-glass'
+
+import { BgType } from '@/shared/enums'
+import { useSettingsStore } from '@/shared/settings'
+
+import { useCompositionInput } from '@newtab/composables/useCompositionInput'
+import { useFocusState } from '@newtab/composables/useFocus'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
+import { useSearchHistoryCache } from '@newtab/composables/useSearchHistoryCache'
+import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
+import {
+  getAvailableSearchEngineIds,
+  getSearchEngineUrl,
+  searchEngines,
+} from '@newtab/shared/search'
+import { parseNavigableUrl } from '@newtab/shared/search/url'
+
+import SearchEngineMenu from './components/SearchEngineMenu.vue'
+import SearchSuggestionArea from './components/SearchSuggestionArea.vue'
+
+type SearchSuggestionAreaController = {
+  clearActiveSuggest: () => void
+  clearSearchSuggestions: () => void
+  showSearchHistories: () => Promise<void>
+  handleInput: (text: string) => void
+  navigateActiveSuggest: (
+    direction: number,
+    currentText: string,
+    originText: string | null,
+  ) => { searchText: string; originSearchText: string | null } | null
+  submitActiveSuggest: () => boolean
+}
+
+const searchBox = useTemplateRef('searchBox')
+const searchForm = useTemplateRef('searchForm')
+const searchInput = useTemplateRef('searchInput')
+const { start: focusSearchInputLater } = useTimeoutFn(() => searchInput.value?.focus(), 10, {
+  immediate: false,
+})
+const suggestionArea = ref<SearchSuggestionAreaController>()
+const searchEngineMenuRef = ref<typeof SearchEngineMenu>()
+const searchSuggestionListId = 'search-suggestion-list'
+const activeSuggestionOptionId = ref<string>()
+const searchSuggestionsExpanded = ref(false)
+
+const { t } = useTranslation()
+
+const searchText = ref('')
+const originSearchText = ref<string | null>(null)
+const mounted = ref(false)
+const { isComposing, handleCompositionStart, handleCompositionEnd } = useCompositionInput(
+  () => void nextTick(handleInput),
+)
+
+const focusStore = useFocusState()
+const settings = useSettingsStore()
+const customSearchEngineStore = useCustomSearchEngineStore()
+const isWindowFocused = useWindowFocus()
+const activeElement = useActiveElement()
+const { addHistory } = useSearchHistoryCache()
+
+const SEARCH_FORM_FALLBACK_HEIGHT = 44
+
+const { width: searchFormWidth, height: searchFormHeight } = useElementSize(searchForm)
+const searchBorderRadius = computed(() => {
+  const height = searchFormHeight.value || SEARCH_FORM_FALLBACK_HEIGHT
+  return `${Math.round((height * settings.search.borderRadius) / 100)}px`
+})
+
+const perf = usePerfClasses(() => ({
+  transparent: settings.perf.searchBar.transparent,
+  transparency: settings.perf.searchBar.transparency,
+  blur: settings.perf.searchBar.blur,
+}))
+
+const formPerfClass = computed(() => [
+  {
+    'search-box__form--shadow': settings.search.style.shadow,
+    'search-box__form--dark': settings.background.bgType === BgType.None,
+    'search-box__form--expand': settings.search.expandAlways,
+    'search-box__form--always-icon': settings.search.showIconAlways,
+    border: settings.search.style.border,
+  },
+  perf('search-box__form').value,
+])
+
+const searchPlaceholder = computed(() =>
+  focusStore.isFocused ? undefined : settings.search.placeholder || t('search.placeholder'),
+)
+
+function resetSearch() {
+  searchText.value = ''
+  originSearchText.value = null
+  suggestionArea.value?.clearSearchSuggestions()
+  searchForm.value?.classList.remove('search-box__form--focus')
+  focusStore.blur()
+}
+
+watch(isWindowFocused, (isFocused) => {
+  if (searchText.value.length > 0 || isFocused) {
+    return
+  }
+  handleEsc()
+})
+
+onClickOutside(searchBox, (e) => {
+  if (!focusStore.isFocused) {
+    return
+  }
+
+  if (activeElement.value?.classList.contains('search-engine-menu')) {
+    searchEngineMenuRef.value?.hide()
+    focusSearchInputLater()
+    return
+  }
+
+  const target = e.target as Element | null
+  if (target?.closest('.yiyan')) {
+    return
+  }
+  resetSearch()
+})
+
+function handleEsc(event?: KeyboardEvent) {
+  if (isComposing.value || event?.isComposing) {
+    return
+  }
+  resetSearch()
+  searchInput.value?.blur()
+}
+
+function handleFocus() {
+  searchForm.value?.classList.add('search-box__form--focus')
+  focusStore.focus()
+  suggestionArea.value?.showSearchHistories()
+}
+
+// 处理输入事件
+function handleInput() {
+  // 如果正在组合输入中(拼音未上屏),不触发搜索
+  if (isComposing.value) {
+    return
+  }
+  originSearchText.value = null
+  suggestionArea.value?.clearActiveSuggest()
+  suggestionArea.value?.handleInput(searchText.value)
+}
+
+function navigateSuggestions(direction: number) {
+  const result = suggestionArea.value?.navigateActiveSuggest(
+    direction,
+    searchText.value,
+    originSearchText.value,
+  )
+  if (!result) {
+    return
+  }
+
+  searchText.value = result.searchText
+  originSearchText.value = result.originSearchText
+}
+
+function handleUp() {
+  navigateSuggestions(-1)
+}
+
+function handleDown() {
+  navigateSuggestions(1)
+}
+
+function handleTabNavigation(direction: 1 | -1) {
+  const currentKey = settings.search.engine
+  const allEngineKeys = getAvailableSearchEngineIds(
+    settings.search.builtInEngineOrder,
+    settings.search.hiddenBuiltInEngines,
+    customSearchEngineStore.items.map((engine) => engine.id),
+  )
+
+  if (allEngineKeys.length === 0) {
+    return
+  }
+
+  const currentIndex = allEngineKeys.indexOf(currentKey)
+
+  // 如果当前引擎不在列表中（可能被删除了），从第一个开始
+  if (currentIndex === -1) {
+    settings.search.engine = allEngineKeys[0]!
+    return
+  }
+
+  const newIndex = (currentIndex + direction + allEngineKeys.length) % allEngineKeys.length
+  settings.search.engine = allEngineKeys[newIndex]!
+  searchEngineMenuRef.value?.showEngineToast()
+}
+
+function handlePrevTab() {
+  handleTabNavigation(-1)
+}
+
+function handleNextTab() {
+  handleTabNavigation(1)
+}
+
+const saveSearchHistory = async (text: string) => {
+  if (!settings.search.recordHistory || !text) {
+    return
+  }
+  await addHistory(text)
+}
+
+const doSearchWithText = async (text: string, newtab: boolean = false) => {
+  if (text.length <= 0) {
+    searchInput.value?.focus()
+    return
+  }
+
+  await saveSearchHistory(text)
+
+  if (!(settings.search.engine in searchEngines)) {
+    await customSearchEngineStore.init()
+  }
+
+  const searchUrl = getSearchEngineUrl(settings.search.engine)
+  if (!searchUrl) {
+    console.error('Invalid search engine:', settings.search.engine)
+    ElMessage.error(t('search.searchEngineNotFound'))
+    return
+  }
+
+  window.open(
+    searchUrl.replace('%s', encodeURIComponent(text)),
+    newtab || settings.search.openInNewTab ? '_blank' : '_self',
+    'noopener noreferrer',
+  )
+  suggestionArea.value?.clearSearchSuggestions()
+}
+
+function navigateToUrl(url: string) {
+  window.open(url, settings.search.openInNewTab ? '_blank' : '_self', 'noopener noreferrer')
+  suggestionArea.value?.clearSearchSuggestions()
+}
+
+function doSearch() {
+  if (suggestionArea.value?.submitActiveSuggest()) return
+  const navigableUrl = parseNavigableUrl(searchText.value)
+  if (navigableUrl) {
+    navigateToUrl(navigableUrl.url)
+    searchText.value = ''
+    return
+  }
+  doSearchWithText(searchText.value)
+  searchText.value = ''
+}
+
+onMounted(() => {
+  if (settings.perf.searchBar.launchAnim) {
+    useTimeoutFn(() => (mounted.value = true), 100)
+  }
+})
+</script>
+
+<template>
+  <section
+    ref="searchBox"
+    class="search-box"
+    :style="{ '--search-border-radius': searchBorderRadius }"
+  >
+    <form
+      ref="searchForm"
+      role="search"
+      class="search-box__form"
+      :class="formPerfClass"
+      :style="{
+        '--width': settings.perf.searchBar.launchAnim ? (mounted ? undefined : '0') : undefined,
+        '--search-expand-width': `${settings.search.expandWidth}px`,
+      }"
+      @submit.prevent="doSearch"
+    >
+      <search-engine-menu ref="searchEngineMenuRef" :border-radius="searchBorderRadius" />
+      <input
+        ref="searchInput"
+        name="search-input"
+        v-model="searchText"
+        :placeholder="searchPlaceholder"
+        class="search-box__input"
+        :class="{ 'search-box__input--left-aligned': settings.search.leftAlignInput }"
+        role="combobox"
+        :aria-label="t('a11y.searchInput')"
+        :aria-controls="searchSuggestionListId"
+        :aria-activedescendant="activeSuggestionOptionId"
+        :aria-expanded="searchSuggestionsExpanded"
+        aria-autocomplete="list"
+        autocomplete="off"
+        @input="handleInput"
+        @focus="handleFocus"
+        @compositionstart="handleCompositionStart"
+        @compositionend="handleCompositionEnd"
+        @keydown.up.prevent="handleUp"
+        @keydown.down.prevent="handleDown"
+        @keydown.tab.shift.prevent.exact="handlePrevTab"
+        @keydown.tab.prevent.exact="handleNextTab"
+        @keydown.esc="handleEsc"
+      />
+      <div
+        class="search-box__btn"
+        tabindex="-1"
+        :style="{ opacity: focusStore.isFocused || settings.search.showIconAlways ? 1 : 0 }"
+      >
+        <el-icon @click="doSearch"><search aria-hidden="true" /></el-icon>
+      </div>
+    </form>
+    <search-suggestion-area
+      ref="suggestionArea"
+      :list-id="searchSuggestionListId"
+      :search-text="searchText"
+      :search-form-width="searchFormWidth"
+      @do-search-with-text="doSearchWithText"
+      @navigate-to-url="navigateToUrl"
+      @active-option-change="activeSuggestionOptionId = $event"
+      @expanded-change="searchSuggestionsExpanded = $event"
+    />
+  </section>
+</template>

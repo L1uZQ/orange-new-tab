@@ -1,0 +1,311 @@
+{
+  "a11y": {
+    "actions": "页面操作",
+    "addQuickLinksGroup": "添加快速导航分组",
+    "copyYiyan": "复制一言",
+    "deleteGroup": "删除分组 {{name}}",
+    "downloadBackground": "下载背景",
+    "goToPage": "前往第 {{page}} 页",
+    "main": "新标签页内容",
+    "moveGroupDown": "下移分组 {{name}}",
+    "moveGroupUp": "上移分组 {{name}}",
+    "nextPage": "下一页",
+    "openActionsMenu": "打开页面操作菜单",
+    "openBookmarks": "打开书签",
+    "previousPage": "上一页",
+    "quickLinksGroups": "快速导航分组",
+    "quickLinksPagination": "快速导航分页",
+    "refreshBackground": "刷新背景",
+    "renameGroup": "重命名分组 {{name}}",
+    "searchInput": "搜索关键词",
+    "searchSuggestions": "搜索建议"
+  },
+  "about": {
+    "yiyanProvider": "一言API由 {api} 提供"
+  },
+  "bookmark": {
+    "404": "什么都没找到",
+    "addToQuickLinks": "添加到快速导航",
+    "added": "已添加到快速导航",
+    "collapse": {
+      "all": "折叠本层全部",
+      "other": "折叠同级其他项"
+    },
+    "delete": {
+      "confirm": "你确定要删除「{{name}}」吗？",
+      "confirmFolder": "「{{name}}」是一个目录，删除他会把其中所有书签一起删除，确定吗？",
+      "success": "已删除「 {{title}}」"
+    },
+    "expandHint": "请展开侧边栏以查看书签",
+    "moveError": "书签移动失败",
+    "sortBy": "排序方式",
+    "sortMode": {
+      "createdAsc": "由新到旧",
+      "createdDesc": "由旧到新",
+      "nameAsc": "名称由A到Z",
+      "nameDesc": "名称由Z到A",
+      "origin": "原始顺序"
+    },
+    "title": "书签",
+    "tooSmall": "侧边栏宽度过小"
+  },
+  "bootstrap": {
+    "invalidVer": {
+      "bak": "你还可以点击下方按钮以下载旧版本的配置文件备份（不支持导入到当前版本）。",
+      "btn": "清除并刷新",
+      "msg": "非常抱歉，检测到不受支持的历史设置版本。为保证扩展功能正常运行，请清除扩展数据并刷新。",
+      "title": "不支持的配置版本"
+    }
+  },
+  "builtinApps": {
+    "add": "添加",
+    "hidden": "已隐藏应用入口",
+    "note": "便签",
+    "remove": "移除",
+    "title": "内置应用管理"
+  },
+  "changelog": {
+    "hideMajor": "版本升级时不弹出",
+    "newVersionMsg": "你的起始页更新啦~",
+    "otherVersions": {
+      "description": "仅包含5个版本的更新日志，剩余内容请点击下方链接跳转查看：",
+      "linkEn": "English",
+      "linkZhCN": "中文（简体）",
+      "title": "其他版本？"
+    },
+    "title": "更新日志"
+  },
+  "common": {
+    "cancel": "取消",
+    "confirm": "好",
+    "delete": "删除",
+    "edit": "编辑",
+    "enable": "启用",
+    "icon": "图标（可选）",
+    "itemUnavailable": "此项目已在其他页面或设备上删除，已保留当前编辑内容。",
+    "name": "名称",
+    "no": "算了",
+    "save": "保存",
+    "tooLargeImageConfirm": "图片较大（{{size}}），可能会影响性能和响应速度，是否继续使用？",
+    "undo": "撤销",
+    "url": "地址",
+    "warning": "警告"
+  },
+  "customSearchEngine": {
+    "add": "添加自定义搜索引擎",
+    "addDialog": {
+      "invalidUrlError": "URL 无效或不包含 %s 占位符，请重新输入~",
+      "nameRequiredError": "名称不能为空~",
+      "urlHelp": "URL 必须包含 %s 作为搜索关键词占位符"
+    },
+    "deleteConfirm": "确定要删除搜索引擎「{{name}}」吗？",
+    "edit": "编辑自定义搜索引擎",
+    "title": "自定义搜索引擎"
+  },
+  "dock": {
+    "launchpad": {
+      "add": "添加",
+      "empty": "无结果",
+      "search": "搜索...",
+      "title": "启动台"
+    }
+  },
+  "note": {
+    "snapshotTooLarge": "无法保存：完整备份或同步快照超过 10 MiB。请减少便签、自定义图标或其他数据，草稿已保留。",
+    "saveFailed": "无法保存便签，编辑内容已保留。",
+    "conflict": "此便签已在其他页面或设备修改。草稿已保留，请复制草稿后重新打开便签。",
+    "deleted": "此便签已在其他页面或设备删除。草稿已保留，请复制到新便签。",
+    "tooLarge": "无法保存：单条便签限 1 MiB，全部便签限 8 MiB。请缩短内容或删除不需要的便签。",
+    "backToList": "返回便签列表",
+    "create": "创建便签",
+    "deleteConfirm": "确定删除「{{title}}」吗？",
+    "discard": "放弃修改",
+    "edit": "编辑便签",
+    "empty": "从列表选择便签，或新建一条便签。",
+    "export": "导出图片",
+    "exportFailed": "无法导出便签图片",
+    "exported": "便签图片已导出",
+    "listEmpty": "还没有便签",
+    "pin": "置顶",
+    "time": {
+      "dayBeforeYesterday": "前天{{time}}",
+      "today": "今天{{time}}",
+      "yesterday": "昨天{{time}}"
+    },
+    "title": "便签",
+    "toggleSource": "切换源码编辑",
+    "unpin": "取消置顶",
+    "unsaved": "离开前保存修改吗？",
+    "untitled": "无标题便签"
+  },
+  "menu": {
+    "about": "关于",
+    "backgroundPreference": "背景偏好设置",
+    "help": "帮助和反馈",
+    "searchEnginePreference": "搜索引擎偏好",
+    "sponsor": "支持我们"
+  },
+  "notification": {
+    "bing": {
+      "message": "请检查开发者工具中的控制台提示。",
+      "title": "获取 Bing 壁纸失败"
+    },
+    "extensionUpdate": {
+      "message": "扩展已有新版本可用，请重启浏览器以完成更新。",
+      "title": "扩展更新可用",
+      "toast": "请重启浏览器以完成扩展更新"
+    },
+    "faviconCacheHint": {
+      "message": "可在「其他」设置中开启图标缓存，获得更快的图标加载速度",
+      "title": "提示：图标缓存未开启"
+    },
+    "greeting": {
+      "afternoon": [
+        "下午好，愿接下来的时间顺顺利利",
+        "下午好，喝口水，让忙碌的节奏缓一缓",
+        "愿这个下午，有件小事让你会心一笑",
+        "忙了一阵，记得伸伸懒腰，照顾一下自己",
+        "下午好，按自己的节奏来就好",
+        "愿余下的时光，多一点轻松，少一点匆忙"
+      ],
+      "dawn": [
+        "凌晨了，记得照顾好自己",
+        "凌晨的世界很安静，愿你此刻也能安心",
+        "如果还在忙，记得给自己留一点休息的时间",
+        "不管刚醒还是未睡，都愿你被温柔以待",
+        "天还没亮，先把自己照顾好",
+        "愿你在这安静的时刻，找到一点属于自己的自在"
+      ],
+      "dusk": [
+        "傍晚了，辛苦一天，歇一歇吧",
+        "傍晚好，给自己留一点放松的时间吧",
+        "一天渐渐收尾，没做完的事可以慢慢来",
+        "愿这个傍晚，有一顿可口的饭，也有好心情",
+        "忙到现在辛苦了，让肩膀和心情都放松一点",
+        "天色渐晚，记得把一点温柔也留给自己"
+      ],
+      "evening": [
+        "晚上好，愿你有个轻松的夜晚",
+        "晚上好，做点自己喜欢的事吧",
+        "愿今晚的你，能安心享受一点自己的时间",
+        "今晚不妨慢一点，一杯热饮也能让心情暖起来",
+        "晚上好，今天的小烦恼，先放一放吧",
+        "愿今晚有人可以聊聊，也有让你开心的小事"
+      ],
+      "lateNight": [
+        "夜深了，记得早点休息",
+        "夜深了，愿你放下疲惫，睡个安稳的好觉",
+        "如果还在忙，记得歇歇眼睛，喝口水",
+        "今天已经做了不少，剩下的留一点给明天吧",
+        "愿今晚的烦心事轻一点，梦里的好事多一点",
+        "晚安，照顾好自己，明天再慢慢来"
+      ],
+      "morning": [
+        "早上好，愿你今天有个好心情",
+        "早上好，记得吃点早餐，给自己一个舒服的开始",
+        "新的一天，不必太赶，按自己的节奏出发吧",
+        "愿今天有一点小惊喜，也有许多小确幸",
+        "早安，给自己一个微笑，慢慢开启今天",
+        "今天也要好好照顾自己，愿你一路顺心"
+      ],
+      "noon": [
+        "中午好，忙碌之余也记得休息",
+        "到中午了，先好好吃顿饭，再继续忙吧",
+        "愿你今天的午饭合胃口，午后的心情也轻松",
+        "中午好，给眼睛放个假，也让自己缓一缓",
+        "忙了一上午，留一点时间给自己吧",
+        "午安，吃饱一点，烦恼少一点"
+      ]
+    },
+    "wallpaperCache": {
+      "message": "无法缓存在线壁纸：{error}",
+      "title": "缓存在线壁纸失败"
+    },
+    "welcome": {
+      "message": "感谢安装柠檬起始页！你可以在右下角的设置中自定义你的新标签页。",
+      "title": "欢迎使用柠檬起始页"
+    }
+  },
+  "quickLinks": {
+    "addDialog": {
+      "extensionIconTip": "你也可以点击浏览器扩展菜单中的图标，将当前页面添加到快速导航。",
+      "invalidUrlError": "无效的地址，请重新输入~",
+      "uploadFaviconAlert": "没有上传图标时建议打开「设置-其他-图标缓存」以自动获取图标"
+    },
+    "addLink": "添加链接",
+    "bookmark": {
+      "add": "收藏到书签",
+      "existing": "该书签已存在",
+      "success": "已收藏到「{{folder}}」"
+    },
+    "editLink": "编辑链接",
+    "groups": {
+      "default": "默认",
+      "defaultDeleteBlocked": "默认分组不可删除",
+      "deleteConfirm": "确定要删除分组「{{name}}」及其中的所有链接吗？",
+      "moveDown": "下移",
+      "moveTo": "移动到分组",
+      "moveUp": "上移",
+      "rename": "重命名",
+      "selectAddTarget": "选择添加到哪个分组",
+      "selectMoveTarget": "选择移动到哪个分组",
+      "selectPinTarget": "选择保存到哪个分组",
+      "selectTitle": "选择分组",
+      "topSites": "最常访问",
+      "untitled": "分组 {{index}}"
+    },
+    "hide": "隐藏",
+    "hideTopMessage": {
+      "content": "已隐藏该最常访问网站",
+      "restoreDefault": "恢复默认",
+      "restoreSuccess": "已恢复默认最常访问网站"
+    },
+    "moveError": "移动失败",
+    "moveLeft": "左移",
+    "moveRight": "右移",
+    "pin": "置顶",
+    "unpin": "取消置顶",
+    "unpinMessage": "已取消置顶该链接",
+    "fetchingFavicon": "正在后台获取图标..."
+  },
+  "search": {
+    "browserHistory": "浏览",
+    "calculationResult": "结果",
+    "calculator": "计算",
+    "clickToCopy": "复制",
+    "engineMenu": {
+      "current": "当前",
+      "tipPrefix": "Tip：按下",
+      "tipSuffix": "切换搜索引擎"
+    },
+    "engines": {
+      "baidu": "百度",
+      "bing": "必应",
+      "duckduckgo": "DuckDuckGo",
+      "google": "Google",
+      "yandex": "Yandex"
+    },
+    "extensionSearchHistory": "搜索",
+    "mostVisited": "常用",
+    "navigateTo": "前往",
+    "placeholder": "搜索",
+    "purgeSearchHistory": "清除搜索历史",
+    "savedWebsite": "快捷",
+    "searchEngineNotFound": "未找到搜索引擎",
+    "searchFor": "搜索"
+  },
+  "sponsor": "这个扩展是我利用业余时间开发的小工具，很开心能帮助到你！如果你喜欢它，不妨给个 Star ⭐ 来支持一下，这对我意义重大。如果有任何想法或建议，也欢迎通过邮箱联系我：redlnn@outlook.com。谢谢你的信任！",
+  "time": {
+    "afternoon": "下午",
+    "dawn": "凌晨",
+    "dusk": "傍晚",
+    "evening": "晚上",
+    "lateNight": "深夜",
+    "morning": "早上",
+    "noon": "中午"
+  },
+  "title": "新标签页",
+  "yiyan": {
+    "copied": "已复制到剪贴板"
+  }
+}

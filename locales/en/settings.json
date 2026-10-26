@@ -1,0 +1,899 @@
+{
+  "a11y": {
+    "back": "Back to previous settings view"
+  },
+  "background": {
+    "bingFrom": "Image source: Bing",
+    "blur": "Blur intensity",
+    "cache": {
+      "askEnable": {
+        "message": "Caching reduces repeated downloads and keeps cached wallpapers available offline. Enable wallpaper caching?",
+        "title": "Enable wallpaper caching?"
+      },
+      "disabledTip": "Only available when the background type is \"Online URL\" (Bing wallpaper is always cached by default)",
+      "duration": "Cache expiration duration",
+      "label": "Online wallpaper cache",
+      "nextStartup": "Effective on next startup",
+      "noExpires": "Cache never expires"
+    },
+    "change": "Change background",
+    "custom": "Custom",
+    "fasterBgAnim": "Faster background display on startup",
+    "library": {
+      "add": "Add",
+      "clearPreviews": "Clear preview cache",
+      "collapse": "Collapse",
+      "confirmRemove": "Remove the {{count}} selected wallpapers?",
+      "dark": "Dark mode",
+      "done": "Done",
+      "download": "Download",
+      "dragAddHint": "Drag images or videos here to add them",
+      "empty": "Add images or videos. Select multiple files or drop them here.",
+      "expand": "Show all",
+      "group": "Wallpaper group",
+      "image": "Image",
+      "importFailed": "{{count}} files could not be added. Other files were kept.",
+      "inherit": "When no dark mode wallpapers are set, light mode wallpapers will be used automatically.",
+      "light": "Light mode",
+      "loading": "Reading details",
+      "manage": "Manage",
+      "order": "Rotation order",
+      "ordered": "List order",
+      "random": "Random",
+      "remove": "Remove",
+      "reset": "Reset",
+      "rotation": "Wallpaper rotation",
+      "solid": "Solid color",
+      "sortHint": "Drag to reorder",
+      "unavailable": "Unavailable",
+      "video": "Video"
+    },
+    "mask": {
+      "color": "Mask color",
+      "enable": "Enable mask"
+    },
+    "onlineTips": {
+      "a": "Submit after pressing the Enter key or when the input field loses focus.",
+      "b": "The wallpaper caching strategy depends on the browser, and wallpapers may not be accessible offline.",
+      "c": "There will be a blank screen before the wallpaper finishes loading, and the duration depends on your internet speed."
+    },
+    "parallax": "Wallpaper parallax effect",
+    "pauseWhenBlur": "Pause video background when loses focus",
+    "permission": {
+      "allowAll": "Allow all sites",
+      "allowCurrent": "Only allow this API URL",
+      "deny": "Reject",
+      "request": {
+        "faviconCacheMessage": "To enable favicon caching, the extension needs the “Access all sites” permission.",
+        "message": "To access online wallpapers, the extension needs to request the appropriate permissions:",
+        "monetColorMessage": "To enable Dynamic Theme Colors (Monet Color Extraction), the extension needs the “Access all sites” permission.",
+        "subA": {
+          "content": "Requires “Access this API URL”.",
+          "label": "Normal mode: "
+        },
+        "subB": {
+          "content": "Requires “Access all sites”.",
+          "label": "Dynamic theme colors / Cache:"
+        },
+        "title": "Permission Request",
+        "wallpaperCacheMessage": "To enable online wallpaper caching, the extension needs the “Access all sites” permission."
+      }
+    },
+    "preferenceTitle": "Wallpaper preferences",
+    "resolution": "Resolution",
+    "showDownloadBtn": "Show download button",
+    "showDownloadBtnNote": "Download the displayed Bing, online, or local wallpaper",
+    "title": "Background",
+    "today": "Today",
+    "type": {
+      "local": "Local file",
+      "online": "Online URL"
+    },
+    "video": {
+      "blurTip": "Turn on to reduce performance usage when multiple new tabs or windows are open on the screen simultaneously."
+    },
+    "vignette": "Enable vignetting",
+    "warning": {
+      "bingResolutionCacheFailed": "Couldn’t cache the selected resolution. The existing cache will remain in use, and the download will be retried later.",
+      "cacheDisabled": "Online wallpaper caching has been disabled because the “Access all websites” permission was not granted.",
+      "fileIsNotImage": "The selected file is not an image!",
+      "invalidUrl": "Enter a valid HTTP(S) wallpaper URL.",
+      "monetDisabled": "Dynamic Theme Colors (Monet Extraction) has been disabled because “Access all sites” permission was not granted.",
+      "notGranted": "Permission not granted, cannot access this host.",
+      "title": "Warning",
+      "unknownSource": "Using images from unknown sources as backgrounds may expose your device to attacks. Do you want to continue?"
+    }
+  },
+  "bookmark": {
+    "defaultSort": "Default sorting",
+    "direction": {
+      "ltr": "Left to right",
+      "rtl": "Right to left",
+      "title": "Open direction"
+    },
+    "rightClickDisabledNote": "Right-click to open Launchpad is enabled. Turn it off first.",
+    "rightClickToOpen": "Right click on background to open",
+    "showBtn": "Show bottom-right button",
+    "syncNote": "Browser bookmarks are managed by the browser and are not synced through WebDAV.",
+    "title": "Bookmarks bar"
+  },
+  "clock": {
+    "blink": "Blinking colon",
+    "blinkingTip": "Turning this off can reduce sustained GPU usage.",
+    "colorful": "Colorful clock numbers",
+    "gradient": "Gradient clock",
+    "dateSize": "Date size",
+    "hour12": "12-hour clock",
+    "invertColor": {
+      "dark": "Use dark text in dark mode",
+      "light": "Use dark text in light mode"
+    },
+    "meridiem": {
+      "followSize": "Large AM/PM Label",
+      "show": "Show AM/PM"
+    },
+    "newStyle": "New style",
+    "newStyleDesc": "When enabled, will simultaneously enable “Show AM/PM” and “Show seconds” and cannot be disabled",
+    "secondsTip": "This increases performance usage.",
+    "shadow": "Show shadow",
+    "showDate": "Show date",
+    "showLunar": "Show Chinese lunar calendar",
+    "showSeconds": "Show seconds",
+    "size": {
+      "title": "Clock size"
+    },
+    "title": "Clock",
+    "transparency": "Clock transparency",
+    "weight": {
+      "black": "Heaviest",
+      "bold": "Bold",
+      "dateTitle": "Date weight",
+      "extraBold": "Very Bold",
+      "heavy": "Extra Bold",
+      "medium": "Slightly Bold",
+      "normal": "Normal",
+      "title": "Clock weight"
+    }
+  },
+  "common": {
+    "copyLink": "Copy Link Address",
+    "hour": "Hour",
+    "incognitoPermission": {
+      "message": "To open a private window, allow this extension to run in private windows in Firefox Add-ons Manager, then try again.",
+      "title": "Private Browsing Permission Required"
+    },
+    "openInIncognitoWindow": "Open in Incognito Window",
+    "openInNewTab": "Open in New Tab",
+    "openInNewWindow": "Open in New Window",
+    "sections": {
+      "appearance": "Appearance",
+      "behavior": "Interaction and behavior",
+      "danger": "Clear data",
+      "data": "Data and recovery",
+      "display": "Display and content",
+      "general": "General",
+      "layout": "Layout and spacing",
+      "position": "Page position",
+      "radius": "Corner radius",
+      "source": "Content source",
+      "summary": {
+        "appearance": "Color, shadow, and sizing",
+        "behavior": "Interactions and opening behavior",
+        "danger": "Irreversible actions—use with care",
+        "data": "Backups and caches",
+        "display": "Visible content and presentation",
+        "general": "Frequently used options",
+        "layout": "Sizing, counts, and spacing",
+        "position": "Main content and action buttons",
+        "radius": "Adjust component corners in one place",
+        "source": "Providers and custom content"
+      }
+    },
+    "touchDeviceDisabledNote": "This option is disabled on touch-only devices."
+  },
+  "dock": {
+    "displayGroup": "Group shown in Dock",
+    "showOtherGroups": "Show other groups as folders",
+    "folderCount": "Folder count",
+    "emptyGroup": "No links in this group yet",
+    "replaceQuickLinks": "Use Dock instead of Quick Links",
+    "replaceQuickLinksTip": "For a more spacious layout, you might like to enable “{{option}}” in Search settings.",
+    "replaceQuickLinksLayoutTip": "You can also slightly increase the distance from the top in Layout settings to give the page more breathing room.",
+    "actionBtnNote": "When Dock is enabled, the button bar can only be placed at the top (choose left/right in Layout settings)",
+    "borderRadius": "Radius",
+    "launchpad": {
+      "rightClickDisabledNote": "Right-click to open bookmarks is enabled. Turn it off first.",
+      "show": "Show Launchpad in Dock",
+      "title": "Launchpad"
+    },
+    "limitCount": "Limit maximum count",
+    "maxCount": "Maximum count",
+    "title": "Dock"
+  },
+  "layout": {
+    "actionBtn": {
+      "borderRadius": "Action button radius",
+      "bottomLeft": "Bottom Left",
+      "bottomRight": "Bottom Right",
+      "dockNote": "Dock is on — button bar is fixed to the top",
+      "label": "Button bar position",
+      "topLeft": "Top Left",
+      "topRight": "Top Right"
+    },
+    "dockBorderRadius": "Dock radius",
+    "globalBorderRadius": "Other component radius",
+    "mainPosition": {
+      "bottomDvh": "From bottom (%)",
+      "bottomDvhValue": "Distance from bottom (dvh)",
+      "bottomNote": "Search suggestions open upward when positioned from the bottom. We recommend disabling Quick Links and using Dock instead.",
+      "bottomPx": "From bottom (px)",
+      "bottomPxValue": "Distance from bottom (px)",
+      "center": "Center",
+      "dvh": "From top (%)",
+      "dvhValue": "Distance from top (dvh)",
+      "label": "Main area position",
+      "px": "From top (px)",
+      "pxValue": "Distance from top (px)",
+      "quickLinksScrollNote": "Center positioning is unavailable while Quick Links scrolling is enabled."
+    },
+    "minimalModeOnDoubleClick": "Double-click blank background to toggle minimal mode",
+    "quickLinksIconBorderRadius": "Quick Links icon background radius",
+    "title": "Layout"
+  },
+  "other": {
+    "disableSettingsScrollRestore": "Don't save settings window scroll position",
+    "changelog": {
+      "description": "Still opens for major upgrades",
+      "label": "Don't open the changelog on version upgrades"
+    },
+    "greeting": {
+      "description": "Shown once each time the browser starts.",
+      "label": "Startup greeting"
+    },
+    "faviconCache": {
+      "description": "Cache favicons locally for faster loading; requires the \"Access all sites\" permission",
+      "label": "Favicon Cache",
+      "permissionDenied": "Permission \"Access all sites\" was not granted; favicon cache remains disabled"
+    },
+    "importExport": {
+      "backup": "Back up extension settings",
+      "export": "Export",
+      "exporting": "Creating backup...",
+      "import": "Import",
+      "importFailed": "Import failed: {{reason}}",
+      "importSuccess": "Import successful",
+      "importing": "Safely applying imported data...",
+      "noFileSelected": "No file selected",
+      "omittedIcons": "{{count}} oversized selected icons were omitted from this backup",
+      "syncMode": {
+        "confirmMismatch": "The confirmation text did not match",
+        "deletePrompt": "Type “{{text}}” to delete the WebDAV data",
+        "deleteRemote": "Delete the remote sync vault, disconnect, then replace local data",
+        "description": "WebDAV sync is enabled. Choose how this import should affect other devices.",
+        "disconnectTitle": "Disconnect before replacing local data",
+        "keepRemote": "Keep the remote sync vault, disconnect, then replace local data",
+        "merge": "Merge into current data and sync (pause on conflicts)",
+        "replace": "Replace all synced data with the imported content",
+        "title": "Import and sync"
+      },
+      "unknownError": "Unknown error",
+      "validating": "Validating backup integrity...",
+      "warningDialog": {
+        "content": "Importing will overwrite your current data. Please be cautious when using this feature!",
+        "no": "No",
+        "title": "Are you sure you want to import from the file?",
+        "yes": "Yes"
+      }
+    },
+    "language": "Language",
+    "purge": {
+      "btn": "Purge",
+      "confirm": {
+        "data": {
+          "deleteRemote": "Delete remote data, disconnect, then reset",
+          "deleteRemotePrompt": "Type “{{text}}” to delete the remote sync vault",
+          "deleteRemoteTitle": "Delete remote sync data?",
+          "includeSync": "Also clear retired browser-sync data",
+          "keepRemote": "Keep remote data, disconnect, then reset",
+          "message": "This operation will reset the extension settings, ignored most visited sites, pinned or favorited sites, selected background images or videos, etc.",
+          "purging": "Clearing extension data..",
+          "syncQuestion": "Sync is enabled. How should this reset be handled?",
+          "title": "Are you sure you want to purge all data of this extension?"
+        },
+        "icon": {
+          "message": "This operation will delete all cached site icons.",
+          "purging": "Clearing favicon cache...",
+          "title": "Are you sure you want to purge the favicon cache?"
+        },
+        "wallpaper": {
+          "message": "This operation will delete the selected background images or videos.",
+          "purging": "Clearing wallpaper cache...",
+          "title": "Are you sure you want to purge all wallpaper cache?"
+        }
+      },
+      "data": "Purge all data",
+      "failed": {
+        "refresh": "Refresh page",
+        "title": "Unable to clear data"
+      },
+      "icon": "Purge favicon cache",
+      "wallpaper": "Purge wallpaper cache"
+    },
+    "syncRetirement": {
+      "acknowledge": "OK",
+      "clearCloudData": "Clean up cloud data",
+      "clearFailedMessage": "The old cloud data could not be deleted right now. It will not be uploaded or applied, and you will be reminded again after a future restart.",
+      "clearFailedTitle": "Unable to delete cloud data",
+      "clearSuccess": "The old cloud data has been cleared",
+      "downloadCloudData": "Download cloud data",
+      "downloadFailed": "Cloud data could not be read or downloaded. Please try again later.",
+      "downloadNote": "You can download the current cloud data, but this file cannot be imported back into the extension.",
+      "downloadStarted": "The cloud data file has started downloading",
+      "message": "Cloud Sync could sometimes replace current settings with older data. To protect your data, this feature has been removed and turned off automatically. Settings on this device are not affected.",
+      "noCloudData": "No cloud data was found to download",
+      "residualMessage": "Old cloud data was found. You can delete it without affecting the current settings on this device.",
+      "residualTitle": "Old cloud data found",
+      "title": "Cloud Sync is no longer supported"
+    },
+    "title": "Other"
+  },
+  "perf": {
+    "actionBtns": {
+      "blur": "Action buttons blur",
+      "transparent": "Action buttons transparency"
+    },
+    "bgSwitchAnim": "Wallpaper switch animation",
+    "blurIntensity": "Background blur",
+    "bookmark": {
+      "blur": "Bookmarks sidebar blur",
+      "transparent": "Bookmarks sidebar transparency"
+    },
+    "dialog": {
+      "animation": "Dialog animation",
+      "blur": "Dialog blur",
+      "title": "Dialog",
+      "transparent": "Dialog transparency"
+    },
+    "dock": {
+      "enterAnim": "Dock entrance animation",
+      "scale": "Dock icon scale animation"
+    },
+    "effectsTitle": "Effect Settings",
+    "focus": {
+      "blur": "Blur background on search focus",
+      "scale": "Scale background on search focus"
+    },
+    "quickLinks": {
+      "blur": "Quick Links, Dock, and Launchpad blur",
+      "transparent": "Quick Links and Dock transparency"
+    },
+    "resetTransparencyAndBlur": "Reset transparency and blur",
+    "searchBar": {
+      "blur": "Search bar blur",
+      "transparent": "Search bar transparency"
+    },
+    "title": "Performance & Effects",
+    "toggleAll": {
+      "animation": "Animation",
+      "blur": "Blur",
+      "disable": "Disable All",
+      "enable": "Enable All",
+      "transparent": "Transparency"
+    },
+    "transparency": "Background transparency",
+    "wallpaper": "Wallpaper",
+    "yiyan": {
+      "blur": "Quote blur",
+      "ripple": "Quote ripple animation",
+      "transparent": "Quote transparency"
+    }
+  },
+  "quickLinks": {
+    "border": "Show icon border",
+    "fallbackToTitleInitial": "Show title initial when icon is unavailable",
+    "fallbackToTitleInitialChromeTip": "In Chrome, this requires Icon cache to be enabled.",
+    "grouping": "Enable groups",
+    "groupingDisableConfirm": "Disabling groups will merge all Quick Links groups and remove duplicate URLs. Duplicate links in different groups cannot be preserved.",
+    "groupingTip": "Double-click a group name in Quick Links or Launchpad to rename it.",
+    "iconBorderRadius": "Icon background radius",
+    "iconCacheTip": "Consider enabling Settings → Other → Icon cache to attempt fetching higher-resolution icons.",
+    "iconRatio": "Icon ratio",
+    "iconSize": "Icon size",
+    "marginTop": "Spacing from content above",
+    "maxColumns": "Maximum columns",
+    "maxItemsTipForChrome": "Tip: You can only have up to 10 most visited links.",
+    "maxRows": "Maximum rows",
+    "navigationMode": "Navigation mode",
+    "pagingMode": "Paging mode",
+    "pagingLoop": "Loop pages",
+    "pinnedIcon": "Show pinned icon",
+    "restoreDefault": "Recover hidden links",
+    "restoreDefaultTitle": "Are you sure you want to restore default Quick Links?",
+    "shadow": "Show icon shadow",
+    "showOnSearchFocus": "Show on search focus",
+    "showTitle": "Show link title",
+    "spacing": {
+      "iconTitleGap": "Icon–Title Spacing",
+      "itemGapX": "Horizontal link spacing",
+      "itemGapY": "Vertical link spacing"
+    },
+    "tip": "Drag the settings window to preview changes in the Quick Links area.",
+    "title": "Quick Links",
+    "titleExtraWidth": "Title expand width",
+    "titleWhiteInLight": "Use white text in light mode",
+    "topSites": "Show most visited",
+    "scrollMode": "Scroll mode",
+    "scrollModeTip": "Scroll mode is recommended on portrait devices for a better browsing experience.",
+    "pagingModeTip": "Paging mode is recommended on widescreen devices for a better browsing experience."
+  },
+  "search": {
+    "alwaysExpandSearchBar": "Always expand search bar",
+    "alwaysShowIcon": "Always show search engine icon",
+    "authorizeHistory": "Grant history access",
+    "border": "Show search box border",
+    "borderRadius": "Search box radius",
+    "clickToChange": "Click to change",
+    "defaultSearchEngine": "Search engine",
+    "expandWidth": "Expanded width",
+    "historyPermissionDenied": "History access was not granted. Other suggestion providers are still available.",
+    "historyPermissionDescription": "Browser history suggestions require permission and match titles or URLs.",
+    "historyPermissionPending": "Browser history is selected, but this device has not granted permission.",
+    "launchAnim": "Search box expand animation on startup",
+    "leftAlignInput": "Left-align search input",
+    "noSuggestionProviders": "None",
+    "placeholder": "Search placeholder",
+    "providers": {
+      "calculator": "Calculator",
+      "url": "URL recognition",
+      "quick-links": "Quick links",
+      "top-sites": "Most visited sites",
+      "browser-history": "Browser history",
+      "search-history": "Extension search history",
+      "remote": "Search engine suggestions"
+    },
+    "recordSearchHistory": "Record search history",
+    "restoreHiddenEngines": "Restore hidden built-in search engines",
+    "restoreHiddenEnginesTitle": "Restore all built-in search engines and their default order?",
+    "searchSuggestionProvider": "Search suggestion API",
+    "searchSuggestions": "Search suggestions",
+    "shadow": "Show search box shadow",
+    "suggestionProviders": "Suggestion providers",
+    "tip": "Want to activate the search input when opening a new tab? Check the “Help and Feedback” in the button menu at the bottom right of the page.",
+    "title": "Search",
+    "browserHistoryLimit": "Browser history suggestion count"
+  },
+  "sync": {
+    "availability": {
+      "blockedTopSitesScopeDisabled": "Hidden-site records stay on this device. You can include them in the WebDAV sync scope.",
+      "bookmarksBrowserManaged": "Bookmarks are managed by the browser and are not synced through WebDAV.",
+      "faviconCacheLocal": "The website icon cache can be rebuilt and is never uploaded. Its enable preference is synced.",
+      "onlineWallpaperCacheLocal": "Cached files stay on this device; the enable preference is synced.",
+      "onlineWallpaperUrlScopeDisabled": "The online/API wallpaper address stays on this device. You can include it in Advanced sync scope.",
+      "pendingPermission": "The setting is synced, but this device has not granted permission. The feature is waiting for permission.",
+      "quickLinksScopeDisabled": "Quick Links stay on this device because their sync category is off.",
+      "searchEnginesScopeDisabled": "Custom search engines stay on this device because their sync category is off.",
+      "searchHistoryLocal": "Search history always stays on this device and is not uploaded.",
+      "settingsScopeDisabled": "Extension settings stay on this device because their sync category is off.",
+      "uiScopeDisabled": "Language and color mode stay on this device because their sync category is off.",
+      "userIconsScopeDisabled": "User-selected icons stay on this device. You can include them in Advanced sync scope.",
+      "wallpaperFailed": "The wallpaper did not pass upload or integrity checks. Other data will still sync.",
+      "wallpaperPartial": "Only available static images up to 20 MiB sync. Videos, animated images, and other skipped files stay on this device.",
+      "wallpaperScopeDisabled": "Local image wallpapers stay on this device. You can include them in the WebDAV sync scope.",
+      "wallpaperTooLarge": "This image is over 20 MB, so the wallpaper is not synced. Other data will still sync.",
+      "wallpaperVideo": "Video wallpapers are not synced through WebDAV."
+    }
+  },
+  "theme": {
+    "color": {
+      "acgn": {
+        "aveMujica": "Ave Mujica",
+        "bocchi": "Bocchi the Rock!",
+        "kessoku": "Kessoku Band",
+        "luo": "Luo Tianyi",
+        "miku": "Hatsune Miku",
+        "mygo": "MyGO!!!!!",
+        "togeari": "TOGENASHI TOGEARI"
+      },
+      "classic": {
+        "antBlue": "Ant Blue",
+        "bellflower": "Deep Bellflower",
+        "crimson": "Kokiake Crimson",
+        "ink": "Chinese ink",
+        "lapisBlue": "Lapis Ruri",
+        "ochre": "Zhe Ochre",
+        "orangeRed": "Ouseki Amber",
+        "teal": "Nando Teal",
+        "yamabuki": "Yamabuki Gold",
+        "yellowGreen": "Moegi Green"
+      }
+    },
+    "colorful": {
+      "desc": "Apply the theme color to more elements",
+      "label": "Global Color Mode"
+    },
+    "idleHide": "Fade out page elements when inactive",
+    "keepClockVisibleOnIdle": "Keep clock and date visible when inactive",
+    "mode": {
+      "alwaysOff": "Always Off",
+      "alwaysOn": "Always On",
+      "dark": "Dark Mode",
+      "light": "Light Mode",
+      "system": "Follow System"
+    },
+    "monet": {
+      "askEnableCache": {
+        "message": "To use dynamic theme colors, online wallpaper cache must be enabled. Enabling cache will store images from this domains. Do you want to enable it?",
+        "title": "Enable wallpaper cache?"
+      },
+      "desc": "Inspired by Material Design 3, extracts theme colors from your wallpaper. Only supports image backgrounds. For the best visual effect, use it together with the “Global Color Mode” option.",
+      "label": "Dynamic Theme Colors (Monet Extraction)"
+    },
+    "primaryColor": "Primary color",
+    "title": "Theme"
+  },
+  "title": "Settings",
+  "webdavSync": {
+    "conflicts": {
+      "batch": {
+        "prefer": "Select Multiple"
+      },
+      "both": "Keep both",
+      "bothNote": "The changed copy receives a new stable ID.",
+      "categories": {
+        "blocked-top-sites": "Hidden sites",
+        "search-engines": "Search engines",
+        "settings": "Settings",
+        "ui": "UI preferences"
+      },
+      "deleted": "Deleted or missing",
+      "empty": "No unresolved conflicts were found",
+      "fields": {
+        "colorMode": "Color mode",
+        "customSearchEngine": "Custom search engine",
+        "groupName": "Group name",
+        "groupOrder": "Group order",
+        "linkGroup": "Link group",
+        "linkIcon": "Link icon",
+        "linkOrder": "Quick Links order",
+        "linkTitle": "Link title",
+        "linkUrl": "Link address",
+        "quickLink": "Quick Link",
+        "quickLinkGroup": "Quick Links group",
+        "searchEngineIcon": "Search engine icon",
+        "searchEngineName": "Search engine name",
+        "searchEngineOrder": "Search engine order",
+        "searchEngineUrl": "Search engine address",
+        "wallpaper": "Wallpaper",
+        "wallpaperDark": "Dark wallpaper",
+        "wallpaperFixed": "Fixed wallpaper",
+        "wallpaperLight": "Light wallpaper",
+        "wallpaperOrder": "Wallpaper list order"
+      },
+      "finish": "Create merge version",
+      "local": "Keep local data",
+      "notice": "Some content was changed differently on your devices. Choose the content to keep.",
+      "noticeTitle": "Confirm synced content",
+      "remote": "Use cloud data",
+      "resolved": "Conflicts resolved and a new merge version was created",
+      "sourceDevice": "Device {{device}}",
+      "sourceLocal": "Local",
+      "sourceRemote": "Cloud",
+      "sources": "Conflicting data sources",
+      "title": "Resolve sync conflicts",
+      "useDevice": "Use data from {{device}}",
+      "values": {
+        "changed": "Changed",
+        "customIcon": "Uses a custom icon",
+        "disabled": "Off",
+        "enabled": "On",
+        "enabledScopeCount": "{{count}} sync items enabled",
+        "group": "Group: {{name}}",
+        "groupSummary": "{{name}} · {{count}} links",
+        "itemCount": "{{count}} items",
+        "noBaseline": "Not in the common baseline",
+        "noCustomIcon": "No custom icon",
+        "orderChanged": "Order changed",
+        "quickLinksSummary": "{{items}} links · {{groups}} groups",
+        "rootGroup": "Ungrouped",
+        "searchEnginesSummary": "{{count}} search engines",
+        "settingCount": "{{count}} settings",
+        "unknownGroup": "Another group",
+        "untitled": "Untitled",
+        "wallpaperCount": "{{count}} wallpapers selected"
+      }
+    },
+    "connectionActions": {
+      "open": "Manage connection",
+      "title": "Disconnect or delete"
+    },
+    "deviceName": "Current device: {{name}}",
+    "devices": {
+      "firstSeen": "First synced: {{time}}",
+      "stale": "Offline for over 180 days",
+      "title": "Synced devices",
+      "unknownDescription": "Your WebDAV credentials may be exposed. Change the password or app password with your provider, then reconnect trusted devices. Removing a device record cannot revoke access.",
+      "unknownTitle": "See a device you do not recognize?"
+    },
+    "disconnect": {
+      "deleteAction": "Permanently delete and disconnect",
+      "deleteDescription": "Clears the sync directory and keeps the empty folder by default. Select the option below to also delete the folder",
+      "deleteDirectory": "Also delete the sync directory folder",
+      "deleteTitle": "Permanently delete the remote sync vault",
+      "deleted": "Remote sync data was deleted and this device disconnected",
+      "disconnected": "Remote data kept and this device disconnected",
+      "impact": "Affects {{devices}} devices and {{versions}} versions",
+      "keepAction": "Keep remote data and disconnect",
+      "keepDescription": "Clears this device's connection. Other devices and remote data are unaffected.",
+      "keepTitle": "Turn off WebDAV sync",
+      "title": "Manage WebDAV connection",
+      "typePrompt": "Type “{{text}}” to continue"
+    },
+    "empty": {
+      "title": "WebDAV sync is not configured"
+    },
+    "encrypted": "Client-side encrypted",
+    "encryption": {
+      "description": "This password is separate from your WebDAV login. If forgotten, the vault can only be deleted and cannot be recovered.",
+      "disabled": "Encryption is off by default",
+      "enabled": "This sync vault is encrypted",
+      "fixedMode": "Encryption mode is chosen when the vault is created and cannot be changed later.",
+      "keyNote": "After success, only a non-exportable derived key is stored. The password is never uploaded, exported, or logged.",
+      "password": "Independent sync encryption password",
+      "title": "Client-side encryption",
+      "unlock": "Unlock sync vault"
+    },
+    "errors": {
+      "authentication": "The password is incorrect or the provider denied access",
+      "permission-required": "Access to this WebDAV server must be authorized",
+      "conflict": "Remote data has a conflict",
+      "corrupted": "Remote data is corrupted",
+      "network": "The server is temporarily unreachable",
+      "redirect-cross-origin": "The server redirected to another origin, so sync was stopped",
+      "redirect-insecure": "The server tried to downgrade HTTPS to HTTP, so sync was stopped",
+      "redirect-required": "The redirect is unsafe or could not be verified. Only same-origin redirects and same-host HTTP-to-HTTPS upgrades are allowed; you can also enter the final WebDAV address.",
+      "server": "The WebDAV service returned an error",
+      "data-too-large": "Data exceeds the size limits: 1 MiB per note, 8 MiB for all notes, and 10 MiB for the full snapshot. Reduce local or remote data and retry.",
+      "storage-full": "The WebDAV storage is full",
+      "timeout": "The connection timed out",
+      "unknown": "Sync failed. Review its status and try again."
+    },
+    "experimental": {
+      "description": "This feature is still being tested and refined. Before enabling it, we recommend exporting your current settings from Other Settings to avoid overwriting them.",
+      "title": "Experimental Feature"
+    },
+    "history": {
+      "back": "Back to history",
+      "current": "Current",
+      "noDifferences": "This version is identical to the current local data",
+      "preview": "Review differences",
+      "reasons": {
+        "import": "Import",
+        "initial": "Initial version",
+        "local-change": "Local change",
+        "merge": "Automatic merge",
+        "repair": "Damage repair",
+        "restore": "History restore"
+      },
+      "restore": "Restore as new version",
+      "restoreDescription": "The reviewed old content is submitted as a new latest version. The operation stops if local or remote data changed after this preview.",
+      "restoreTitle": "Restore the reviewed version?",
+      "restored": "A new latest version was created from history",
+      "target": "History",
+      "title": "Version history",
+      "truncated": "Only the first 200 differences are shown. The entire version is still validated before restore.",
+      "wallpaperMissing": "This historical wallpaper is no longer retained; the current wallpaper will be kept"
+    },
+    "lastSuccess": "Last successful sync: {{time}}",
+    "later": "Not now",
+    "legacy": {
+      "clearConfirm": "This only clears data left by the retired browser sync feature. Current settings and the new WebDAV sync are unaffected. Continue?",
+      "description": "This is leftover browser storage.sync data. It is never uploaded to WebDAV.",
+      "found": "Data found",
+      "title": "Legacy browser cloud-sync data"
+    },
+    "management": {
+      "devices": "Devices",
+      "history": "History",
+      "summary": "History, devices, and encryption",
+      "title": "Sync management"
+    },
+    "messages": {
+      "syncComplete": "Sync check completed"
+    },
+    "never": "Never synced successfully",
+    "omissions": {
+      "aggregate-too-large": "The total selected icon data exceeds 8 MB",
+      "item-too-large": "A selected icon exceeds 2 MB",
+      "too-large": "A wallpaper exceeds 20 MB",
+      "unavailable": "The selected local image is unavailable",
+      "unsupported": "Animated images and videos are not synced"
+    },
+    "plaintext": "Client encryption is off",
+    "refresh": "Refresh status",
+    "remoteDeleted": {
+      "action": "Clear this device's connection",
+      "description": "The remote sync vault for this device was deleted. Clear this device's connection before setting up sync again; no remote files will be read or deleted.",
+      "title": "Remote sync vault deleted"
+    },
+    "repair": {
+      "action": "Create repair version",
+      "completed": "The damaged version was isolated and a repair version created",
+      "corrupted": "The latest version is damaged; automatic sync stopped",
+      "corruptedDescription": "Download the raw file first, then choose current local data or the previous complete remote version.",
+      "corruptionTitle": "Repair damaged data",
+      "deleteEvidenceDescription": "The repair version will be uploaded and verified first. Only after it succeeds will the downloaded damaged cloud version be deleted.",
+      "deleteEvidenceTitle": "Delete the damaged cloud version after repair?",
+      "download": "Download damaged raw file",
+      "downloaded": "Raw file downloaded",
+      "local": "Use current local data",
+      "missingPayload": "The damaged revision payload is missing and cannot be downloaded. You can still repair it using local data or the previous complete version.",
+      "previous": "Use previous complete remote version",
+      "removeWallpapersAction": "Stop syncing wallpapers and clean up cloud images",
+      "removeWallpapersCompleted": "Wallpaper sync stopped and unused cloud images cleaned up",
+      "removeWallpapersDescription": "A new version without wallpapers will be published, then cloud images no longer referenced by retained versions will be removed. Local wallpapers will remain.",
+      "removeWallpapersTitle": "Stop syncing wallpapers and clean up cloud images?",
+      "retry": "Check again",
+      "revision": "Damaged version: {{id}}",
+      "same": "Local data matches the previous complete version, which will be used automatically to create a repair version.",
+      "size": "Raw file size: {{size}} bytes",
+      "wallpaperDescription": "Oversized or unsupported images are skipped. Change the scope or choose a smaller image; the original file is never modified.",
+      "wallpaperTitle": "Some images were not synced"
+    },
+    "resolve": "Resolve issue",
+    "scope": {
+      "blockedTopSites": "Hidden frequently visited sites",
+      "customSearchEngines": "Custom search engines",
+      "notes": "Notes",
+      "onlineWallpaperUrl": "Online wallpaper address",
+      "onlineWallpaperUrlNote": "The address may contain a access token.",
+      "settings": "Baisc Settings",
+      "summary": "Only affects this device. Disabled categories retain their remote data and resume comparison when enabled.",
+      "title": "Sync scope",
+      "uiPreferences": "Language and Dark Mode",
+      "userIcons": "Custom Link Icons",
+      "userIconsNote": "Such as custom Quick Access and custom search engine icons. Each icon is limited to 2 MB and all icons to 8 MB.",
+      "wallpapers": "Local image wallpapers",
+      "wallpapersNote": "Excluding video wallpapers. Each image can be up to 20 MB; images exceeding this limit will be skipped."
+    },
+    "setup": {
+      "advanced": "Advanced settings",
+      "back": "Back",
+      "compare": {
+        "conflicts": "{{count}} conflicts need to be resolved",
+        "existing": "Remote data exists",
+        "existingTitle": "Compare this device and remote",
+        "firstConnectionNote": "This device and the remote both have data, but no shared sync version exists yet. After enabling sync, resolve items individually or choose a bulk preference in Settings; confirmation creates the shared baseline.",
+        "firstConnectionTitle": "First connection: choose which data to keep",
+        "initialTitle": "Review the initial upload",
+        "safe": "No conflicts between local and remote data. Sync can be safely enabled."
+      },
+      "confirm": {
+        "autoDevice": "An anonymous name without exact OS version will be generated",
+        "description": "The sync vault is only created or changed after this confirmation.",
+        "encrypted": "Enabled; a forgotten password cannot be recovered",
+        "plaintext": "Off (default)",
+        "title": "Final confirmation"
+      },
+      "connected": "WebDAV sync is enabled",
+      "connection": {
+        "deviceName": "Device name (optional)",
+        "deviceNamePlaceholder": "For example: Office computer",
+        "directory": "Extension-only directory",
+        "password": "Password or app password",
+        "remember": "Save in this browser profile and allow background sync",
+        "rememberNote": "The password is never uploaded, exported, or logged.",
+        "sessionNote": "This session only. It is cleared after the browser closes and background automatic sync is disabled.",
+        "title": "Connect your network storage",
+        "url": "Server address",
+        "username": "Username"
+      },
+      "encryption": {
+        "enable": "Encrypt synced content with an independent password",
+        "password": "Independent sync encryption password (at least 8 characters)"
+      },
+      "errors": {
+        "authentication": "The password is incorrect or this account was denied. Check the username, password, or app password.",
+        "encryption": "This vault is encrypted. Enter the correct independent sync encryption password under Advanced settings.",
+        "foreign": "This directory contains data not owned by Lemon New Tab. Use an empty or correct extension-only directory.",
+        "format": "This sync format was created by a newer extension. Upgrade the extension first.",
+        "network": "The browser could not send the request. Open the server address in a normal tab to verify the address and HTTPS certificate, then check the network, proxy, and redirects.",
+        "permission": "Access to this exact WebDAV server was not granted, so the connection was not saved.",
+        "unsupported": "The server cannot reliably create, read, list, or delete WebDAV files."
+      },
+      "finish": "Enable sync",
+      "http": {
+        "accept": "I understand that LAN HTTP can be intercepted by others on the same network",
+        "localWarning": "This is a LAN HTTP address. Credentials and unencrypted content can still be seen by others on the same network.",
+        "publicUnsupported": "Public HTTP WebDAV addresses are not supported. Use HTTPS or a LAN address."
+      },
+      "next": "Next",
+      "scan": {
+        "empty": "The directory is empty and can host a new sync vault",
+        "emptyNote": "LemonNewTab and its first version are only created after final confirmation.",
+        "existing": "An existing sync vault was found",
+        "existingNote": "Ownership and version integrity were verified. This device is compared next.",
+        "remote-conflict": "The remote vault has multiple version branches",
+        "remoteConflictNote": "This device can resolve the branches item by item. After connecting, sync stays paused until every conflict is handled.",
+        "title": "Remote scan result"
+      },
+      "scope": {
+        "description": "Only affects this device. Disabled categories retain their remote data and resume comparison when enabled.",
+        "omittedResources": "{{count}} oversized or unsupported selected images will be skipped",
+        "required": "Enable at least one sync category.",
+        "title": "Choose sync scope"
+      },
+      "steps": {
+        "compare": "Compare",
+        "confirm": "Confirm",
+        "connection": "Connect",
+        "scan": "Scan",
+        "scope": "Scope",
+        "test": "Test"
+      },
+      "test": {
+        "action": "Test connection",
+        "notTested": "Waiting for Test",
+        "permissionNote": "After you click Test, the browser requests optional permissions to access this WebDAV server and inspect requests. The former connects to the server; the latter determines whether this connection is secure.",
+        "retry": "Test again",
+        "scanned": "Successfully connected to the server.",
+        "success": "Connection successful",
+        "title": "Test connection and grant access"
+      },
+      "title": "Set up WebDAV sync",
+      "wallpaper": {
+        "oversized": "{{count}} wallpaper images exceed 20 MB and will be skipped",
+        "summary": "Excluding video wallpapers, {{count}} images totaling {{size}}. Each image can be up to 20 MB; images exceeding this limit will be skipped."
+      }
+    },
+    "status": {
+      "authentication": "Sign-in required",
+      "permission": "Server access permission required",
+      "conflict": "Conflicts need attention",
+      "corrupted": "The latest remote version is damaged",
+      "encryptionPassword": "Sync encryption password required",
+      "formatTooNew": "Sync format is newer; upgrade the extension",
+      "paused": "Sync paused",
+      "pending": "Changes waiting to upload",
+      "ready": "Connected; waiting for first check",
+      "remoteDeleted": "Remote sync data was deleted",
+      "dataTooLarge": "Data exceeds the size limits. Reduce it and retry",
+      "storageFull": "WebDAV storage is full",
+      "synced": "Synced",
+      "unconfigured": "Not configured",
+      "wallpaperSkipped": "Core data synced; wallpaper not synced",
+      "noSelection": "No sync categories selected"
+    },
+    "syncNow": "Sync now",
+    "title": "WebDAV Sync",
+    "enabled": "Enable sync on this device",
+    "credentials": {
+      "title": "Update login credentials",
+      "username": "Username (leave blank to keep current)",
+      "save": "Verify and save"
+    }
+  },
+  "yiyan": {
+    "alwaysShow": "Always show",
+    "borderRadius": "Quote background radius",
+    "customLinesLabel": "Custom content",
+    "customLinesNote": "Each line represents one quote. Use \"\\n\" within a line to indicate a line break.",
+    "customLinesPlaceholder": "One quote per line; use \\n within a line for line breaks",
+    "description": "Display a random Chinese quote below the search bar. Give it a try — you can always turn it off later!",
+    "normalyShowTip": "When disabled, only show when the search box is focused.",
+    "provider": "Provider",
+    "providers": {
+      "custom": {
+        "name": "Custom"
+      },
+      "hitokoto": {
+        "name": "Hitokoto.cn",
+        "note": "Please note that Hitokoto.cn has a very strict QPS (queries per second) limit. This extension uses caching, but multiple requests from different sites in a short period may still cause your IP to be temporarily banned."
+      },
+      "jinrishici": {
+        "name": "Chinese Poetry"
+      }
+    },
+    "shadow": "Show text shadow",
+    "title": "Quote"
+  }
+}

@@ -1,0 +1,1556 @@
+<script setup lang="ts">
+import { onKeyStroke, useDebounceFn, useElementSize, useSwipe, useWindowSize } from '@vueuse/core'
+
+import {
+  DragDropProvider,
+  DragOverlay,
+  type DragEndEvent,
+  type DragMoveEvent,
+  type DragOverEvent,
+  type DragStartEvent,
+} from '@dnd-kit/vue'
+import ElFocusTrap from 'element-plus/es/components/focus-trap/src/focus-trap.mjs'
+import { useTranslation } from 'i18next-vue'
+import SearchOutlined from '~icons/ant-design/search-outlined'
+import ChevronDown20Filled from '~icons/fluent/chevron-down-20-filled'
+import ChevronLeft20Filled from '~icons/fluent/chevron-left-20-filled'
+import ChevronRight20Filled from '~icons/fluent/chevron-right-20-filled'
+import ChevronUp20Filled from '~icons/fluent/chevron-up-20-filled'
+import Edit20Filled from '~icons/fluent/edit-20-filled'
+import Pin12Regular from '~icons/fluent/pin-12-regular'
+import AddRound from '~icons/ic/round-add'
+import DeleteRound from '~icons/ic/round-delete'
+import SettingsRound from '~icons/ic/round-settings'
+
+import { resolveBuiltInAppId, type BuiltInAppId } from '@/shared/builtinApps'
+import {
+  DEFAULT_QUICK_LINK_GROUP_ID,
+  useQuickLinksStore,
+  type QuickLink,
+  type QuickLinkGroup,
+} from '@/shared/quickLinks'
+import { useSettingsStore } from '@/shared/settings'
+import { toggleDocumentClass } from '@/shared/theme'
+
+import { useAppDialogs } from '@newtab/composables/appDialogs'
+import { useImeAwareDialog } from '@newtab/composables/useImeAwareDialog'
+import { usePerfClasses } from '@newtab/composables/usePerfClasses'
+
+import FaviconImage from './components/FaviconImage.vue'
+import QuickLinkContextMenu from './components/QuickLinkContextMenu.vue'
+import QuickLinkDragOverlay from './components/QuickLinkDragOverlay.vue'
+import QuickLinkDropTarget from './components/QuickLinkDropTarget.vue'
+import QuickLinkGroupName from './components/QuickLinkGroupName.vue'
+import QuickLinkGroupSelectDialog from './components/QuickLinkGroupSelectDialog.vue'
+import QuickLinkSortableItem from './components/QuickLinkSortableItem.vue'
+import QuickLinkVirtualGrid from './components/QuickLinkVirtualGrid.vue'
+import {
+  buildQuickLinkDisplayItems,
+  buildTopSiteDisplayItems,
+} from './composables/quickLinkDisplayItems'
+import type { QuickLinkViewItem } from './composables/quickLinksViewModel'
+import { useGroupNameRefs } from './composables/useGroupNameRefs'
+import {
+  FLAT_QUICK_LINK_DND_GROUP_ID,
+  TOP_SITES_DND_GROUP_ID,
+  createDelayedTargetSwitch,
+  getDndData,
+  getPointerClientPoint,
+  getSortableMoveState,
+  getSortableStoreIndexes,
+  launchpadDndSensors,
+  virtualQuickLinkDndSensors,
+  persistQuickLinkDndMove,
+  quickLinkContainerDndId,
+  quickLinkDndId,
+  resolveQuickLinkMoveTarget,
+  resolveStoreIndexFromSortableIndex,
+  toQuickLinkDisplayItem,
+  type QuickLinkDndData,
+} from './composables/useQuickLinkDnd'
+import { useQuickLinkGroupActions } from './composables/useQuickLinkGroupActions'
+import { mergeTopSites } from './composables/useTopSitesMerge'
+import { useVirtualQuickLinkDnd, virtualItemKey } from './composables/useVirtualQuickLinkDnd'
+import { getTopSites, rawTopSites } from './utils/topSites'
+
+const refreshDebounced = useDebounceFn(refresh, 100)
+onScopeDispose(() => refreshDebounced.cancel())
+
+const model = defineModel<boolean>({ required: true })
+
+type GroupView = {
+  group: QuickLinkGroup
+  items: QuickLinkViewItem[]
+  sortableStoreIndexes: number[]
+}
+
+const { t } = useTranslation()
+const dialogs = useAppDialogs()
+const settings = useSettingsStore()
+
+function openBuiltInItem(event: MouseEvent, item: { url: string; appId?: BuiltInAppId }) {
+  const appId = resolveBuiltInAppId(item)
+  if (!appId) return
+  event.preventDefault()
+  dialogs.open(appId)
+}
+const quickLinksBlurEnabled = computed(
+  () =>
+    settings.perf.quickLinks.transparent &&
+    settings.perf.quickLinks.transparency > 0 &&
+    settings.perf.quickLinks.blur,
+)
+const launchpadOverlayClass = computed(
+  () =>
+    `launchpad-overlay noselect${quickLinksBlurEnabled.value ? ' launchpad-overlay--blur' : ''}`,
+)
+const hideBackgroundContent = computed(() => model.value && !quickLinksBlurEnabled.value)
+
+watch(
+  hideBackgroundContent,
+  (hidden) => {
+    toggleDocumentClass('launchpad-no-blur', hidden)
+  },
+  { immediate: true },
+)
+const quickLinksStore = useQuickLinksStore()
+const virtualDnd = useVirtualQuickLinkDnd()
+watch(model, (visible) => {
+  if (!visible) void virtualDnd.finish(false)
+})
+const quickLinks = computed(() => quickLinksStore.items.slice())
+const topSites = computed(() =>
+  settings.dock.launchpad.topSites
+    ? mergeTopSites(rawTopSites.value, {
+        quickLinks: settings.quickLinks.grouping ? [] : quickLinks.value,
+        noCap: true,
+      })
+    : [],
+)
+const legacyDndGroupId = FLAT_QUICK_LINK_DND_GROUP_ID
+const topSitesGroupId = TOP_SITES_DND_GROUP_ID
+const { isComposing: isImeComposing } = useImeAwareDialog()
+
+const { width: windowWidth } = useWindowSize({ type: 'visual' })
+
+// ---- 状态 ----
+const query = ref('')
+const page = ref(0)
+const containerRef = useTemplateRef<HTMLElement>('container')
+const { height: containerHeight } = useElementSize(containerRef)
+
+const COLS = computed(() => {
+  if (windowWidth.value <= 700) return 4
+  else if (windowWidth.value <= 900) return 5
+  else if (windowWidth.value <= 1000) return 6
+  else return 7
+})
+const ROWS = computed(() => {
+  const isSmall = windowWidth.value <= 500
+  const h = containerHeight.value - (isSmall ? 70 : 88) - 64
+  const rowHeight = settings.dock.launchpad.iconSize + 50
+  return Math.max(1, Math.floor((h + 8) / rowHeight))
+})
+
+const pageSize = computed(() => COLS.value * ROWS.value)
+
+const allItems = computed(() => buildQuickLinkDisplayItems(quickLinks.value, topSites.value))
+const userGroups = computed(() => (settings.quickLinks.grouping ? quickLinksStore.groups : []))
+const topSitesItems = computed(() => buildTopSiteDisplayItems(topSites.value))
+const searchTextIndex = computed(() => {
+  const index = new Map<string, string>()
+  for (const item of [...quickLinks.value, ...topSites.value]) {
+    const title = item.title || ''
+    if (!index.has(title)) index.set(title, title.toLowerCase())
+    if (!index.has(item.url)) index.set(item.url, item.url.toLowerCase())
+  }
+  return index
+})
+const matchesQuery = (item: { title: string; url: string }, q: string) =>
+  searchTextIndex.value.get(item.title)!.includes(q) ||
+  searchTextIndex.value.get(item.url)!.includes(q)
+
+const filteredTopSitesItems = computed(() => {
+  const q = query.value.trim().toLowerCase()
+  if (!q) return topSitesItems.value
+  return topSitesItems.value.filter((item) => matchesQuery(item, q))
+})
+
+const isSearching = computed(() => query.value.trim().length > 0)
+
+const filteredItems = computed(() => {
+  const q = query.value.trim().toLowerCase()
+  if (!q) return allItems.value
+  return allItems.value.filter((item) => matchesQuery(item, q))
+})
+
+// 添加按钮占1个槽，纳入分页计算
+const pageCount = computed(() => {
+  const total = !isSearching.value ? allItems.value.length + 1 : allItems.value.length
+  return Math.max(1, Math.ceil(total / pageSize.value))
+})
+
+const currentItems = computed(() => {
+  if (isSearching.value) return filteredItems.value
+  const start = page.value * pageSize.value
+  const isLastPage = page.value === pageCount.value - 1
+  // 最后一页留一个槽给添加按钮
+  const end = isLastPage && !isSearching.value ? start + pageSize.value - 1 : start + pageSize.value
+  return allItems.value.slice(start, end)
+})
+
+const currentSortableStoreIndexes = computed(() => getSortableStoreIndexes(currentItems.value))
+const currentSortableIndexByStoreIndex = computed(
+  () =>
+    new Map(
+      currentSortableStoreIndexes.value.map((storeIndex, sortableIndex) => [
+        storeIndex,
+        sortableIndex,
+      ]),
+    ),
+)
+
+const currentFlatContainerInsertIndex = computed(() => {
+  const pinnedIndexes = currentItems.value
+    .filter((item) => item.isPinned)
+    .map((item) => item.originalIndex)
+  if (pinnedIndexes.length === 0) {
+    return Math.min(page.value * pageSize.value, quickLinksStore.items.length)
+  }
+  return Math.min(Math.max(...pinnedIndexes) + 1, quickLinksStore.items.length)
+})
+
+// ---- 数据获取 ----
+async function refresh() {
+  await quickLinksStore.init()
+
+  if (settings.dock.launchpad.topSites) {
+    await getTopSites()
+  }
+}
+
+// ---- 翻页 ----
+const pageDirection = ref<'forward' | 'backward'>('forward')
+
+function prevPage() {
+  if (page.value > 0) {
+    pageDirection.value = 'backward'
+    page.value--
+  }
+}
+
+function nextPage() {
+  if (page.value < pageCount.value - 1) {
+    pageDirection.value = 'forward'
+    page.value++
+  }
+}
+
+// ---- 关闭 ----
+function close() {
+  if (ctxMenuOpen.value) {
+    ctxMenuRef.value?.close()
+    ctxMenuOpen.value = false
+    return
+  }
+  model.value = false
+}
+
+// ---- 滑动翻页（移动端）----
+useSwipe(containerRef, {
+  onSwipeEnd(_e, dir) {
+    if (dir === 'left') nextPage()
+    else if (dir === 'right') prevPage()
+  },
+})
+
+// ---- 键盘 ----
+onKeyStroke('Escape', (e) => {
+  if (model.value) {
+    if (isImeComposing.value) return
+    e.preventDefault()
+    close()
+  }
+})
+
+onKeyStroke('ArrowLeft', (e) => {
+  if (model.value && !isSearching.value) {
+    e.preventDefault()
+    prevPage()
+  }
+})
+
+onKeyStroke('ArrowRight', (e) => {
+  if (model.value && !isSearching.value) {
+    e.preventDefault()
+    nextPage()
+  }
+})
+
+// ---- 打开时重置 & 刷新 ----
+watch(
+  model,
+  async (v) => {
+    if (v) {
+      query.value = ''
+      page.value = 0
+      await refresh()
+    }
+  },
+  { immediate: true },
+)
+
+// 搜索时回到第0页
+watch(query, () => {
+  page.value = 0
+})
+
+// 页数变化时确保当前页有效
+watch(pageCount, (count) => {
+  if (page.value >= count) page.value = Math.max(0, count - 1)
+})
+
+watch(
+  () => settings.dock.launchpad.topSites,
+  (enabled) => {
+    if (enabled) {
+      void getTopSites(true)
+    }
+    refreshDebounced()
+  },
+)
+
+// ---- 右键菜单 ----
+const perf = usePerfClasses(() => ({
+  transparent: settings.perf.quickLinks.transparent,
+  transparency: settings.perf.quickLinks.transparency,
+  blur: settings.perf.quickLinks.blur,
+}))
+
+const popperClass = perf('quick-links__menu-popper')
+
+const ctxMenuRef = useTemplateRef<InstanceType<typeof QuickLinkContextMenu>>('ctxMenuRef')
+const ctxMenuOpen = ref(false)
+const dndRenderKey = ref(0)
+
+function openCtxMenu(
+  event: MouseEvent | PointerEvent,
+  item: { url: string; title: string; isPinned: boolean; originalIndex: number; groupId?: string },
+): void {
+  ctxMenuRef.value?.open(event, item)
+  ctxMenuOpen.value = true
+}
+
+const groupSelectDialogRef =
+  useTemplateRef<InstanceType<typeof QuickLinkGroupSelectDialog>>('groupSelectDialogRef')
+const { groupNameRefs, setGroupNameRef } = useGroupNameRefs()
+
+const groupViews = computed<GroupView[]>(() => {
+  const q = query.value.trim().toLowerCase()
+  return userGroups.value.map((group) => {
+    const items: QuickLinkViewItem[] = []
+    const sortableStoreIndexes: number[] = []
+
+    for (let index = 0; index < group.items.length; index++) {
+      const item = group.items[index]!
+      if (q && !matchesQuery(item, q)) {
+        continue
+      }
+      items.push({
+        ...toGroupedDisplayItem(item, index, group.id),
+        sortableIndex: sortableStoreIndexes.length,
+      })
+      sortableStoreIndexes.push(index)
+    }
+
+    return {
+      group,
+      items,
+      sortableStoreIndexes,
+    }
+  })
+})
+
+function toGroupedDisplayItem(item: QuickLink, index: number, groupId: string) {
+  return {
+    id: item.id,
+    url: item.url,
+    title: item.title,
+    favicon: item.favicon,
+    icon: item.icon,
+    appId: item.appId,
+    isPinned: true,
+    originalIndex: index,
+    groupId,
+  }
+}
+
+function getCurrentSortableStoreIndexes() {
+  return currentSortableStoreIndexes.value
+}
+
+function getFlatSortableIndex(storeIndex: number) {
+  return currentSortableIndexByStoreIndex.value.get(storeIndex) ?? 0
+}
+
+async function createGroupInline() {
+  const group = await quickLinksStore.createGroup('')
+  await refreshDebounced()
+  nextTick(() => groupNameRefs.get(group.id)?.beginEdit())
+}
+
+async function moveGroup(groupId: string, direction: -1 | 1) {
+  const visibleGroups = userGroups.value
+  const index = visibleGroups.findIndex((group) => group.id === groupId)
+  const targetIndex = index + direction
+  if (index < 0 || targetIndex < 0 || targetIndex >= visibleGroups.length) return
+  const nextGroups = visibleGroups.slice()
+  const [group] = nextGroups.splice(index, 1)
+  if (!group) return
+  nextGroups.splice(targetIndex, 0, group)
+  const changed = await quickLinksStore.reorderGroups(nextGroups.map((group) => group.id))
+  if (!changed) return
+  await refreshDebounced()
+}
+
+function openAddQuickLink(groupId?: string) {
+  dialogs.open('quickLink', { mode: 'add', groupId: groupId ?? DEFAULT_QUICK_LINK_GROUP_ID })
+}
+
+const { pinToGroup, moveToGroup, renameGroup, confirmDeleteGroup } = useQuickLinkGroupActions({
+  groupSelectDialogRef,
+  refresh: refreshDebounced,
+  t,
+})
+
+const activeDndData = shallowRef<QuickLinkDndData | null>(null)
+const pageSwitch = createDelayedTargetSwitch()
+
+const clearPageSwitchTimer = pageSwitch.clear
+
+function scheduleLaunchpadPageSwitch(point: { x: number; y: number } | null) {
+  if (!point || settings.quickLinks.grouping || isSearching.value || pageCount.value <= 1) {
+    clearPageSwitchTimer()
+    return
+  }
+
+  const rect = containerRef.value?.getBoundingClientRect()
+  if (!rect) {
+    clearPageSwitchTimer()
+    return
+  }
+
+  const threshold = 72
+  let target: number | null = null
+  if (point.x - rect.left < threshold && page.value > 0) {
+    target = page.value - 1
+  } else if (rect.right - point.x < threshold && page.value < pageCount.value - 1) {
+    target = page.value + 1
+  }
+
+  if (target === null || target === page.value) {
+    clearPageSwitchTimer()
+    return
+  }
+  pageSwitch.schedule(target, () => {
+    if (target! > page.value) nextPage()
+    else prevPage()
+  })
+}
+
+function getLaunchpadMoveTarget(
+  target: QuickLinkDndData | null,
+  sortableMove: ReturnType<typeof getSortableMoveState>,
+) {
+  const fallbackTarget = {
+    groupId: legacyDndGroupId,
+    sortableIndex: currentSortableStoreIndexes.value.length,
+    storeIndex: currentFlatContainerInsertIndex.value,
+  }
+  const moveTarget = resolveQuickLinkMoveTarget(target, fallbackTarget)
+  if (!moveTarget || moveTarget.groupId === topSitesGroupId) return null
+
+  if (target?.kind !== 'quick-link') {
+    return {
+      groupId: moveTarget.groupId,
+      storeIndex: moveTarget.storeIndex,
+    }
+  }
+
+  const targetGroupId = sortableMove.toGroupId ?? moveTarget.groupId
+  if (targetGroupId === topSitesGroupId) return null
+  return {
+    groupId: targetGroupId,
+    storeIndex: resolveStoreIndexFromSortableIndex(
+      currentSortableStoreIndexes.value,
+      sortableMove.toSortableIndex,
+      moveTarget.storeIndex,
+    ),
+  }
+}
+
+function handleLaunchpadDragStart(event: DragStartEvent) {
+  if (settings.quickLinks.grouping && !isSearching.value) virtualDnd.start(event)
+  const data = getDndData(event.operation.source)
+  activeDndData.value = data
+  if (ctxMenuOpen.value) {
+    ctxMenuRef.value?.close()
+    ctxMenuOpen.value = false
+  }
+}
+
+function handleLaunchpadDragMove(event: DragMoveEvent) {
+  if (settings.quickLinks.grouping) {
+    virtualDnd.move(event)
+    return
+  }
+  const point = getPointerClientPoint(event)
+  scheduleLaunchpadPageSwitch(point)
+}
+
+function handleLaunchpadDragOver(event: DragOverEvent) {
+  const source = getDndData(event.operation.source)
+  if (!source || source.source !== 'launchpad' || isSearching.value) {
+    event.preventDefault()
+  }
+}
+
+async function handleLaunchpadDragEnd(event: DragEndEvent) {
+  const virtualDrop = settings.quickLinks.grouping ? event.suspend() : null
+  try {
+    clearPageSwitchTimer()
+    const source = activeDndData.value ?? getDndData(event.operation.source)
+    const target = getDndData(event.operation.target)
+    const sortableMove = getSortableMoveState(event.operation.source)
+    activeDndData.value = null
+
+    if (
+      !source ||
+      event.canceled ||
+      source.source !== 'launchpad' ||
+      source.kind !== 'quick-link'
+    ) {
+      return
+    }
+
+    const moveTarget = settings.quickLinks.grouping
+      ? virtualDnd.destination(event)
+      : getLaunchpadMoveTarget(target, sortableMove)
+    if (!moveTarget) return
+
+    try {
+      const changed = await persistQuickLinkDndMove({
+        store: quickLinksStore,
+        grouping: settings.quickLinks.grouping,
+        source,
+        moveTarget,
+      })
+      if (source.origin === 'top-sites') {
+        await refreshDebounced()
+        dndRenderKey.value++
+      } else if (changed) {
+        await refreshDebounced()
+      }
+    } catch (error) {
+      console.error('[launchpad] Failed to persist drag order:', error)
+      ElMessage.error('拖拽排序保存失败')
+      await refreshDebounced()
+      if (source.origin === 'top-sites') {
+        dndRenderKey.value++
+      }
+    }
+  } finally {
+    if (virtualDrop) {
+      await nextTick()
+      virtualDrop.abort()
+      await virtualDnd.finish()
+    }
+  }
+}
+
+function handleLaunchpadTouchMenu(event: PointerEvent, data: QuickLinkDndData) {
+  if (data.kind !== 'quick-link') return
+  openCtxMenu(event, toQuickLinkDisplayItem(data, settings.quickLinks.grouping))
+}
+
+onBeforeUnmount(() => {
+  clearPageSwitchTimer()
+  toggleDocumentClass('launchpad-no-blur', false)
+})
+</script>
+
+<template>
+  <Teleport to="body">
+    <Transition name="launchpad-fade" appear>
+      <el-overlay v-show="model" :overlay-class="launchpadOverlayClass" :z-index="1">
+        <el-focus-trap
+          loop
+          :trapped="model"
+          :focus-trap-el="containerRef"
+          focus-start-el="container"
+        >
+          <div
+            ref="container"
+            class="launchpad-wrapper"
+            :style="{ '--launchpad-icon-size': `${settings.dock.launchpad.iconSize}px` }"
+            tabindex="-1"
+            @click.self="close"
+            @contextmenu.prevent.stop
+          >
+            <!-- 搜索栏 -->
+            <div class="launchpad-search">
+              <el-input
+                ref="searchInput"
+                v-model="query"
+                :placeholder="t('dock.launchpad.search')"
+                clearable
+                size="large"
+                class="launchpad-search__input"
+              >
+                <template #prefix>
+                  <el-icon :size="16">
+                    <search-outlined />
+                  </el-icon>
+                </template>
+              </el-input>
+
+              <div
+                v-if="settings.quickLinks.grouping"
+                role="button"
+                tabindex="0"
+                class="launchpad-group-add action-btn setting-btn"
+                :aria-label="t('newtab:a11y.addQuickLinksGroup')"
+                @click="createGroupInline"
+                @keydown.enter.prevent="createGroupInline"
+                @keydown.space.prevent="createGroupInline"
+              >
+                <el-icon><add-round /></el-icon>
+              </div>
+
+              <!-- 设置按钮 -->
+              <div
+                role="button"
+                tabindex="0"
+                class="launchpad-settings action-btn setting-btn"
+                :aria-label="t('settings:title')"
+                @click="dialogs.open('settings')"
+                @keydown.enter.prevent="dialogs.open('settings')"
+                @keydown.space.prevent="dialogs.open('settings')"
+              >
+                <el-icon><settings-round /></el-icon>
+              </div>
+            </div>
+
+            <DragDropProvider
+              :key="dndRenderKey"
+              :sensors="
+                settings.quickLinks.grouping ? virtualQuickLinkDndSensors : launchpadDndSensors
+              "
+              @dragStart="handleLaunchpadDragStart"
+              @dragMove="handleLaunchpadDragMove"
+              @dragOver="handleLaunchpadDragOver"
+              @dragEnd="handleLaunchpadDragEnd"
+            >
+              <!-- 图标网格 -->
+              <div
+                v-if="settings.quickLinks.grouping"
+                class="launchpad-grouped"
+                @click.self="close"
+              >
+                <el-scrollbar>
+                  <section v-for="view in groupViews" :key="view.group.id" class="launchpad-group">
+                    <div class="launchpad-group__header">
+                      <quick-link-drop-target
+                        :id="`launchpad-group-title:${view.group.id}`"
+                        class="launchpad-group__title-drop"
+                        :disabled="isSearching"
+                        :data="{
+                          kind: 'quick-link-group',
+                          source: 'launchpad',
+                          groupId: view.group.id,
+                          sortableIndex: view.sortableStoreIndexes.length,
+                          storeIndex: view.group.items.length,
+                        }"
+                      >
+                        <quick-link-group-name
+                          :ref="(el) => setGroupNameRef(view.group.id, el)"
+                          :name="view.group.name"
+                          class="launchpad-group__title"
+                          editable
+                          plain
+                          @rename="(name) => renameGroup(view.group.id, name)"
+                        />
+                      </quick-link-drop-target>
+                      <div class="launchpad-group__actions">
+                        <button
+                          type="button"
+                          class="launchpad-group__sort-btn"
+                          :aria-label="t('newtab:a11y.renameGroup', { name: view.group.name })"
+                          @click="groupNameRefs.get(view.group.id)?.beginEdit()"
+                        >
+                          <el-icon><edit20-filled /></el-icon>
+                        </button>
+                        <button
+                          type="button"
+                          class="launchpad-group__sort-btn"
+                          :aria-label="t('newtab:a11y.moveGroupUp', { name: view.group.name })"
+                          :disabled="userGroups[0]?.id === view.group.id"
+                          @click="moveGroup(view.group.id, -1)"
+                        >
+                          <el-icon><chevron-up20-filled /></el-icon>
+                        </button>
+                        <button
+                          type="button"
+                          class="launchpad-group__sort-btn"
+                          :aria-label="t('newtab:a11y.moveGroupDown', { name: view.group.name })"
+                          :disabled="userGroups[userGroups.length - 1]?.id === view.group.id"
+                          @click="moveGroup(view.group.id, 1)"
+                        >
+                          <el-icon><chevron-down20-filled /></el-icon>
+                        </button>
+                        <button
+                          v-if="view.group.id !== DEFAULT_QUICK_LINK_GROUP_ID"
+                          type="button"
+                          class="launchpad-group__sort-btn"
+                          :aria-label="t('newtab:a11y.deleteGroup', { name: view.group.name })"
+                          @click="confirmDeleteGroup(view.group)"
+                        >
+                          <el-icon><delete-round /></el-icon>
+                        </button>
+                      </div>
+                    </div>
+                    <quick-link-virtual-grid
+                      :items="view.items"
+                      :columns="COLS"
+                      :group-id="view.group.id"
+                      :controller="virtualDnd"
+                      :end-target="() => groupNameRefs.get(view.group.id)?.$el?.parentElement"
+                      :add="!isSearching"
+                      :id="quickLinkContainerDndId('launchpad', view.group.id)"
+                      class="launchpad-grid"
+                      :style="{ '--lp-cols': COLS }"
+                      :disabled="isSearching"
+                      :data="{
+                        kind: 'quick-link-container',
+                        source: 'launchpad',
+                        groupId: view.group.id,
+                        sortableIndex: view.sortableStoreIndexes.length,
+                        storeIndex: view.group.items.length,
+                      }"
+                    >
+                      <template #default="{ item }">
+                        <quick-link-sortable-item
+                          :id="virtualItemKey(item)"
+                          manual
+                          :index="item.sortableIndex ?? 0"
+                          :group="view.group.id"
+                          :disabled="isSearching"
+                          :data="{
+                            kind: 'quick-link',
+                            source: 'launchpad',
+                            groupId: view.group.id,
+                            id: item.id,
+                            sortableIndex: item.sortableIndex ?? 0,
+                            storeIndex: item.originalIndex,
+                            url: item.url,
+                            title: item.title,
+                            favicon: item.favicon,
+                            icon: item.icon,
+                            appId: item.appId,
+                            isPinned: true,
+                            origin: 'pinned',
+                          }"
+                          @touch-menu="handleLaunchpadTouchMenu"
+                        >
+                          <a
+                            class="launchpad-item launchpad-item--pined"
+                            :title="item.title"
+                            :href="item.url"
+                            :target="settings.quickLinks.openInNewTab ? '_blank' : '_self'"
+                            :rel="
+                              settings.quickLinks.openInNewTab ? 'noopener noreferrer' : undefined
+                            "
+                            @contextmenu.prevent="openCtxMenu($event, item)"
+                            @click="openBuiltInItem($event, item)"
+                          >
+                            <div class="launchpad-item__icon">
+                              <favicon-image
+                                :url="item.url"
+                                :favicon="item.favicon"
+                                :icon="item.icon"
+                                :title="item.title"
+                                :alt="item.title"
+                              />
+                            </div>
+                            <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                              {{ item.title }}
+                            </el-text>
+                          </a>
+                        </quick-link-sortable-item>
+                      </template>
+                      <template #add>
+                        <div
+                          v-if="!isSearching"
+                          role="button"
+                          tabindex="0"
+                          class="launchpad-item"
+                          :aria-label="t('quickLinks.addLink')"
+                          @click="openAddQuickLink(view.group.id)"
+                          @keydown.enter.prevent="openAddQuickLink(view.group.id)"
+                          @keydown.space.prevent="openAddQuickLink(view.group.id)"
+                        >
+                          <el-icon class="launchpad-item__icon launchpad-item__icon--add">
+                            <add-round />
+                          </el-icon>
+                          <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                            {{ t('dock.launchpad.add') }}
+                          </el-text>
+                        </div>
+                      </template>
+                    </quick-link-virtual-grid>
+                  </section>
+
+                  <section
+                    v-if="settings.dock.launchpad.topSites && filteredTopSitesItems.length > 0"
+                    class="launchpad-group"
+                  >
+                    <h2 class="launchpad-group__system-title">
+                      {{ t('quickLinks.groups.topSites') }}
+                    </h2>
+                    <quick-link-virtual-grid
+                      :id="quickLinkContainerDndId('launchpad', topSitesGroupId)"
+                      :items="filteredTopSitesItems"
+                      :columns="COLS"
+                      :group-id="topSitesGroupId"
+                      :controller="virtualDnd"
+                      disabled
+                      :data="{
+                        kind: 'quick-link-container',
+                        source: 'launchpad',
+                        groupId: topSitesGroupId,
+                        sortableIndex: 0,
+                        storeIndex: 0,
+                      }"
+                      class="launchpad-grid"
+                      :style="{ '--lp-cols': COLS }"
+                    >
+                      <template #default="{ item }">
+                        <quick-link-sortable-item
+                          manual
+                          :id="
+                            quickLinkDndId(
+                              'launchpad',
+                              topSitesGroupId,
+                              item.originalIndex,
+                              item.url,
+                            )
+                          "
+                          :index="item.originalIndex"
+                          :group="topSitesGroupId"
+                          :disabled="isSearching ? true : { draggable: false, droppable: true }"
+                          :data="{
+                            kind: 'quick-link',
+                            source: 'launchpad',
+                            groupId: topSitesGroupId,
+                            sortableIndex: item.originalIndex,
+                            storeIndex: item.originalIndex,
+                            url: item.url,
+                            title: item.title,
+                            favicon: item.favicon,
+                            icon: item.icon,
+                            appId: item.appId,
+                            isPinned: false,
+                            origin: 'top-sites',
+                          }"
+                          @touch-menu="handleLaunchpadTouchMenu"
+                        >
+                          <a
+                            class="launchpad-item"
+                            :title="item.title"
+                            :href="item.url"
+                            :target="settings.quickLinks.openInNewTab ? '_blank' : '_self'"
+                            :rel="
+                              settings.quickLinks.openInNewTab ? 'noopener noreferrer' : undefined
+                            "
+                            @contextmenu.prevent="openCtxMenu($event, item)"
+                          >
+                            <div class="launchpad-item__icon">
+                              <favicon-image
+                                :url="item.url"
+                                :favicon="item.favicon"
+                                :icon="item.icon"
+                                :title="item.title"
+                                :alt="item.title"
+                              />
+                            </div>
+                            <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                              {{ item.title }}
+                            </el-text>
+                          </a>
+                        </quick-link-sortable-item>
+                      </template>
+                    </quick-link-virtual-grid>
+                  </section>
+                </el-scrollbar>
+              </div>
+
+              <el-scrollbar v-else-if="isSearching" class="launchpad-search-results">
+                <quick-link-virtual-grid
+                  v-if="currentItems.length"
+                  :id="quickLinkContainerDndId('launchpad', legacyDndGroupId)"
+                  :items="currentItems"
+                  :columns="COLS"
+                  :group-id="legacyDndGroupId"
+                  :controller="virtualDnd"
+                  disabled
+                  :data="{
+                    kind: 'quick-link-container',
+                    source: 'launchpad',
+                    groupId: legacyDndGroupId,
+                    sortableIndex: 0,
+                    storeIndex: 0,
+                  }"
+                  class="launchpad-grid"
+                  :style="{ '--lp-cols': COLS }"
+                >
+                  <template #default="{ item }">
+                    <a
+                      class="launchpad-item"
+                      :class="{ 'launchpad-item--pined': item.isPinned }"
+                      :title="item.title"
+                      :href="item.url"
+                      :target="settings.quickLinks.openInNewTab ? '_blank' : '_self'"
+                      :rel="settings.quickLinks.openInNewTab ? 'noopener noreferrer' : undefined"
+                      @contextmenu.prevent="openCtxMenu($event, item)"
+                      @click="openBuiltInItem($event, item)"
+                    >
+                      <div class="launchpad-item__icon">
+                        <favicon-image
+                          :url="item.url"
+                          :favicon="item.favicon"
+                          :icon="item.icon"
+                          :title="item.title"
+                          :alt="item.title"
+                        />
+                      </div>
+                      <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                        <el-icon v-if="item.isPinned && settings.dock.launchpad.topSites"
+                          ><pin12-regular
+                        /></el-icon>
+                        {{ item.title }}
+                      </el-text>
+                    </a>
+                  </template>
+                </quick-link-virtual-grid>
+                <div v-else class="launchpad-empty" style="pointer-events: none">
+                  {{ t('dock.launchpad.empty') }}
+                </div>
+              </el-scrollbar>
+
+              <Transition
+                v-else
+                :name="pageDirection === 'backward' ? 'launchpad-page-back' : 'launchpad-page'"
+                mode="out-in"
+              >
+                <quick-link-drop-target
+                  :key="isSearching ? 'search' : page"
+                  :id="quickLinkContainerDndId('launchpad', legacyDndGroupId, page)"
+                  class="launchpad-grid"
+                  :style="{ '--lp-cols': COLS }"
+                  :disabled="isSearching"
+                  :data="{
+                    kind: 'quick-link-container',
+                    source: 'launchpad',
+                    groupId: legacyDndGroupId,
+                    sortableIndex: getCurrentSortableStoreIndexes().length,
+                    storeIndex: currentFlatContainerInsertIndex,
+                    pageIndex: page,
+                  }"
+                  @click.self="close"
+                >
+                  <template v-for="item in currentItems" :key="item.url">
+                    <quick-link-sortable-item
+                      v-if="item.isPinned"
+                      :id="
+                        quickLinkDndId('launchpad', legacyDndGroupId, item.originalIndex, item.url)
+                      "
+                      :index="getFlatSortableIndex(item.originalIndex)"
+                      :group="legacyDndGroupId"
+                      :disabled="isSearching"
+                      :data="{
+                        kind: 'quick-link',
+                        source: 'launchpad',
+                        groupId: legacyDndGroupId,
+                        sortableIndex: getFlatSortableIndex(item.originalIndex),
+                        storeIndex: item.originalIndex,
+                        url: item.url,
+                        title: item.title,
+                        favicon: item.favicon,
+                        icon: item.icon,
+                        appId: item.appId,
+                        isPinned: true,
+                        origin: 'pinned',
+                        pageIndex: page,
+                      }"
+                      @touch-menu="handleLaunchpadTouchMenu"
+                    >
+                      <a
+                        class="launchpad-item launchpad-item--pined"
+                        :title="item.title"
+                        :href="item.url"
+                        :target="settings.quickLinks.openInNewTab ? '_blank' : '_self'"
+                        :rel="settings.quickLinks.openInNewTab ? 'noopener noreferrer' : undefined"
+                        @contextmenu.prevent="openCtxMenu($event, item)"
+                        @click="openBuiltInItem($event, item)"
+                      >
+                        <div class="launchpad-item__icon">
+                          <favicon-image
+                            :url="item.url"
+                            :favicon="item.favicon"
+                            :icon="item.icon"
+                            :title="item.title"
+                            :alt="item.title"
+                          />
+                        </div>
+                        <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                          <el-icon v-if="settings.dock.launchpad.topSites">
+                            <pin12-regular />
+                          </el-icon>
+                          {{ item.title }}
+                        </el-text>
+                      </a>
+                    </quick-link-sortable-item>
+                    <quick-link-sortable-item
+                      v-else
+                      :id="
+                        quickLinkDndId('launchpad', topSitesGroupId, item.originalIndex, item.url)
+                      "
+                      :index="item.originalIndex"
+                      :group="topSitesGroupId"
+                      :disabled="isSearching ? true : { draggable: false, droppable: true }"
+                      :data="{
+                        kind: 'quick-link',
+                        source: 'launchpad',
+                        groupId: topSitesGroupId,
+                        sortableIndex: item.originalIndex,
+                        storeIndex: item.originalIndex,
+                        url: item.url,
+                        title: item.title,
+                        favicon: item.favicon,
+                        icon: item.icon,
+                        appId: item.appId,
+                        isPinned: false,
+                        origin: 'top-sites',
+                        pageIndex: page,
+                      }"
+                      @touch-menu="handleLaunchpadTouchMenu"
+                    >
+                      <a
+                        class="launchpad-item"
+                        :title="item.title"
+                        :href="item.url"
+                        :target="settings.quickLinks.openInNewTab ? '_blank' : '_self'"
+                        :rel="settings.quickLinks.openInNewTab ? 'noopener noreferrer' : undefined"
+                        @contextmenu.prevent="openCtxMenu($event, item)"
+                      >
+                        <div class="launchpad-item__icon">
+                          <favicon-image
+                            :url="item.url"
+                            :favicon="item.favicon"
+                            :icon="item.icon"
+                            :title="item.title"
+                            :alt="item.title"
+                          />
+                        </div>
+                        <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                          {{ item.title }}
+                        </el-text>
+                      </a>
+                    </quick-link-sortable-item>
+                  </template>
+                  <!-- 无结果 -->
+                  <div
+                    v-if="currentItems.length === 0 && isSearching"
+                    class="launchpad-empty"
+                    style="pointer-events: none"
+                  >
+                    {{ t('dock.launchpad.empty') }}
+                  </div>
+                  <!-- 添加按钮（仅最后一页显示）-->
+                  <div
+                    v-if="!isSearching && page === pageCount - 1"
+                    role="button"
+                    tabindex="0"
+                    class="launchpad-item"
+                    :title="t('dock.launchpad.add')"
+                    :aria-label="t('quickLinks.addLink')"
+                    @click="dialogs.open('quickLink', { mode: 'add' })"
+                    @keydown.enter.prevent="dialogs.open('quickLink', { mode: 'add' })"
+                    @keydown.space.prevent="dialogs.open('quickLink', { mode: 'add' })"
+                  >
+                    <el-icon class="launchpad-item__icon launchpad-item__icon--add">
+                      <add-round />
+                    </el-icon>
+                    <el-text :line-clamp="1" truncated class="launchpad-item__label">
+                      {{ t('dock.launchpad.add') }}
+                    </el-text>
+                  </div>
+                </quick-link-drop-target>
+              </Transition>
+
+              <!-- 分页控制（非搜索模式，多于1页时显示） -->
+              <div
+                v-if="!settings.quickLinks.grouping && !isSearching && pageCount > 1"
+                class="launchpad-pagination"
+              >
+                <button
+                  class="launchpad-arrow"
+                  type="button"
+                  :aria-label="t('newtab:a11y.previousPage')"
+                  :disabled="page === 0"
+                  @click="prevPage"
+                >
+                  <ChevronLeft20Filled />
+                </button>
+                <div class="launchpad-dots">
+                  <span
+                    v-for="i in pageCount"
+                    :key="i"
+                    class="launchpad-dot"
+                    :class="{ 'launchpad-dot--active': page === i - 1 }"
+                    @click="page = i - 1"
+                  ></span>
+                </div>
+                <button
+                  class="launchpad-arrow"
+                  type="button"
+                  :aria-label="t('newtab:a11y.nextPage')"
+                  :disabled="page === pageCount - 1"
+                  @click="nextPage"
+                >
+                  <ChevronRight20Filled />
+                </button>
+              </div>
+              <DragOverlay :drop-animation="null">
+                <quick-link-drag-overlay :data="activeDndData" />
+              </DragOverlay>
+            </DragDropProvider>
+          </div>
+        </el-focus-trap>
+      </el-overlay>
+    </Transition>
+
+    <!-- 右键菜单 -->
+    <quick-link-context-menu
+      ref="ctxMenuRef"
+      :refresh-fn="refreshDebounced"
+      :popper-class="popperClass"
+      show-edit
+      show-move
+      :on-pin="pinToGroup"
+      :on-move="moveToGroup"
+      @visible-change="(v: boolean) => (ctxMenuOpen = v)"
+    />
+    <quick-link-group-select-dialog ref="groupSelectDialogRef" />
+  </Teleport>
+</template>
+
+<style lang="scss">
+.launchpad-overlay {
+  overflow: hidden;
+
+  &--blur {
+    backdrop-filter: blur(var(--le-quick-links-launchpad-backdrop-blur, 40px)) saturate(1.5);
+
+    .launchpad-search__input .el-input__wrapper {
+      backdrop-filter: blur(var(--le-quick-links-backdrop-blur, 10px));
+    }
+  }
+}
+
+.launchpad-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  max-height: 100dvh;
+  padding: 60px 40px 90px;
+
+  @media (width <= 500px) {
+    padding: 40px 20px 90px;
+  }
+}
+
+.launchpad-search {
+  display: flex;
+  gap: 5px;
+  align-items: center;
+  width: 320px;
+  max-width: 90dvw;
+  margin-bottom: 48px;
+
+  @media (width <= 500px) {
+    margin-bottom: 30px;
+  }
+
+  &__input {
+    --el-input-bg-color: rgb(255 255 255 / 20%);
+    --el-input-border-color: rgb(255 255 255 / 30%);
+    --el-input-hover-border-color: rgb(255 255 255 / 60%);
+    --el-input-focus-border-color: rgb(255 255 255 / 80%);
+    --el-input-text-color: #fff;
+    --el-input-placeholder-color: rgb(255 255 255 / 55%);
+    --el-input-clear-hover-color: #fff;
+  }
+}
+
+.launchpad-settings {
+  position: absolute;
+  top: 25px;
+  right: 35px;
+  color: rgb(255 255 255 / 30%);
+
+  @media (width <= 480px) {
+    position: static;
+  }
+}
+
+.launchpad-group-add {
+  position: absolute;
+  top: 25px;
+  right: 82px;
+  color: rgb(255 255 255 / 30%);
+
+  @media (width <= 480px) {
+    position: static;
+  }
+}
+
+.launchpad-search-results {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.launchpad-grouped {
+  flex: 1;
+  width: 100%;
+  max-width: 1000px;
+  overflow: auto;
+
+  .el-scrollbar {
+    height: fit-content;
+  }
+
+  .el-scrollbar__view {
+    padding-right: 10px;
+  }
+}
+
+.launchpad-group {
+  padding: 0 5px;
+  margin-bottom: 28px;
+}
+
+.launchpad-group__header {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.launchpad-group__title {
+  --quick-links-group-title-color: rgb(255 255 255 / 82%);
+
+  display: inline-flex;
+  font-size: 15px;
+  font-weight: 600;
+  color: rgb(255 255 255 / 82%);
+  background: transparent;
+}
+
+.launchpad-group__title-drop {
+  display: inline-flex;
+  border-radius: var(--le-radius-small, 8px);
+}
+
+.launchpad-group__title.quick-links__category-item {
+  padding: 0;
+  background: transparent;
+  border-radius: 0;
+}
+
+.launchpad-group__actions {
+  display: inline-flex;
+  gap: 4px;
+  align-items: center;
+}
+
+.launchpad-group__sort-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  color: rgb(255 255 255 / 70%);
+  cursor: pointer;
+  background: transparent;
+  border: none;
+  border-radius: 50%;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+
+  &:hover:not(:disabled),
+  &:focus-visible:not(:disabled) {
+    color: #fff;
+    background: rgb(255 255 255 / 14%);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.3;
+  }
+}
+
+.launchpad-group__system-title {
+  margin: 0 0 12px;
+  font-size: 14px;
+  font-weight: 400;
+  color: rgb(255 255 255 / 82%);
+}
+
+.launchpad-grid {
+  display: grid;
+  flex: 1;
+  grid-template-columns: repeat(var(--lp-cols, 7), 1fr);
+  gap: 8px;
+  align-content: start;
+  width: 100%;
+  max-width: 1000px;
+}
+
+.launchpad-grouped .launchpad-grid.quick-link-dnd-drop-target {
+  min-height: 96px;
+}
+
+.launchpad-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  padding: 10px 8px;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: calc(var(--le-radius-base, 20px) * 0.8);
+  transition:
+    background-color 0.15s ease,
+    transform 0.15s ease;
+
+  &:hover:not(:has(.launchpad-item__icon--add)),
+  &:focus-visible {
+    background-color: rgb(255 255 255 / 12%);
+  }
+
+  &:hover,
+  &:focus-visible {
+    transform: scale(1.06);
+
+    .launchpad-item__icon--add {
+      background-color: rgb(255 255 255 / 25%);
+    }
+  }
+
+  &__icon {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    width: var(--launchpad-icon-size);
+    height: var(--launchpad-icon-size);
+    margin-bottom: 8px;
+    overflow: hidden;
+    border-radius: calc(var(--le-radius-base, 20px) * 0.9);
+    transition: 0.15s ease;
+
+    @media (width <= 800px) {
+      border-radius: calc(var(--le-radius-base, 20px) * 0.7);
+    }
+
+    @media (width <= 500px) {
+      border-radius: var(--le-radius-medium, 12px);
+    }
+
+    img,
+    .favicon-image__component,
+    .favicon-image__title-initial {
+      width: 75%;
+      height: 75%;
+      border-radius: var(--le-radius-inner, 10px);
+      transition: opacity 0.1s ease;
+    }
+
+    img {
+      object-fit: contain;
+
+      &.favicon-image--pending {
+        opacity: 0;
+      }
+    }
+
+    .favicon-image__title-initial {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: calc(var(--launchpad-icon-size) * 0.55);
+      font-weight: 500;
+      color: #fff;
+    }
+
+    &--add {
+      font-size: 38px;
+      color: rgb(255 255 255 / 85%);
+      background-color: rgb(255 255 255 / 15%);
+    }
+  }
+
+  &__label {
+    font-size: 12px;
+    font-weight: 500;
+    color: #fff;
+    text-shadow: 0 1px 4px rgb(0 0 0 / 40%);
+  }
+}
+
+.launchpad-empty {
+  display: flex;
+  grid-column: 1 / -1;
+  align-items: center;
+  justify-content: center;
+  height: 200px;
+  font-size: 16px;
+  color: rgb(255 255 255 / 50%);
+}
+
+.launchpad-pagination {
+  display: flex;
+  flex-shrink: 0;
+  gap: 12px;
+  align-items: center;
+  margin-top: 32px;
+}
+
+.launchpad-dots {
+  display: flex;
+  gap: 8px;
+}
+
+.launchpad-dot {
+  width: 7px;
+  height: 7px;
+  cursor: pointer;
+  background-color: rgb(255 255 255 / 35%);
+  border-radius: 50%;
+  transition:
+    background-color 0.2s ease,
+    transform 0.2s ease;
+
+  &:hover {
+    background-color: rgb(255 255 255 / 65%);
+  }
+
+  &--active {
+    background-color: #fff;
+    transform: scale(1.2);
+  }
+}
+
+.launchpad-arrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  overflow: hidden;
+  color: rgb(255 255 255 / 70%);
+  cursor: pointer;
+  background: rgb(255 255 255 / 12%);
+  border: none;
+  border-radius: 50%;
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+
+  &:hover:not(:disabled) {
+    color: #fff;
+    background: rgb(255 255 255 / 25%);
+  }
+
+  &:disabled {
+    cursor: default;
+    opacity: 0.3;
+  }
+}
+
+/* ---- 入场/离场动画 ---- */
+.launchpad-fade-enter-active,
+.launchpad-fade-leave-active {
+  transition:
+    opacity 0.3s ease,
+    backdrop-filter 0.3s ease;
+
+  .launchpad-wrapper {
+    transition: transform 0.3s ease;
+  }
+}
+
+.launchpad-fade-enter-from,
+.launchpad-fade-leave-to {
+  opacity: 0;
+
+  .launchpad-wrapper {
+    transform: scale(1.05);
+  }
+}
+
+/* ---- 翻页动画（下一页：右→左）---- */
+.launchpad-page-enter-active,
+.launchpad-page-leave-active {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.launchpad-page-enter-from {
+  opacity: 0;
+  transform: translateX(24px);
+}
+
+.launchpad-page-leave-to {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+/* ---- 翻页动画（上一页：左→右）---- */
+.launchpad-page-back-enter-active,
+.launchpad-page-back-leave-active {
+  transition:
+    opacity 0.18s ease,
+    transform 0.18s ease;
+}
+
+.launchpad-page-back-enter-from {
+  opacity: 0;
+  transform: translateX(-24px);
+}
+
+.launchpad-page-back-leave-to {
+  opacity: 0;
+  transform: translateX(24px);
+}
+</style>

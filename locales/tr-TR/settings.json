@@ -1,0 +1,899 @@
+{
+  "a11y": {
+    "back": "Önceki ayarlar görünümüne dön"
+  },
+  "background": {
+    "bingFrom": "Görsel kaynağı: Bing",
+    "blur": "Bulanıklık yoğunluğu",
+    "cache": {
+      "askEnable": {
+        "message": "Önbellek, tekrarlanan indirmeleri azaltır ve önbelleğe alınmış duvar kağıtlarını çevrimdışı kullanıma hazır tutar. Duvar kağıdı önbelleği etkinleştirilsin mi?",
+        "title": "Duvar kağıdı önbelleği etkinleştirilsin mi?"
+      },
+      "disabledTip": "Yalnızca arka plan türü \"Çevrimiçi URL\" olduğunda kullanılabilir (Bing duvar kağıdı varsayılan olarak her zaman önbelleğe alınır)",
+      "duration": "Önbellek geçerlilik süresi",
+      "label": "Çevrimiçi duvar kağıdı önbelleği",
+      "nextStartup": "Sonraki başlangıçta geçerli olur",
+      "noExpires": "Önbellek asla sona ermez"
+    },
+    "change": "Arka planı değiştir",
+    "custom": "Özel",
+    "fasterBgAnim": "Başlangıçta daha hızlı arka plan gösterimi",
+    "library": {
+      "add": "Ekle",
+      "clearPreviews": "Önizleme önbelleğini temizle",
+      "collapse": "Daralt",
+      "confirmRemove": "Seçilen {{count}} duvar kâğıdı kaldırılsın mı?",
+      "dark": "Koyu tema",
+      "done": "Bitti",
+      "download": "İndir",
+      "dragAddHint": "Eklemek için resimleri veya videoları buraya sürükleyin",
+      "empty": "Resim veya video ekleyin. Birden fazla dosya seçin ya da buraya sürükleyin.",
+      "expand": "Tümünü göster",
+      "group": "Duvar kâğıdı grubu",
+      "image": "Resim",
+      "importFailed": "{{count}} dosya eklenemedi. Diğer dosyalar korundu.",
+      "inherit": "Koyu tema duvar kâğıdı ayarlanmadığında açık tema duvar kâğıtları otomatik olarak kullanılır.",
+      "light": "Açık tema",
+      "loading": "Bilgiler okunuyor",
+      "manage": "Yönet",
+      "order": "Değiştirme sırası",
+      "ordered": "Liste sırası",
+      "random": "Rastgele",
+      "remove": "Kaldır",
+      "reset": "Sıfırla",
+      "rotation": "Duvar kâğıdı değişimi",
+      "solid": "Düz renk",
+      "sortHint": "Sıralamak için sürükleyin",
+      "unavailable": "Kullanılamıyor",
+      "video": "Video"
+    },
+    "mask": {
+      "color": "Maske rengi",
+      "enable": "Maskeyi etkinleştir"
+    },
+    "onlineTips": {
+      "a": "Enter tuşuna basarak veya giriş alanı odağı kaybettiğinde gönderin.",
+      "b": "Duvar kağıdı önbellekleme stratejisi tarayıcıya bağlıdır ve duvar kağıtları çevrimdışı erişilebilir olmayabilir.",
+      "c": "Duvar kağıdı yüklenene kadar boş bir ekran olacaktır ve bu süre internet hızınıza bağlıdır."
+    },
+    "parallax": "Duvar kağıdı paralaks efekti",
+    "pauseWhenBlur": "Arka plan penceresi odağı kaybettiğinde videoyu duraklat",
+    "permission": {
+      "allowAll": "Tüm sitelere izin ver",
+      "allowCurrent": "Yalnızca bu API URL'sine izin ver",
+      "deny": "Reddet",
+      "request": {
+        "faviconCacheMessage": "Favicon önbelleğini etkinleştirmek için uzantının \"Tüm sitelere erişim\" iznine ihtiyacı vardır.",
+        "message": "Çevrimiçi duvar kağıtlarına erişmek için uzantının uygun izinleri talep etmesi gerekir:",
+        "monetColorMessage": "Dinamik Tema Renklerini (Monet Renk Çıkarma) etkinleştirmek için uzantının \"Tüm sitelere erişim\" iznine ihtiyacı vardır.",
+        "subA": {
+          "content": "\"Bu API URL'sine erişim\" gerektirir.",
+          "label": "Normal mod: "
+        },
+        "subB": {
+          "content": "\"Tüm sitelere erişim\" gerektirir.",
+          "label": "Dinamik tema renkleri / Önbellek:"
+        },
+        "title": "İzin Talebi",
+        "wallpaperCacheMessage": "Çevrimiçi duvar kağıdı önbelleğini etkinleştirmek için uzantının \"Tüm sitelere erişim\" iznine ihtiyacı vardır."
+      }
+    },
+    "preferenceTitle": "Duvar kağıdı tercihleri",
+    "resolution": "Çözünürlük",
+    "showDownloadBtn": "İndirme düğmesini göster",
+    "showDownloadBtnNote": "Görüntülenen Bing, çevrimiçi veya yerel duvar kağıdını indirin",
+    "title": "Arka Plan",
+    "today": "Bugün",
+    "type": {
+      "local": "Yerel dosya",
+      "online": "Çevrimiçi URL"
+    },
+    "video": {
+      "blurTip": "Ekranda aynı anda birden fazla yeni sekme veya pencere açıkken performans kullanımını azaltmak için açın."
+    },
+    "vignette": "Vinyet efektini etkinleştir",
+    "warning": {
+      "bingResolutionCacheFailed": "Seçilen çözünürlük önbelleğe alınamadı. Mevcut önbellek kullanılmaya devam edecek ve indirme daha sonra tekrar denenicektir.",
+      "cacheDisabled": "Çevrimiçi duvar kağıdı önbelleği, \"Tüm web sitelerine erişim\" izni verilmediği için devre dışı bırakıldı.",
+      "fileIsNotImage": "Seçilen dosya bir resim değil!",
+      "invalidUrl": "Geçerli bir HTTP(S) duvar kâğıdı URL'si girin.",
+      "monetDisabled": "Dinamik Tema Renkleri (Monet Çıkarma), \"Tüm sitelere erişim\" izni verilmediği için devre dışı bırakıldı.",
+      "notGranted": "İzin verilmedi, bu ana bilgisayara erişilemiyor.",
+      "title": "Uyarı",
+      "unknownSource": "Bilinmeyen kaynaklardan alınan görselleri arka plan olarak kullanmak cihazınızı saldırılara maruz bırakabilir. Devam etmek istiyor musunuz?"
+    }
+  },
+  "bookmark": {
+    "defaultSort": "Varsayılan sıralama",
+    "direction": {
+      "ltr": "Soldan sağa",
+      "rtl": "Sağdan sola",
+      "title": "Açılış yönü"
+    },
+    "rightClickDisabledNote": "Başlatıcı'yı açmak için sağ tıklama etkinleştirildi. Önce kapatın.",
+    "rightClickToOpen": "Açmak için arka plana sağ tıklayın",
+    "showBtn": "Sağ alt düğmesini göster",
+    "syncNote": "Tarayıcı yer imleri tarayıcı tarafından yönetilir ve WebDAV üzerinden eşitlenmez.",
+    "title": "Yer imleri çubuğu"
+  },
+  "clock": {
+    "blink": "Yanıp sönen iki nokta üst üste",
+    "blinkingTip": "Bunu kapatmak sürekli GPU kullanımını azaltabilir.",
+    "colorful": "Renkli saat rakamları",
+    "gradient": "Gradyan saat",
+    "dateSize": "Tarih boyutu",
+    "hour12": "12 saatlik saat",
+    "invertColor": {
+      "dark": "Karanlık modda koyu metin kullan",
+      "light": "Aydınlık modda koyu metin kullan"
+    },
+    "meridiem": {
+      "followSize": "Büyük ÖÖ/ÖS Etiketi",
+      "show": "ÖÖ/ÖS göster"
+    },
+    "newStyle": "Yeni stil",
+    "newStyleDesc": "Etkinleştirildiğinde, \"ÖÖ/ÖS Göster\" ve \"Saniyeleri Göster\" seçeneklerini aynı anda etkinleştirir ve devre dışı bırakılamaz",
+    "secondsTip": "Bu, performans kullanımını artırır.",
+    "shadow": "Gölge göster",
+    "showDate": "Tarihi göster",
+    "showLunar": "Çin ay takvimini göster",
+    "showSeconds": "Saniyeleri göster",
+    "size": {
+      "title": "Saat boyutu"
+    },
+    "title": "Saat",
+    "transparency": "Saat saydamlığı",
+    "weight": {
+      "black": "En kalın",
+      "bold": "Kalın",
+      "dateTitle": "Tarih kalınlığı",
+      "extraBold": "Çok Kalın",
+      "heavy": "Ekstra Kalın",
+      "medium": "Hafif Kalın",
+      "normal": "Normal",
+      "title": "Saat kalınlığı"
+    }
+  },
+  "common": {
+    "copyLink": "Bağlantı Adresini Kopyala",
+    "hour": "Saat",
+    "incognitoPermission": {
+      "message": "Gizli pencere açmak için Firefox Eklenti Yöneticisi'nde bu uzantının özel pencerelerde çalışmasına izin verin ve tekrar deneyin.",
+      "title": "Özel Gezinti İzni Gerekli"
+    },
+    "openInIncognitoWindow": "Gizli Pencerede Aç",
+    "openInNewTab": "Yeni Sekmede Aç",
+    "openInNewWindow": "Yeni Pencerede Aç",
+    "sections": {
+      "appearance": "Görünüm",
+      "behavior": "Etkileşim ve davranış",
+      "danger": "Verileri temizle",
+      "data": "Veri ve kurtarma",
+      "display": "Görüntü ve içerik",
+      "general": "Genel",
+      "layout": "Düzen ve boşluk",
+      "position": "Sayfa konumu",
+      "radius": "Köşe yarıçapı",
+      "source": "İçerik kaynağı",
+      "summary": {
+        "appearance": "Renk, gölge ve boyutlandırma",
+        "behavior": "Etkileşimler ve açılış davranışı",
+        "danger": "Geri alınamaz işlemler—dikkatli kullanın",
+        "data": "Yedekler ve önbellekler",
+        "display": "Görünür içerik ve sunum",
+        "general": "Sık kullanılan seçenekler",
+        "layout": "Boyutlandırma, sayılar ve boşluk",
+        "position": "Ana içerik ve eylem düğmeleri",
+        "radius": "Bileşen köşelerini tek bir yerden ayarlayın",
+        "source": "Sağlayıcılar ve özel içerik"
+      }
+    },
+    "touchDeviceDisabledNote": "Bu seçenek yalnızca dokunmatik cihazlarda devre dışıdır."
+  },
+  "dock": {
+    "displayGroup": "Dock'ta gösterilen grup",
+    "showOtherGroups": "Diğer grupları klasör olarak göster",
+    "folderCount": "Klasör sayısı",
+    "emptyGroup": "Bu grupta henüz bağlantı yok",
+    "replaceQuickLinks": "Hızlı Bağlantılar yerine Dock kullan",
+    "replaceQuickLinksTip": "Daha ferah bir düzen için Arama ayarlarında “{{option}}” seçeneğini açmayı deneyebilirsiniz.",
+    "replaceQuickLinksLayoutTip": "Sayfaya biraz daha alan kazandırmak için Düzen ayarlarında üstten uzaklığı da biraz artırabilirsiniz.",
+    "actionBtnNote": "Dock etkinleştirildiğinde, düğme çubuğu yalnızca üste yerleştirilebilir (Düzen ayarlarında sol/sağ seçin)",
+    "borderRadius": "Köşe yarıçapı",
+    "launchpad": {
+      "rightClickDisabledNote": "Yer imlerini açmak için sağ tıklama etkinleştirildi. Önce kapatın.",
+      "show": "Başlatıcı'yı Dock'ta Göster",
+      "title": "Başlatıcı"
+    },
+    "limitCount": "Maksimum sayıyı sınırla",
+    "maxCount": "Maksimum sayı",
+    "title": "Dock"
+  },
+  "layout": {
+    "actionBtn": {
+      "borderRadius": "Eylem düğmesi köşe yarıçapı",
+      "bottomLeft": "Sol Alt",
+      "bottomRight": "Sağ Alt",
+      "dockNote": "Dock açık — düğme çubuğu üste sabitlenmiştir",
+      "label": "Düğme çubuğu konumu",
+      "topLeft": "Sol Üst",
+      "topRight": "Sağ Üst"
+    },
+    "dockBorderRadius": "Dock köşe yarıçapı",
+    "globalBorderRadius": "Diğer bileşen köşe yarıçapı",
+    "mainPosition": {
+      "bottomDvh": "Alttan (%)",
+      "bottomDvhValue": "Alttan uzaklık (dvh)",
+      "bottomNote": "Alttan konumlandırıldığında arama önerileri yukarı doğru açılır. Hızlı Bağlantıları kapatıp Dock kullanmanızı öneririz.",
+      "bottomPx": "Alttan (px)",
+      "bottomPxValue": "Alttan uzaklık (px)",
+      "center": "Orta",
+      "dvh": "Üstten (%)",
+      "dvhValue": "Üstten uzaklık (dvh)",
+      "label": "Ana alan konumu",
+      "px": "Üstten (px)",
+      "pxValue": "Üstten uzaklık (px)",
+      "quickLinksScrollNote": "Hızlı Bağlantı kaydırması etkinleştirildiğinde orta konumlandırma kullanılamaz."
+    },
+    "minimalModeOnDoubleClick": "Boş arka plana çift tıklayarak minimalist modu aç/kapat",
+    "quickLinksIconBorderRadius": "Hızlı Bağlantı simge arka planı köşe yarıçapı",
+    "title": "Düzen"
+  },
+  "other": {
+    "disableSettingsScrollRestore": "Ayarlar penceresinin kaydırma konumunu kaydetme",
+    "changelog": {
+      "description": "Büyük güncellemelerde yine açılır",
+      "label": "Sürüm yükseltmelerinde değişiklik günlüğünü açma"
+    },
+    "greeting": {
+      "description": "Tarayıcı her açıldığında bir kez gösterilir.",
+      "label": "Başlangıç selamlaması"
+    },
+    "faviconCache": {
+      "description": "Favicon'ları daha hızlı yükleme için yerel olarak önbelleğe alır; \"Tüm sitelere erişim\" izni gerektirir",
+      "label": "Favicon Önbelleği",
+      "permissionDenied": "\"Tüm sitelere erişim\" izni verilmedi; favicon önbelleği devre dışı kaldı"
+    },
+    "importExport": {
+      "backup": "Uzantı ayarlarını yedekle",
+      "export": "Dışa Aktar",
+      "exporting": "Yedek oluşturuluyor...",
+      "import": "İçe Aktar",
+      "importFailed": "İçe aktarma başarısız: {{reason}}",
+      "importSuccess": "İçe aktarma başarılı",
+      "importing": "İçe aktarılan veriler güvenli şekilde uygulanıyor...",
+      "noFileSelected": "Dosya seçilmedi",
+      "omittedIcons": "Bu yedeklemede çok büyük olan {{count}} kullanıcı simgesi atlandı",
+      "syncMode": {
+        "confirmMismatch": "Girilen onay metni eşleşmiyor",
+        "deletePrompt": "WebDAV verilerini silmek için “{{text}}” yazın",
+        "deleteRemote": "Uzak eşitleme kasasını sil, bağlantıyı kes ve ardından yerel verileri değiştir",
+        "description": "WebDAV eşitlemesi açık. Bu içe aktarmanın diğer cihazları nasıl etkileyeceğini seçin.",
+        "disconnectTitle": "Yerel verileri değiştirmeden önce bağlantıyı kesin",
+        "keepRemote": "Uzak eşitleme kasasını koru, bağlantıyı kes ve ardından yerel verileri değiştir",
+        "merge": "Mevcut verilerle birleştir ve eşitle (çakışmada duraklat)",
+        "replace": "Eşitlenen tüm verileri içe aktarılan içerikle değiştir",
+        "title": "İçe aktarma ve eşitleme"
+      },
+      "unknownError": "Bilinmeyen hata",
+      "validating": "Yedek bütünlüğü doğrulanıyor...",
+      "warningDialog": {
+        "content": "İçe aktarma, mevcut verilerinizin üzerine yazacaktır. Bu özelliği kullanırken lütfen dikkatli olun!",
+        "no": "Hayır",
+        "title": "Dosyadan içe aktarmak istediğinizden emin misiniz?",
+        "yes": "Evet"
+      }
+    },
+    "language": "Dil",
+    "purge": {
+      "btn": "Temizle",
+      "confirm": {
+        "data": {
+          "deleteRemote": "Uzak verileri sil, bağlantıyı kes ve ardından sıfırla",
+          "deleteRemotePrompt": "Uzak eşitleme kasasını silmek için “{{text}}” yazın",
+          "deleteRemoteTitle": "Uzak eşitleme verileri silinsin mi?",
+          "includeSync": "Bulut senkronizasyon verilerini de temizle",
+          "keepRemote": "Uzak verileri koru, bağlantıyı kes ve ardından sıfırla",
+          "message": "Bu işlem uzantı ayarlarını, göz ardı edilen en çok ziyaret edilen siteleri, sabitlenmiş veya favorilere eklenmiş siteleri, seçilen arka plan resimlerini veya videolarını vb. sıfırlayacaktır.",
+          "purging": "Uzantı verileri temizleniyor...",
+          "syncQuestion": "Eşitleme açık. Bu sıfırlama nasıl işlenmeli?",
+          "title": "Bu uzantının tüm verilerini temizlemek istediğinizden emin misiniz?"
+        },
+        "icon": {
+          "message": "Bu işlem, önbelleğe alınmış tüm site simgelerini silecektir.",
+          "purging": "Favicon önbelleği temizleniyor...",
+          "title": "Favicon önbelleğini temizlemek istediğinizden emin misiniz?"
+        },
+        "wallpaper": {
+          "message": "Bu işlem, seçilen arka plan resimlerini veya videolarını silecektir.",
+          "purging": "Duvar kağıdı önbelleği temizleniyor...",
+          "title": "Tüm duvar kağıdı önbelleğini temizlemek istediğinizden emin misiniz?"
+        }
+      },
+      "data": "Tüm verileri temizle",
+      "failed": {
+        "refresh": "Sayfayı yenile",
+        "title": "Veriler temizlenemiyor"
+      },
+      "icon": "Favicon önbelleğini temizle",
+      "wallpaper": "Duvar kağıdı önbelleğini temizle"
+    },
+    "syncRetirement": {
+      "acknowledge": "Tamam",
+      "clearCloudData": "Bulut verilerini temizle",
+      "clearFailedMessage": "Eski bulut verileri şu anda silinemedi. Yüklenmeyecek veya uygulanmayacak ve gelecekteki bir yeniden başlatmanın ardından size tekrar hatırlatılacaktır.",
+      "clearFailedTitle": "Bulut verileri silinemiyor",
+      "clearSuccess": "Eski bulut verileri temizlendi",
+      "downloadCloudData": "Bulut verilerini indir",
+      "downloadFailed": "Bulut verileri okunamadı veya indirilemedi. Lütfen daha sonra tekrar deneyin.",
+      "downloadNote": "Mevcut bulut verilerini indirebilirsiniz, ancak bu dosya uzantıya geri aktarılamaz.",
+      "downloadStarted": "Bulut veri dosyası indirilmeye başladı",
+      "message": "Bulut Senkronizasyonu bazen mevcut ayarları eski verilerle değiştirebiliyordu. Verilerinizi korumak için bu özellik kaldırıldı ve otomatik olarak kapatıldı. Bu cihazdaki ayarlar etkilenmedi.",
+      "noCloudData": "İndirilecek bulut verisi bulunamadı",
+      "residualMessage": "Eski bulut verileri bulundu. Mevcut cihazdaki ayarları etkilemeden silebilirsiniz.",
+      "residualTitle": "Eski bulut verileri bulundu",
+      "title": "Bulut Senkronizasyonu artık desteklenmiyor"
+    },
+    "title": "Diğer"
+  },
+  "perf": {
+    "actionBtns": {
+      "blur": "Eylem düğmeleri bulanıklığı",
+      "transparent": "Eylem düğmeleri saydamlığı"
+    },
+    "bgSwitchAnim": "Duvar kağıdı geçiş animasyonu",
+    "blurIntensity": "Arka plan bulanıklığı",
+    "bookmark": {
+      "blur": "Yer imleri yan çubuğu bulanıklığı",
+      "transparent": "Yer imleri yan çubuğu saydamlığı"
+    },
+    "dialog": {
+      "animation": "İletişim kutusu animasyonu",
+      "blur": "İletişim kutusu bulanıklığı",
+      "title": "İletişim kutusu",
+      "transparent": "İletişim kutusu saydamlığı"
+    },
+    "dock": {
+      "enterAnim": "Dock giriş animasyonu",
+      "scale": "Dock simgesi ölçeklendirme animasyonu"
+    },
+    "effectsTitle": "Efekt Ayarları",
+    "focus": {
+      "blur": "Arama odağında arka planı bulanıklaştır",
+      "scale": "Arama odağında arka planı ölçeklendir"
+    },
+    "quickLinks": {
+      "blur": "Hızlı Bağlantılar, Dock ve Başlatıcı bulanıklığı",
+      "transparent": "Hızlı Bağlantılar ve Dock saydamlığı"
+    },
+    "resetTransparencyAndBlur": "Saydamlık ve bulanıklığı sıfırla",
+    "searchBar": {
+      "blur": "Arama çubuğu bulanıklığı",
+      "transparent": "Arama çubuğu saydamlığı"
+    },
+    "title": "Performans ve Efektler",
+    "toggleAll": {
+      "animation": "Animasyon",
+      "blur": "Bulanıklık",
+      "disable": "Tümünü Devre Dışı Bırak",
+      "enable": "Tümünü Etkinleştir",
+      "transparent": "Saydamlık"
+    },
+    "transparency": "Arka plan saydamlığı",
+    "wallpaper": "Duvar kağıdı",
+    "yiyan": {
+      "blur": "Alıntı bulanıklığı",
+      "ripple": "Alıntı dalgalanma animasyonu",
+      "transparent": "Alıntı saydamlığı"
+    }
+  },
+  "quickLinks": {
+    "border": "Simge kenarlığını göster",
+    "fallbackToTitleInitial": "Simge kullanılamadığında başlığın ilk harfini göster",
+    "fallbackToTitleInitialChromeTip": "Chrome'da bunun çalışması için Simge önbelleğinin etkinleştirilmesi gerekir.",
+    "grouping": "Grupları etkinleştir",
+    "groupingDisableConfirm": "Grupları devre dışı bırakmak, tüm Hızlı Bağlantı gruplarını birleştirir ve yinelenen URL'leri kaldırır. Farklı gruplardaki yinelenen bağlantılar korunamaz.",
+    "groupingTip": "Yeniden adlandırmak için Hızlı Bağlantılar veya Başlatıcı'da bir grup adına çift tıklayın.",
+    "iconBorderRadius": "Simge arka planı köşe yarıçapı",
+    "iconCacheTip": "Daha yüksek çözünürlüklü simgeleri almaya çalışmak için Ayarlar → Diğer → Simge önbelleği seçeneğini etkinleştirmeyi düşünün.",
+    "iconRatio": "Simge oranı",
+    "iconSize": "Simge boyutu",
+    "marginTop": "Üstteki içerikle aralık",
+    "maxColumns": "Maksimum sütun",
+    "maxItemsTipForChrome": "İpucu: En fazla 10 en çok ziyaret edilen bağlantınız olabilir.",
+    "maxRows": "Maksimum satır",
+    "navigationMode": "Gezinme modu",
+    "pagingMode": "Sayfalama modu",
+    "pagingLoop": "Sayfalar arasında döngü",
+    "pinnedIcon": "Sabitlenmiş simgeyi göster",
+    "restoreDefault": "Gizli bağlantıları kurtar",
+    "restoreDefaultTitle": "Varsayılan Hızlı Bağlantıları geri yüklemek istediğinizden emin misiniz?",
+    "shadow": "Simge gölgesini göster",
+    "showOnSearchFocus": "Arama odağında göster",
+    "showTitle": "Bağlantı başlığını göster",
+    "spacing": {
+      "iconTitleGap": "Simge–Başlık Aralığı",
+      "itemGapX": "Yatay bağlantı aralığı",
+      "itemGapY": "Dikey bağlantı aralığı"
+    },
+    "tip": "Hızlı Bağlantılar alanındaki değişiklikleri önizlemek için ayarlar penceresini sürükleyin.",
+    "title": "Hızlı Bağlantılar",
+    "titleExtraWidth": "Başlık genişletme genişliği",
+    "titleWhiteInLight": "Aydınlık modda beyaz metin kullan",
+    "topSites": "En çok ziyaret edilenleri göster",
+    "scrollMode": "Kaydırma modu",
+    "scrollModeTip": "Dikey ekranlı cihazlarda daha iyi bir gezinti deneyimi için kaydırma modu önerilir.",
+    "pagingModeTip": "Geniş ekranlı cihazlarda daha iyi bir gezinti deneyimi için sayfalama modu önerilir."
+  },
+  "search": {
+    "alwaysExpandSearchBar": "Arama çubuğunu her zaman genişlet",
+    "alwaysShowIcon": "Arama motoru simgesini her zaman göster",
+    "authorizeHistory": "Geçmiş erişimine izin ver",
+    "border": "Arama kutusu kenarlığını göster",
+    "borderRadius": "Arama kutusu köşe yarıçapı",
+    "clickToChange": "Değiştirmek için tıklayın",
+    "defaultSearchEngine": "Arama motoru",
+    "expandWidth": "Genişletilmiş genişlik",
+    "historyPermissionDenied": "Geçmiş erişimine izin verilmedi. Diğer öneri sağlayıcıları kullanılabilir.",
+    "historyPermissionDescription": "Tarayıcı geçmişi önerileri izin gerektirir; başlık veya URL ile eşleşir.",
+    "historyPermissionPending": "Tarayıcı geçmişi seçili, ancak bu cihazda izin verilmemiş.",
+    "launchAnim": "Başlangıçta arama kutusu genişletme animasyonu",
+    "leftAlignInput": "Arama girişini sola hizala",
+    "noSuggestionProviders": "Hiçbiri",
+    "placeholder": "Arama yer tutucusu",
+    "providers": {
+      "calculator": "Hesap makinesi",
+      "url": "URL algılama",
+      "quick-links": "Hızlı bağlantılar",
+      "top-sites": "En çok ziyaret edilen siteler",
+      "browser-history": "Tarayıcı geçmişi",
+      "search-history": "Uzantı arama geçmişi",
+      "remote": "Arama motoru önerileri"
+    },
+    "recordSearchHistory": "Arama geçmişini kaydet",
+    "restoreHiddenEngines": "Gizli yerleşik arama motorlarını geri yükle",
+    "restoreHiddenEnginesTitle": "Tüm yerleşik arama motorlarını ve varsayılan sıralarını geri yüklemek istiyor musunuz?",
+    "searchSuggestionProvider": "Arama önerisi API",
+    "searchSuggestions": "Arama önerileri",
+    "shadow": "Arama kutusu gölgesini göster",
+    "suggestionProviders": "Öneri sağlayıcıları",
+    "tip": "Yeni bir sekme açarken arama girişini etkinleştirmek mi istiyorsunuz? Sayfanın sağ alt kısmındaki düğme menüsündeki \"Yardım ve Geri Bildirim\" bölümüne bakın.",
+    "title": "Arama",
+    "browserHistoryLimit": "Tarayıcı geçmişi öneri sayısı"
+  },
+  "sync": {
+    "availability": {
+      "blockedTopSitesScopeDisabled": "Gizlenen site kayıtları yalnızca bu cihazda tutulur. Bunları WebDAV eşitleme kapsamına ekleyebilirsiniz.",
+      "bookmarksBrowserManaged": "Yer imleri tarayıcı tarafından yönetilir ve WebDAV üzerinden eşitlenmez.",
+      "faviconCacheLocal": "Site simgesi önbelleği yeniden oluşturulabilir ve yüklenmez. Önbelleği etkinleştirme tercihi eşitlenir.",
+      "onlineWallpaperCacheLocal": "Önbellek dosyaları yalnızca bu cihazda tutulur; etkinleştirme tercihi eşitlenir.",
+      "onlineWallpaperUrlScopeDisabled": "Çevrimiçi/API duvar kâğıdı adresi yalnızca bu cihazda tutulur. Gelişmiş eşitleme kapsamına ekleyebilirsiniz.",
+      "pendingPermission": "Ayar eşitlendi ancak bu cihaz izin vermedi. İlgili özellik izin bekliyor.",
+      "quickLinksScopeDisabled": "Hızlı Bağlantılar eşitlemesi kapalı olduğundan veriler yalnızca bu cihazda tutulur.",
+      "searchEnginesScopeDisabled": "Özel arama motoru eşitlemesi kapalı olduğundan veriler yalnızca bu cihazda tutulur.",
+      "searchHistoryLocal": "Arama geçmişi her zaman yalnızca bu cihazda tutulur ve yüklenmez.",
+      "settingsScopeDisabled": "Ayar eşitlemesi kapalı olduğundan uzantı ayarları yalnızca bu cihazda tutulur.",
+      "uiScopeDisabled": "Dil ve renk modu eşitlemesi kapalı olduğundan yalnızca bu cihazda tutulur.",
+      "userIconsScopeDisabled": "Kullanıcının seçtiği simgeler yalnızca bu cihazda tutulur. Gelişmiş eşitleme kapsamına ekleyebilirsiniz.",
+      "wallpaperFailed": "Duvar kâğıdı yükleme veya bütünlük denetimini geçemedi. Diğer veriler eşitlenmeye devam eder.",
+      "wallpaperPartial": "Yalnızca 20 MiB sınırındaki kullanılabilir sabit görseller eşitlenir. Videolar, animasyonlar ve atlanan dosyalar bu cihazda kalır.",
+      "wallpaperScopeDisabled": "Yerel resim duvar kâğıtları yalnızca bu cihazda tutulur. WebDAV eşitleme kapsamına ekleyebilirsiniz.",
+      "wallpaperTooLarge": "Resim 20 MB sınırını aştığından duvar kâğıdı eşitlenmedi. Diğer veriler eşitlenmeye devam eder.",
+      "wallpaperVideo": "Video duvar kâğıtları WebDAV üzerinden eşitlenmez."
+    }
+  },
+  "theme": {
+    "color": {
+      "acgn": {
+        "aveMujica": "Ave Mujica",
+        "bocchi": "Bocchi the Rock!",
+        "kessoku": "Kessoku Band",
+        "luo": "Luo Tianyi",
+        "miku": "Hatsune Miku",
+        "mygo": "MyGO!!!!!",
+        "togeari": "TOGENASHI TOGEARI"
+      },
+      "classic": {
+        "antBlue": "Ant Design Mavisi",
+        "bellflower": "Koyu Çan Çiçeği",
+        "crimson": "Kokiake Kırmızısı",
+        "ink": "Çin mürekkebi",
+        "lapisBlue": "Lapis Ruri",
+        "ochre": "Zhe Aşı Boyası",
+        "orangeRed": "Ouseki Kehribarı",
+        "teal": "Nando Teal",
+        "yamabuki": "Yamabuki Altını",
+        "yellowGreen": "Moegi Yeşili"
+      }
+    },
+    "colorful": {
+      "desc": "Tema rengini daha fazla öğeye uygula",
+      "label": "Küresel Renk Modu"
+    },
+    "idleHide": "Sayfa öğeleri boştayken soldur",
+    "keepClockVisibleOnIdle": "Boştayken saat ve tarihi görünür tut",
+    "mode": {
+      "alwaysOff": "Her zaman Kapalı",
+      "alwaysOn": "Her zaman Açık",
+      "dark": "Karanlık Mod",
+      "light": "Aydınlık Mod",
+      "system": "Sistemi Takip Et"
+    },
+    "monet": {
+      "askEnableCache": {
+        "message": "Dinamik tema renklerini kullanmak için çevrimiçi duvar kağıdı önbelleğinin etkinleştirilmesi gerekir. Önbelleği etkinleştirmek, bu alan adlarındaki görselleri depolar. Etkinleştirmek istiyor musunuz?",
+        "title": "Duvar kağıdı önbelleği etkinleştirilsin mi?"
+      },
+      "desc": "Material Design 3'ten ilham alır, duvar kağıdınızdan tema renkleri çıkarır. Yalnızca resim arka planlarını destekler. En iyi görsel efekt için \"Küresel Renk Modu\" seçeneğiyle birlikte kullanın.",
+      "label": "Dinamik Tema Renkleri (Monet Çıkarma)"
+    },
+    "primaryColor": "Ana renk",
+    "title": "Tema"
+  },
+  "title": "Ayarlar",
+  "webdavSync": {
+    "conflicts": {
+      "batch": {
+        "prefer": "Toplu seçim"
+      },
+      "both": "İkisini de koru",
+      "bothNote": "Değiştirilen kopyaya yeni ve kalıcı bir kimlik verilir.",
+      "categories": {
+        "blocked-top-sites": "Gizlenen siteler",
+        "search-engines": "Arama motorları",
+        "settings": "Ayarlar",
+        "ui": "Arayüz tercihleri"
+      },
+      "deleted": "Silinmiş veya mevcut değil",
+      "empty": "Çözülmemiş çakışma bulunamadı",
+      "fields": {
+        "colorMode": "Renk modu",
+        "customSearchEngine": "Özel arama motoru",
+        "groupName": "Grup adı",
+        "groupOrder": "Grup sırası",
+        "linkGroup": "Bağlantı grubu",
+        "linkIcon": "Bağlantı simgesi",
+        "linkOrder": "Hızlı Bağlantılar sırası",
+        "linkTitle": "Bağlantı başlığı",
+        "linkUrl": "Bağlantı adresi",
+        "quickLink": "Hızlı Bağlantı",
+        "quickLinkGroup": "Hızlı Bağlantılar grubu",
+        "searchEngineIcon": "Arama motoru simgesi",
+        "searchEngineName": "Arama motoru adı",
+        "searchEngineOrder": "Arama motoru sırası",
+        "searchEngineUrl": "Arama motoru adresi",
+        "wallpaper": "Duvar kâğıdı",
+        "wallpaperDark": "Koyu duvar kâğıdı",
+        "wallpaperFixed": "Sabit duvar kağıdı",
+        "wallpaperLight": "Açık duvar kâğıdı",
+        "wallpaperOrder": "Duvar kağıdı liste sırası"
+      },
+      "finish": "Birleştirme sürümü oluştur",
+      "local": "Yerel verileri koru",
+      "notice": "Bazı içerikler cihazlarınızda farklı biçimde değiştirildi. Korunacak içeriği seçin.",
+      "noticeTitle": "Eşitlenecek içeriği onaylayın",
+      "remote": "Bulut verilerini kullan",
+      "resolved": "Çakışmalar çözüldü ve yeni bir birleştirme sürümü oluşturuldu",
+      "sourceDevice": "{{device}} cihazı",
+      "sourceLocal": "Yerel",
+      "sourceRemote": "Bulut",
+      "sources": "Çakışan veri kaynakları",
+      "title": "Eşitleme çakışmalarını çöz",
+      "useDevice": "{{device}} cihazındaki verileri kullan",
+      "values": {
+        "changed": "Değiştirildi",
+        "customIcon": "Özel simge kullanılıyor",
+        "disabled": "Kapalı",
+        "enabled": "Açık",
+        "enabledScopeCount": "{{count}} eşitleme öğesi etkin",
+        "group": "Grup: {{name}}",
+        "groupSummary": "{{name}} · {{count}} bağlantı",
+        "itemCount": "{{count}} öğe",
+        "noBaseline": "Ortak başlangıçta bu öğe yok",
+        "noCustomIcon": "Özel simge kullanılmıyor",
+        "orderChanged": "Sıralama değiştirildi",
+        "quickLinksSummary": "{{items}} bağlantı · {{groups}} grup",
+        "rootGroup": "Gruplanmamış",
+        "searchEnginesSummary": "{{count}} arama motoru",
+        "settingCount": "{{count}} ayar",
+        "unknownGroup": "Diğer grup",
+        "untitled": "Adsız",
+        "wallpaperCount": "{{count}} duvar kâğıdı seçildi"
+      }
+    },
+    "connectionActions": {
+      "open": "Bağlantıyı yönet",
+      "title": "Bağlantıyı kes veya sil"
+    },
+    "deviceName": "Geçerli cihaz: {{name}}",
+    "devices": {
+      "firstSeen": "İlk eşitleme: {{time}}",
+      "stale": "180 günden uzun süredir çevrimdışı",
+      "title": "Eşitlenen cihazlar",
+      "unknownDescription": "WebDAV kimlik bilgileriniz açığa çıkmış olabilir. Sağlayıcınızda parolayı veya uygulama parolasını değiştirin, ardından güvendiğiniz cihazları yeniden bağlayın. Cihaz kaydını silmek erişimi iptal etmez.",
+      "unknownTitle": "Tanımadığınız bir cihaz mı var?"
+    },
+    "disconnect": {
+      "deleteAction": "Kalıcı olarak sil ve bağlantıyı kes",
+      "deleteDescription": "Eşitleme dizini temizlenir ve boş klasör varsayılan olarak korunur. Klasörü de silmek için aşağıdaki seçeneği işaretleyin",
+      "deleteDirectory": "Eşitleme dizini klasörünü de sil",
+      "deleteTitle": "Uzak eşitleme kasasını kalıcı olarak sil",
+      "deleted": "Uzak eşitleme verileri silindi ve bu cihazın bağlantısı kesildi",
+      "disconnected": "Uzak veriler korundu ve bu cihazın bağlantısı kesildi",
+      "impact": "{{devices}} cihazı ve {{versions}} sürümü etkiler",
+      "keepAction": "Uzak verileri koru ve bağlantıyı kes",
+      "keepDescription": "Bu cihazdaki bağlantı temizlenir. Diğer cihazlar ve uzak veriler etkilenmez.",
+      "keepTitle": "WebDAV eşitlemesini kapat",
+      "title": "WebDAV bağlantısını yönet",
+      "typePrompt": "Devam etmek için “{{text}}” yazın"
+    },
+    "empty": {
+      "title": "WebDAV eşitlemesi yapılandırılmadı"
+    },
+    "encrypted": "İstemci tarafında şifreli",
+    "encryption": {
+      "description": "Bu parola WebDAV oturum açma parolanızdan ayrıdır. Unutulursa kasa yalnızca silinebilir ve kurtarılamaz.",
+      "disabled": "Şifreleme varsayılan olarak kapalıdır",
+      "enabled": "Bu eşitleme kasası şifrelidir",
+      "fixedMode": "Şifreleme modu kasa oluşturulurken seçilir ve daha sonra değiştirilemez.",
+      "keyNote": "Başarılı olduktan sonra yalnızca dışa aktarılamayan türetilmiş anahtar saklanır. Parola yüklenmez, dışa aktarılmaz veya günlüğe yazılmaz.",
+      "password": "Bağımsız eşitleme şifreleme parolası",
+      "title": "İstemci tarafı şifreleme",
+      "unlock": "Eşitleme kasasının kilidini aç"
+    },
+    "errors": {
+      "authentication": "Parola yanlış veya sağlayıcı erişimi reddetti",
+      "permission-required": "Bu WebDAV sunucusuna erişim izni verilmelidir",
+      "conflict": "Uzak verilerde çakışma var",
+      "corrupted": "Uzak veriler bozuk",
+      "network": "Sunucuya geçici olarak ulaşılamıyor",
+      "redirect-cross-origin": "Sunucu başka bir kaynağa yönlendirdiği için eşitleme durduruldu",
+      "redirect-insecure": "Sunucu HTTPS bağlantısını HTTP bağlantısına düşürmeye çalıştığı için eşitleme durduruldu",
+      "redirect-required": "Yönlendirme güvenli değil veya doğrulanamadı. Yalnızca aynı kaynaklı yönlendirmelere ve aynı ana bilgisayarda HTTP’den HTTPS’ye yükseltmelere izin verilir; son WebDAV adresini de girebilirsiniz.",
+      "server": "WebDAV hizmeti hata döndürdü",
+      "data-too-large": "Veriler boyut sınırlarını aşıyor: not başına 1 MiB, tüm notlar için 8 MiB ve tam anlık görüntü için 10 MiB. Yerel veya uzak verileri azaltıp yeniden deneyin.",
+      "storage-full": "WebDAV depolama alanı dolu",
+      "timeout": "Bağlantı zaman aşımına uğradı",
+      "unknown": "Eşitleme başarısız oldu. Durumu inceleyip yeniden deneyin."
+    },
+    "experimental": {
+      "description": "Bu özellik hâlâ test edilip geliştiriliyor. Etkinleştirmeden önce mevcut ayarlarınızı Diğer Ayarlar bölümünden dışa aktarmanız önerilir.",
+      "title": "Deneysel özellik"
+    },
+    "history": {
+      "back": "Geçmiş listesine dön",
+      "current": "Geçerli yerel veri",
+      "noDifferences": "Bu sürüm geçerli yerel verilerle aynı",
+      "preview": "Farkları incele",
+      "reasons": {
+        "import": "İçe aktarma",
+        "initial": "İlk sürüm",
+        "local-change": "Yerel değişiklik",
+        "merge": "Otomatik birleştirme",
+        "repair": "Hasar onarımı",
+        "restore": "Geçmişi geri yükleme"
+      },
+      "restore": "Yeni sürüm olarak geri yükle",
+      "restoreDescription": "İncelenen eski içerik yeni en son sürüm olarak gönderilir. Ön izlemeden sonra yerel veya uzak veriler değişirse işlem durur.",
+      "restoreTitle": "İncelenen sürüm geri yüklensin mi?",
+      "restored": "Geçmişten yeni bir en son sürüm oluşturuldu",
+      "target": "Geçmiş sürümü",
+      "title": "Sürüm geçmişi",
+      "truncated": "Yalnızca ilk 200 fark gösterilir. Geri yüklemeden önce sürümün tamamı yine doğrulanır.",
+      "wallpaperMissing": "Bu geçmiş duvar kâğıdı artık saklanmıyor; geçerli duvar kâğıdı korunacak"
+    },
+    "lastSuccess": "Son başarılı eşitleme: {{time}}",
+    "later": "Şimdi değil",
+    "legacy": {
+      "clearConfirm": "Bu işlem yalnızca kullanımdan kaldırılan tarayıcı eşitlemesinden kalan verileri temizler. Geçerli ayarlar ve yeni WebDAV eşitlemesi etkilenmez. Devam edilsin mi?",
+      "description": "Bunlar eski tarayıcı storage.sync verileridir ve WebDAV’a yüklenmez.",
+      "found": "Veri bulundu",
+      "title": "Eski tarayıcı bulut eşitleme verileri"
+    },
+    "management": {
+      "devices": "Cihazlar",
+      "history": "Geçmiş",
+      "summary": "Geçmiş, cihazlar ve şifreleme",
+      "title": "Eşitleme yönetimi"
+    },
+    "messages": {
+      "syncComplete": "Eşitleme denetimi tamamlandı"
+    },
+    "never": "Henüz başarılı eşitleme yok",
+    "omissions": {
+      "aggregate-too-large": "Seçilen simgelerin toplam boyutu 8 MB sınırını aşıyor",
+      "item-too-large": "Seçilen bir simge 2 MB sınırını aşıyor",
+      "too-large": "Bir duvar kâğıdı 20 MB sınırını aşıyor",
+      "unavailable": "Seçilen yerel resim kullanılamıyor",
+      "unsupported": "Animasyonlu resimler ve videolar eşitlenmez"
+    },
+    "plaintext": "İstemci şifrelemesi kapalı",
+    "refresh": "Durumu yenile",
+    "remoteDeleted": {
+      "action": "Bu cihazın bağlantısını temizle",
+      "description": "Bu cihazın bağlı olduğu uzak eşitleme kasası silindi. Eşitlemeyi yeniden kurmadan önce bu cihazın bağlantısını temizleyin; uzak dosyalar okunmaz veya silinmez.",
+      "title": "Uzak eşitleme kasası silindi"
+    },
+    "repair": {
+      "action": "Onarım sürümü oluştur",
+      "completed": "Hasarlı sürüm yalıtıldı ve onarım sürümü oluşturuldu",
+      "corrupted": "En son sürüm hasarlı; otomatik eşitleme durduruldu",
+      "corruptedDescription": "Önce ham dosyayı indirin, ardından geçerli yerel verileri veya önceki eksiksiz uzak sürümü seçin.",
+      "corruptionTitle": "Hasarlı verileri onar",
+      "deleteEvidenceDescription": "Önce onarım sürümü yüklenip doğrulanır. Yalnızca başarılı olduktan sonra indirilmiş hasarlı bulut sürümü silinir.",
+      "deleteEvidenceTitle": "Onarımdan sonra hasarlı bulut sürümü silinsin mi?",
+      "download": "Hasarlı ham dosyayı indir",
+      "downloaded": "Ham dosya indirildi",
+      "local": "Geçerli yerel verileri kullan",
+      "missingPayload": "Hasarlı sürümün içeriği eksik ve indirilemiyor. Yerel verileri veya önceki eksiksiz sürümü kullanarak yine de onarabilirsiniz.",
+      "previous": "Önceki eksiksiz bulut sürümünü kullan",
+      "removeWallpapersAction": "Duvar kâğıdı eşitlemesini durdur ve bulut resimlerini temizle",
+      "removeWallpapersCompleted": "Duvar kâğıdı eşitlemesi durduruldu ve kullanılmayan bulut resimleri temizlendi",
+      "removeWallpapersDescription": "Duvar kâğıdı içermeyen yeni bir sürüm yayımlanır, ardından korunan sürümlerin artık başvurmadığı bulut resimleri silinir. Yerel duvar kâğıtları korunur.",
+      "removeWallpapersTitle": "Duvar kâğıdı eşitlemesi durdurulup bulut resimleri temizlensin mi?",
+      "retry": "Yeniden denetle",
+      "revision": "Hasarlı sürüm: {{id}}",
+      "same": "Yerel veriler önceki eksiksiz sürümle aynı; onarım sürümü oluşturmak için otomatik olarak bu sürüm kullanılacak.",
+      "size": "Ham dosya boyutu: {{size}} bayt",
+      "wallpaperDescription": "Boyut sınırını aşan veya desteklenmeyen resimler atlanır. Kapsamı değiştirin veya daha küçük bir resim seçin; uzantı özgün dosyayı değiştirmez.",
+      "wallpaperTitle": "Bazı resimler eşitlenmedi"
+    },
+    "resolve": "Sorunu çöz",
+    "scope": {
+      "blockedTopSites": "Gizlenen sık ziyaret edilen siteler",
+      "customSearchEngines": "Özel arama motorları",
+      "notes": "Notlar",
+      "onlineWallpaperUrl": "Çevrimiçi duvar kâğıdı adresi",
+      "onlineWallpaperUrlNote": "Adres bir erişim belirteci içerebilir.",
+      "settings": "Temel ayarlar",
+      "summary": "Yalnızca bu cihazı etkiler. Kapalı kategorilerin uzak verileri korunur ve yeniden açıldığında karşılaştırma sürdürülür.",
+      "title": "Eşitleme kapsamı",
+      "uiPreferences": "Dil ve koyu mod",
+      "userIcons": "Özel bağlantı simgeleri",
+      "userIconsNote": "Özel Hızlı Erişim ve özel arama motoru simgeleri gibi. Her simge en fazla 2 MB, tüm simgeler toplam en fazla 8 MB olabilir.",
+      "wallpapers": "Yerel resim duvar kâğıtları",
+      "wallpapersNote": "Video duvar kâğıtları hariçtir. Her resim en fazla 20 MB olabilir; sınırı aşan resimler atlanır."
+    },
+    "setup": {
+      "advanced": "Gelişmiş ayarlar",
+      "back": "Geri",
+      "compare": {
+        "conflicts": "{{count}} çakışmanın çözülmesi gerekiyor",
+        "existing": "Uzak veriler mevcut",
+        "existingTitle": "Bu cihaz ile uzak verileri karşılaştır",
+        "firstConnectionNote": "Bu cihazda ve uzakta veri var ancak henüz ortak bir eşitleme sürümü yok. Eşitlemeyi açtıktan sonra öğeleri tek tek çözün veya Ayarlar’da toplu tercih seçin; onay ortak başlangıcı oluşturur.",
+        "firstConnectionTitle": "İlk bağlantı: korunacak verileri seçin",
+        "initialTitle": "İlk yüklemeyi inceleyin",
+        "safe": "Yerel ve uzak veriler arasında çakışma yok. Eşitleme güvenle etkinleştirilebilir."
+      },
+      "confirm": {
+        "autoDevice": "Tam işletim sistemi sürümünü içermeyen anonim bir ad oluşturulacak",
+        "description": "Eşitleme kasası yalnızca bu onaydan sonra oluşturulur veya değiştirilir.",
+        "encrypted": "Etkin; unutulan parola kurtarılamaz",
+        "plaintext": "Kapalı (varsayılan)",
+        "title": "Son onay"
+      },
+      "connected": "WebDAV eşitlemesi etkinleştirildi",
+      "connection": {
+        "deviceName": "Cihaz adı (isteğe bağlı)",
+        "deviceNamePlaceholder": "Örneğin: Ofis bilgisayarı",
+        "directory": "Uzantıya özel dizin",
+        "password": "Parola veya uygulama parolası",
+        "remember": "Bu tarayıcı profilinde sakla ve arka planda otomatik eşitlemeye izin ver",
+        "rememberNote": "Parola yüklenmez, dışa aktarılmaz veya günlüğe yazılmaz.",
+        "sessionNote": "Yalnızca bu oturumda kullanılır; tarayıcı kapandığında temizlenir ve arka planda otomatik eşitleme kullanılamaz.",
+        "title": "Ağ depolama alanınızı bağlayın",
+        "url": "Sunucu adresi",
+        "username": "Kullanıcı adı"
+      },
+      "encryption": {
+        "enable": "Eşitlenen içeriği bağımsız bir parolayla şifrele",
+        "password": "Bağımsız eşitleme şifreleme parolası (en az 8 karakter)"
+      },
+      "errors": {
+        "authentication": "Parola yanlış veya sağlayıcı bu hesaba erişimi reddetti. Kullanıcı adını, parolayı veya uygulama parolasını kontrol edin.",
+        "encryption": "Bu kasa şifreli. Gelişmiş ayarlarda doğru bağımsız eşitleme şifreleme parolasını girin.",
+        "foreign": "Bu dizinde Lemon New Tab’a ait olmayan veriler var. Boş veya doğru uzantıya özel dizini kullanın.",
+        "format": "Bu eşitleme biçimi uzantının daha yeni bir sürümüyle oluşturulmuş. Önce uzantıyı güncelleyin.",
+        "network": "Tarayıcı isteği gönderemedi. Sunucu adresini normal bir sekmede açarak adresi ve HTTPS sertifikasını doğrulayın; ardından ağı, proxy’yi ve yönlendirmeleri kontrol edin.",
+        "permission": "Bu WebDAV sunucusuna erişim izni verilmediği için bağlantı kaydedilmedi.",
+        "unsupported": "Sunucu WebDAV dosyalarını güvenilir biçimde oluşturamıyor, okuyamıyor, listeleyemiyor veya silemiyor."
+      },
+      "finish": "Eşitlemeyi etkinleştir",
+      "http": {
+        "accept": "Yerel ağ HTTP trafiğinin aynı ağdaki kişilerce ele geçirilebileceğini anlıyorum",
+        "localWarning": "Bu bir yerel ağ HTTP adresidir. Oturum açma bilgileri ve şifrelenmemiş içerik aynı ağdaki kişilerce görülebilir.",
+        "publicUnsupported": "Genel HTTP WebDAV adresleri desteklenmez. HTTPS veya yerel ağ adresi kullanın."
+      },
+      "next": "İleri",
+      "scan": {
+        "empty": "Dizin boş ve yeni bir eşitleme kasası oluşturulabilir",
+        "emptyNote": "LemonNewTab dizini ve ilk sürüm yalnızca son onaydan sonra oluşturulur.",
+        "existing": "Mevcut bir eşitleme kasası bulundu",
+        "existingNote": "Sahiplik işareti ve sürüm bütünlüğü doğrulandı. Sonraki adımda bu cihazdaki veriler karşılaştırılacak.",
+        "remote-conflict": "Uzak kasada birden fazla sürüm dalı var",
+        "remoteConflictNote": "Bu cihaz dalları öğe öğe çözebilir. Bağlandıktan sonra tüm çakışmalar çözülene kadar eşitleme duraklatılır.",
+        "title": "Uzak tarama sonucu"
+      },
+      "scope": {
+        "description": "Yalnızca bu cihazı etkiler. Kapalı kategorilerin uzak verileri korunur ve yeniden açıldığında karşılaştırma sürdürülür.",
+        "omittedResources": "Boyut sınırını aşan veya desteklenmeyen {{count}} seçili resim atlanacak",
+        "required": "En az bir eşitleme kategorisini etkinleştirin.",
+        "title": "Eşitleme kapsamını seçin"
+      },
+      "steps": {
+        "compare": "Karşılaştır",
+        "confirm": "Onayla",
+        "connection": "Bağlantı",
+        "scan": "Tara",
+        "scope": "Kapsam",
+        "test": "Test"
+      },
+      "test": {
+        "action": "Bağlantıyı test et",
+        "notTested": "Test bekleniyor",
+        "permissionNote": "Test’e tıkladıktan sonra tarayıcı bu WebDAV sunucusuna erişmek ve istekleri denetlemek için isteğe bağlı izinler ister. İlki sunucuya bağlanmak, ikincisi bu bağlantının güvenli olup olmadığını belirlemek için kullanılır.",
+        "retry": "Yeniden test et",
+        "scanned": "Sunucuya başarıyla bağlanıldı",
+        "success": "Bağlantı başarılı",
+        "title": "Bağlantıyı test et ve izin iste"
+      },
+      "title": "WebDAV eşitlemesini ayarla",
+      "wallpaper": {
+        "oversized": "{{count}} duvar kâğıdı 20 MB sınırını aşıyor ve atlanacak",
+        "summary": "Video duvar kâğıtları hariç, toplam {{size}} boyutunda {{count}} resim. Her resim en fazla 20 MB olabilir; sınırı aşanlar atlanır."
+      }
+    },
+    "status": {
+      "authentication": "Yeniden oturum açılması gerekiyor",
+      "permission": "Sunucu erişim izni gerekiyor",
+      "conflict": "Çakışmaların çözülmesi gerekiyor",
+      "corrupted": "En son uzak sürüm hasarlı",
+      "encryptionPassword": "Eşitleme şifreleme parolası gerekiyor",
+      "formatTooNew": "Eşitleme biçimi daha yeni; uzantıyı güncelleyin",
+      "paused": "Eşitleme duraklatıldı",
+      "pending": "Yüklenmeyi bekleyen değişiklikler var",
+      "ready": "Bağlandı; ilk denetim bekleniyor",
+      "remoteDeleted": "Uzak eşitleme verileri silindi",
+      "dataTooLarge": "Veriler boyut sınırlarını aşıyor. Azaltıp yeniden deneyin",
+      "storageFull": "WebDAV depolama alanı dolu",
+      "synced": "Eşitlendi",
+      "unconfigured": "Yapılandırılmadı",
+      "wallpaperSkipped": "Temel veriler eşitlendi; duvar kâğıdı eşitlenmedi",
+      "noSelection": "Eşitleme kategorisi seçilmedi"
+    },
+    "syncNow": "Şimdi eşitle",
+    "title": "WebDAV Eşitlemesi",
+    "enabled": "Bu cihazda eşitlemeyi etkinleştir",
+    "credentials": {
+      "title": "Giriş bilgilerini güncelle",
+      "username": "Kullanıcı adı (mevcut adı korumak için boş bırakın)",
+      "save": "Doğrula ve kaydet"
+    }
+  },
+  "yiyan": {
+    "alwaysShow": "Her zaman göster",
+    "borderRadius": "Alıntı arka planı köşe yarıçapı",
+    "customLinesLabel": "Özel içerik",
+    "customLinesNote": "Her satır bir alıntıyı temsil eder. Bir satır içinde satır sonu belirtmek için \"\\n\" kullanın.",
+    "customLinesPlaceholder": "Satır başına bir alıntı; satır içinde satır sonları için \\n kullanın",
+    "description": "Arama çubuğunun altında rastgele bir Çin alıntısı görüntüler. Bir deneyin — isterseniz daha sonra kapatabilirsiniz!",
+    "normalyShowTip": "Devre dışı bırakıldığında, yalnızca arama kutusu odaklandığında göster.",
+    "provider": "Sağlayıcı",
+    "providers": {
+      "custom": {
+        "name": "Özel"
+      },
+      "hitokoto": {
+        "name": "Hitokoto.cn",
+        "note": "Hitokoto.cn'nin çok katı bir QPS (saniyedeki sorgu sayısı) sınırı olduğunu lütfen unutmayın. Bu uzantı önbellek kullanır, ancak kısa sürede farklı sitelerden gelen birden fazla istek, IP adresinizin geçici olarak yasaklanmasına neden olabilir."
+      },
+      "jinrishici": {
+        "name": "Çin Şiiri"
+      }
+    },
+    "shadow": "Metin gölgesini göster",
+    "title": "Alıntı"
+  }
+}

@@ -1,0 +1,899 @@
+{
+  "a11y": {
+    "back": "返回上一層設定"
+  },
+  "background": {
+    "bingFrom": "影像來源：Bing",
+    "blur": "模糊強度",
+    "cache": {
+      "askEnable": {
+        "message": "啟用後會快取線上壁紙，減少重複載入，並可在離線時繼續顯示已快取的壁紙。是否啟用？",
+        "title": "啟用壁紙快取？"
+      },
+      "disabledTip": "僅在壁紙類型為「線上圖片」時可開啟（Bing 壁紙預設已快取）",
+      "duration": "快取有效期",
+      "label": "線上壁紙快取",
+      "nextStartup": "將於下次啟動時生效",
+      "noExpires": "快取永不過期"
+    },
+    "change": "更改背景",
+    "custom": "自訂",
+    "fasterBgAnim": "啟動時更快地顯示背景",
+    "library": {
+      "add": "新增",
+      "clearPreviews": "清除預覽快取",
+      "collapse": "收合",
+      "confirmRemove": "移除選取的 {{count}} 個桌布？",
+      "dark": "深色模式",
+      "done": "完成",
+      "download": "下載",
+      "dragAddHint": "拖入圖片或影片以新增",
+      "empty": "新增圖片或影片，支援一次選取多個檔案或拖入。",
+      "expand": "展開全部",
+      "group": "桌布分組",
+      "image": "圖片",
+      "importFailed": "有 {{count}} 個檔案無法新增，其餘檔案已保留。",
+      "inherit": "未設定深色模式桌布時，將自動使用淺色模式桌布。",
+      "light": "淺色模式",
+      "loading": "正在讀取資訊",
+      "manage": "管理",
+      "order": "輪播順序",
+      "ordered": "依清單順序",
+      "random": "隨機",
+      "remove": "移除",
+      "reset": "恢復預設",
+      "rotation": "桌布輪播",
+      "solid": "純色背景",
+      "sortHint": "拖曳排序",
+      "unavailable": "無法讀取",
+      "video": "影片"
+    },
+    "mask": {
+      "color": "遮罩顏色",
+      "enable": "啟用遮罩"
+    },
+    "onlineTips": {
+      "a": "按下 Enter 鍵或當輸入框失去焦點時會提交",
+      "b": "圖片的快取策略取決於瀏覽器，離線時可能無法載入圖片",
+      "c": "載入圖片前可能會短暫出現白畫面，時間長短取決於你的網路速度"
+    },
+    "parallax": "壁紙視差效果",
+    "pauseWhenBlur": "失去焦點時暫停影片背景",
+    "permission": {
+      "allowAll": "允許所有網址",
+      "allowCurrent": "僅允許這個API網址",
+      "deny": "拒絕",
+      "request": {
+        "faviconCacheMessage": "為了啟用圖示快取，擴充功能需要「訪問所有網址」權限。",
+        "message": "為了獲取線上圖片，擴充功能需要請求相應的訪問權限：",
+        "monetColorMessage": "為了啟用動態主題色（莫內取色），擴充功能需要「訪問所有網址」權限。",
+        "subA": {
+          "content": "需要「訪問這個API網址」",
+          "label": "普通模式："
+        },
+        "subB": {
+          "content": "需要「訪問所有網站」",
+          "label": "動態主題色 / 壁紙快取："
+        },
+        "title": "權限請求",
+        "wallpaperCacheMessage": "為了啟用線上壁紙快取，擴充功能需要「訪問所有網址」權限。"
+      }
+    },
+    "preferenceTitle": "壁紙偏好",
+    "resolution": "清晰度",
+    "showDownloadBtn": "顯示下載按鈕",
+    "showDownloadBtnNote": "可下載目前顯示的必應、線上或本機桌布",
+    "title": "背景",
+    "today": "今日",
+    "type": {
+      "local": "本機圖片/影片",
+      "online": "線上圖片"
+    },
+    "video": {
+      "blurTip": "開啟此開關可緩解同時開啟多個新分頁或多個視窗同時顯示時的效能佔用"
+    },
+    "vignette": "暗角效果",
+    "warning": {
+      "bingResolutionCacheFailed": "未能快取所選清晰度，將繼續使用現有快取，稍後會重試。",
+      "cacheDisabled": "由於未授予「訪問所有網站」權限，無法安全地快取線上壁紙，因此已停用「線上壁紙快取」。",
+      "fileIsNotImage": "所選檔案不是圖片！",
+      "invalidUrl": "請輸入有效的 HTTP(S) 桌布網址。",
+      "monetDisabled": "由於未授予「訪問所有網站」權限，動態主題色（莫內取色）已被關閉",
+      "notGranted": "未授權，無法載入背景圖片",
+      "title": "警告",
+      "unknownSource": "使用來源不明的圖片作為背景可能會使裝置遭到攻擊，是否繼續？"
+    }
+  },
+  "bookmark": {
+    "defaultSort": "預設排序方式",
+    "direction": {
+      "ltr": "從左到右",
+      "rtl": "從右到左",
+      "title": "打開方向"
+    },
+    "rightClickDisabledNote": "已啟用右鍵背景打開啟動台，請先將其關閉。",
+    "rightClickToOpen": "右鍵背景打開",
+    "showBtn": "顯示右下角快捷入口",
+    "syncNote": "瀏覽器書籤由瀏覽器管理，不透過 WebDAV 同步。",
+    "title": "書籤欄"
+  },
+  "clock": {
+    "blink": "閃爍時間分隔符",
+    "blinkingTip": "關閉可減輕持續性的 GPU 使用",
+    "colorful": "多彩時鐘",
+    "gradient": "漸層時鐘",
+    "dateSize": "日期大小",
+    "hour12": "使用 12 小時制",
+    "invertColor": {
+      "dark": "深色模式下使用深色文字",
+      "light": "淺色模式下使用深色文字"
+    },
+    "meridiem": {
+      "followSize": "「上午／下午」大字顯示",
+      "show": "顯示「上午 / 下午」"
+    },
+    "newStyle": "新樣式",
+    "newStyleDesc": "若啟用將同時啟用「顯示『上午／下午』」以及「顯示秒數」且無法停用",
+    "secondsTip": "開啟會增加效能消耗",
+    "shadow": "顯示陰影",
+    "showDate": "顯示日期",
+    "showLunar": "顯示農曆",
+    "showSeconds": "顯示秒鐘",
+    "size": {
+      "title": "時鐘大小"
+    },
+    "title": "時鐘",
+    "transparency": "時鐘透明度",
+    "weight": {
+      "black": "最粗",
+      "bold": "粗體",
+      "dateTitle": "日期字重",
+      "extraBold": "很粗",
+      "heavy": "非常粗",
+      "medium": "稍粗",
+      "normal": "標準",
+      "title": "時鐘字重"
+    }
+  },
+  "common": {
+    "copyLink": "複製連結網址",
+    "hour": "小時",
+    "incognitoPermission": {
+      "message": "請在 Firefox 附加元件管理員中允許此擴充功能在隱私視窗中執行，然後再試一次。",
+      "title": "需要無痕模式權限"
+    },
+    "openInIncognitoWindow": "在無痕視窗中開啟",
+    "openInNewTab": "在新分頁中開啟",
+    "openInNewWindow": "在新視窗中開啟",
+    "sections": {
+      "appearance": "外觀",
+      "behavior": "互動與行為",
+      "danger": "清理資料",
+      "data": "資料與復原",
+      "display": "顯示與內容",
+      "general": "一般",
+      "layout": "佈局與間距",
+      "position": "頁面位置",
+      "radius": "圓角",
+      "source": "內容來源",
+      "summary": {
+        "appearance": "顏色、陰影與尺寸",
+        "behavior": "互動方式與開啟行為",
+        "danger": "不可逆操作，請謹慎使用",
+        "data": "備份與快取",
+        "display": "可見內容與呈現方式",
+        "general": "常用設定",
+        "layout": "尺寸、數量與間距",
+        "position": "主區域與功能按鈕",
+        "radius": "集中調整各元件圓角",
+        "source": "來源與自訂內容"
+      }
+    },
+    "touchDeviceDisabledNote": "觸控裝置已停用此項。"
+  },
+  "dock": {
+    "displayGroup": "在 Dock 中顯示的群組",
+    "showOtherGroups": "以資料夾形式顯示其他群組",
+    "folderCount": "資料夾數量",
+    "emptyGroup": "此群組尚無連結",
+    "replaceQuickLinks": "使用 Dock 取代快速連結",
+    "replaceQuickLinksTip": "不妨試試在搜尋設定中開啟「{{option}}」，讓版面更舒展。",
+    "replaceQuickLinksLayoutTip": "也可以在版面設定中適度增加距頂部距離，讓頁面配置更寬鬆。",
+    "actionBtnNote": "開啟 Dock 後，功能按鈕只能放在頂部（可在「佈局」中選擇左/右）",
+    "borderRadius": "圓角",
+    "launchpad": {
+      "rightClickDisabledNote": "已啟用右鍵背景打開書籤欄，請先將其關閉。",
+      "show": "在 Dock 中啟用啟動台",
+      "title": "啟動台"
+    },
+    "limitCount": "限制最大數量",
+    "maxCount": "最大數量",
+    "title": "Dock"
+  },
+  "layout": {
+    "actionBtn": {
+      "borderRadius": "操作按鈕圓角",
+      "bottomLeft": "左下",
+      "bottomRight": "右下",
+      "dockNote": "開啟 Dock 後功能按鈕只能放在頂部",
+      "label": "功能按鈕位置",
+      "topLeft": "左上",
+      "topRight": "右上"
+    },
+    "dockBorderRadius": "Dock 圓角",
+    "globalBorderRadius": "其他元件圓角",
+    "mainPosition": {
+      "bottomDvh": "距底部（%）",
+      "bottomDvhValue": "距底部距離（dvh）",
+      "bottomNote": "距底部定位時，搜尋建議將向上彈出。建議關閉快速連結，改用 Dock。",
+      "bottomPx": "距底部（px）",
+      "bottomPxValue": "距底部距離（px）",
+      "center": "居中",
+      "dvh": "距頂部（%）",
+      "dvhValue": "距頂部距離（dvh）",
+      "label": "主區域位置",
+      "px": "距頂部（px）",
+      "pxValue": "距頂部距離（px）",
+      "quickLinksScrollNote": "快速連結使用捲動時不能使用置中定位。"
+    },
+    "minimalModeOnDoubleClick": "雙擊空白背景切換極簡模式",
+    "quickLinksIconBorderRadius": "快速連結圖示背景圓角",
+    "title": "佈局"
+  },
+  "other": {
+    "disableSettingsScrollRestore": "不儲存設定視窗捲動位置",
+    "changelog": {
+      "description": "重大升級時仍會彈出",
+      "label": "版本升級時不彈出更新日誌"
+    },
+    "greeting": {
+      "description": "每次啟動瀏覽器後顯示一次。",
+      "label": "啟動問候"
+    },
+    "faviconCache": {
+      "description": "開啟後將圖示快取至本地，加快載入速度；需要「存取所有網站」權限",
+      "label": "圖示快取",
+      "permissionDenied": "未獲得「存取所有網站」權限，圖示快取已保持關閉"
+    },
+    "importExport": {
+      "backup": "備份擴充功能設定",
+      "export": "匯出",
+      "exporting": "正在建立備份...",
+      "import": "匯入",
+      "importFailed": "匯入失敗：{{reason}}",
+      "importSuccess": "匯入成功",
+      "importing": "正在安全套用匯入資料...",
+      "noFileSelected": "未選擇檔案",
+      "omittedIcons": "此次備份已略過 {{count}} 個過大的使用者圖示",
+      "syncMode": {
+        "confirmMismatch": "輸入的確認文字不符",
+        "deletePrompt": "請輸入「{{text}}」以刪除 WebDAV 資料",
+        "deleteRemote": "刪除雲端同步庫並中斷連線，然後取代本機資料",
+        "description": "偵測到 WebDAV 同步已開啟。請選擇此次匯入如何影響其他裝置。",
+        "disconnectTitle": "取代本機資料前中斷同步",
+        "keepRemote": "保留雲端同步庫並中斷連線，然後取代本機資料",
+        "merge": "合併到目前資料並同步（衝突時暫停）",
+        "replace": "用匯入內容取代所有已同步資料",
+        "title": "匯入與同步"
+      },
+      "unknownError": "未知錯誤",
+      "validating": "正在驗證備份完整性...",
+      "warningDialog": {
+        "content": "匯入會覆蓋你目前的資料，請謹慎使用此功能，是否繼續？",
+        "no": "不要啊",
+        "title": "匯入檔案將會覆蓋現有資料，是否繼續？",
+        "yes": "繼續"
+      }
+    },
+    "language": "語言",
+    "purge": {
+      "btn": "清除",
+      "confirm": {
+        "data": {
+          "deleteRemote": "刪除雲端資料並中斷連線，然後重設",
+          "deleteRemotePrompt": "請輸入「{{text}}」以刪除雲端同步庫",
+          "deleteRemoteTitle": "刪除雲端同步資料？",
+          "includeSync": "同時清除舊版瀏覽器同步殘留",
+          "keepRemote": "保留雲端資料並中斷連線，然後重設",
+          "message": "此操作將會重置本擴充功能之設定、已忽略的最常造訪網站、已釘選或收藏的網站、已選擇的背景圖片等。",
+          "purging": "正在清除擴充功能資料...",
+          "syncQuestion": "同步已開啟。要如何處理這次重設？",
+          "title": "確定要清除所有資料嗎？"
+        },
+        "icon": {
+          "message": "此操作將會刪除所有已快取的網站圖示。",
+          "purging": "正在清除圖示快取...",
+          "title": "確定要清除圖示快取？"
+        },
+        "wallpaper": {
+          "message": "此操作將會刪除已選擇的背景圖片/影片。",
+          "purging": "正在清除壁紙快取...",
+          "title": "確定要清除壁紙快取？"
+        }
+      },
+      "data": "清除本擴充功能的資料",
+      "failed": {
+        "refresh": "重新整理頁面",
+        "title": "清除失敗"
+      },
+      "icon": "清除圖示快取",
+      "wallpaper": "清除壁紙快取"
+    },
+    "syncRetirement": {
+      "acknowledge": "好的",
+      "clearCloudData": "清理雲端資料",
+      "clearFailedMessage": "舊的雲端資料暫時未能刪除。我們不會再上傳或套用這些資料，下次啟動時會再次提醒你。",
+      "clearFailedTitle": "未能刪除雲端資料",
+      "clearSuccess": "舊的雲端資料已清除",
+      "downloadCloudData": "下載雲端資料",
+      "downloadFailed": "無法讀取或下載雲端資料，請稍後再試",
+      "downloadNote": "您可以下載目前的雲端資料，但該檔案無法重新匯入擴充功能。",
+      "downloadStarted": "雲端資料檔案已開始下載",
+      "message": "雲端同步有時可能以較舊的內容覆蓋目前設定。為了保護你的資料，這項功能已移除並自動關閉。目前裝置上的設定不受影響。",
+      "noCloudData": "找不到需要下載的雲端資料",
+      "residualMessage": "偵測到以前留下的雲端資料。你可以刪除它，目前裝置上的設定不受影響。",
+      "residualTitle": "發現舊的雲端資料",
+      "title": "雲端同步已停止支援"
+    },
+    "title": "其他"
+  },
+  "perf": {
+    "actionBtns": {
+      "blur": "功能按鈕模糊",
+      "transparent": "功能按鈕透明"
+    },
+    "bgSwitchAnim": "壁紙切換動畫",
+    "blurIntensity": "背景模糊度",
+    "bookmark": {
+      "blur": "書籤欄背景模糊",
+      "transparent": "書籤欄背景透明"
+    },
+    "dialog": {
+      "animation": "對話框動畫",
+      "blur": "對話框背景模糊",
+      "title": "對話框",
+      "transparent": "對話框背景透明"
+    },
+    "dock": {
+      "enterAnim": "Dock 入場動畫",
+      "scale": "Dock圖示縮放動畫"
+    },
+    "effectsTitle": "效果設定",
+    "focus": {
+      "blur": "點擊搜尋框時背景模糊",
+      "scale": "點擊搜尋框時縮放背景"
+    },
+    "quickLinks": {
+      "blur": "快速連結、Dock 和啟動台模糊",
+      "transparent": "快速連結和 Dock 透明"
+    },
+    "resetTransparencyAndBlur": "重設透明與模糊",
+    "searchBar": {
+      "blur": "搜尋框模糊",
+      "transparent": "搜尋框透明"
+    },
+    "title": "效能與效果",
+    "toggleAll": {
+      "animation": "動畫",
+      "blur": "模糊效果",
+      "disable": "一鍵停用所有",
+      "enable": "一鍵啟用所有",
+      "transparent": "透明效果"
+    },
+    "transparency": "背景透明度",
+    "wallpaper": "壁紙",
+    "yiyan": {
+      "blur": "一言背景模糊",
+      "ripple": "一言水波紋動畫",
+      "transparent": "一言背景透明"
+    }
+  },
+  "quickLinks": {
+    "border": "顯示圖示邊框",
+    "fallbackToTitleInitial": "圖示不可用時顯示標題首字元",
+    "fallbackToTitleInitialChromeTip": "在 Chrome 中，需先開啟「圖示快取」才會生效。",
+    "grouping": "啟用分組",
+    "groupingDisableConfirm": "關閉分組會合併所有快速連結分組，並移除重複 URL。不同分組中的重複連結將無法保留。",
+    "groupingTip": "雙擊快速連結區或啟動台中的分組名稱即可重新命名。",
+    "iconBorderRadius": "圖示背景圓角",
+    "iconCacheTip": "建議開啟「設定-其他-圖示快取」以嘗試取得更高清晰度的圖示。",
+    "iconRatio": "圖示填充比例",
+    "iconSize": "圖示大小",
+    "marginTop": "與上方內容的間距",
+    "maxColumns": "最大欄數",
+    "maxItemsTipForChrome": "最常造訪最多只有 10 個喔～",
+    "maxRows": "最大列數",
+    "navigationMode": "瀏覽模式",
+    "pagingMode": "翻頁模式",
+    "pagingLoop": "翻頁循環",
+    "pinnedIcon": "顯示釘選圖示",
+    "restoreDefault": "還原隱藏的連結",
+    "restoreDefaultTitle": "確定要還原為預設快速連結嗎？",
+    "shadow": "顯示圖示陰影",
+    "showOnSearchFocus": "搜尋框聚焦時顯示",
+    "showTitle": "顯示標題",
+    "spacing": {
+      "iconTitleGap": "圖示與標題間距",
+      "itemGapX": "連結左右間距",
+      "itemGapY": "連結上下間距"
+    },
+    "tip": "可以拖曳設定視窗以觀察快速連結區域的變化。",
+    "title": "快速連結",
+    "titleExtraWidth": "標題擴展寬度",
+    "titleWhiteInLight": "淺色模式下使用白色文字",
+    "topSites": "顯示最常造訪",
+    "scrollMode": "捲動模式",
+    "scrollModeTip": "建議直向螢幕裝置選擇捲動模式，以獲得更好的瀏覽體驗。",
+    "pagingModeTip": "建議寬螢幕裝置選擇翻頁模式，以獲得更好的瀏覽體驗。"
+  },
+  "search": {
+    "alwaysExpandSearchBar": "始終展開搜尋框",
+    "alwaysShowIcon": "始終顯示搜尋引擎圖示",
+    "authorizeHistory": "授權讀取歷史紀錄",
+    "border": "顯示搜尋框邊框",
+    "borderRadius": "搜尋框圓角",
+    "clickToChange": "點擊更改",
+    "defaultSearchEngine": "預設搜尋引擎",
+    "expandWidth": "展開後寬度",
+    "historyPermissionDenied": "未取得歷史紀錄權限，其他建議提供器仍可使用。",
+    "historyPermissionDescription": "瀏覽器歷史建議需要授權，依標題或 URL 比對",
+    "historyPermissionPending": "已選取瀏覽器歷史紀錄，但此裝置尚未授權。",
+    "launchAnim": "啟動時搜尋框展開動畫",
+    "leftAlignInput": "搜尋框輸入內容靠左對齊",
+    "noSuggestionProviders": "未選取",
+    "placeholder": "搜尋框占位文字",
+    "providers": {
+      "calculator": "計算機",
+      "url": "URL 辨識",
+      "quick-links": "快速連結",
+      "top-sites": "常用網站",
+      "browser-history": "瀏覽器歷史紀錄",
+      "search-history": "擴充功能搜尋紀錄",
+      "remote": "搜尋引擎建議"
+    },
+    "recordSearchHistory": "記錄搜尋歷史",
+    "restoreHiddenEngines": "還原已隱藏的內建搜尋引擎",
+    "restoreHiddenEnginesTitle": "確定還原所有內建搜尋引擎及其預設順序嗎？",
+    "searchSuggestionProvider": "搜尋引擎建議 API",
+    "searchSuggestions": "搜尋建議",
+    "shadow": "顯示搜尋框陰影",
+    "suggestionProviders": "建議提供器",
+    "tip": "想要打開新分頁就讓搜尋框取得焦點？請查看頁面右下角按鈕菜單的「幫助和反饋」",
+    "title": "搜尋",
+    "browserHistoryLimit": "瀏覽器歷史建議數量"
+  },
+  "sync": {
+    "availability": {
+      "blockedTopSitesScopeDisabled": "隱藏記錄只保存在此裝置，可在 WebDAV 同步範圍中開啟。",
+      "bookmarksBrowserManaged": "書籤由瀏覽器管理，不透過 WebDAV 同步。",
+      "faviconCacheLocal": "網站圖示快取可重新產生，不會上傳；啟用偏好會同步。",
+      "onlineWallpaperCacheLocal": "快取檔案只保存在本機；啟用偏好會同步。",
+      "onlineWallpaperUrlScopeDisabled": "線上/API 桌布網址只保存在此裝置，可在進階同步範圍中開啟。",
+      "pendingPermission": "設定已同步，但此裝置尚未授權；功能正在等待授權。",
+      "quickLinksScopeDisabled": "快速連結同步已關閉，資料只保存在此裝置。",
+      "searchEnginesScopeDisabled": "自訂搜尋引擎同步已關閉，資料只保存在此裝置。",
+      "searchHistoryLocal": "搜尋記錄一律只保留在此裝置，不會上傳。",
+      "settingsScopeDisabled": "設定同步已關閉，資料只保存在此裝置。",
+      "uiScopeDisabled": "語言與色彩模式同步已關閉，只保存在此裝置。",
+      "userIconsScopeDisabled": "使用者選擇的圖示只保存在此裝置，可在進階同步範圍中開啟。",
+      "wallpaperFailed": "桌布未通過上傳或完整性驗證，其他資料仍會同步。",
+      "wallpaperPartial": "僅同步 20 MiB 以內的可用靜態圖片；影片、動態圖片及其他略過項目保留在本機。",
+      "wallpaperScopeDisabled": "本機圖片桌布只保存在此裝置，可在 WebDAV 同步範圍中開啟。",
+      "wallpaperTooLarge": "圖片超過 20 MB，桌布未同步；其他資料仍會同步。",
+      "wallpaperVideo": "影片桌布不會透過 WebDAV 同步。"
+    }
+  },
+  "theme": {
+    "color": {
+      "acgn": {
+        "aveMujica": "Ave Mujica",
+        "bocchi": "後藤ひとり",
+        "kessoku": "結束バンド",
+        "luo": "洛天依",
+        "miku": "初音ミク",
+        "mygo": "MyGO!!!!!",
+        "togeari": "TOGENASHI TOGEARI"
+      },
+      "classic": {
+        "antBlue": "Ant 蓝",
+        "bellflower": "紺桔梗",
+        "crimson": "深緋",
+        "ink": "墨",
+        "lapisBlue": "瑠璃",
+        "ochre": "赭",
+        "orangeRed": "黄赤",
+        "teal": "納戸",
+        "yamabuki": "山吹",
+        "yellowGreen": "萌黄"
+      }
+    },
+    "colorful": {
+      "desc": "將主題色套用至更多介面元素",
+      "label": "全域色彩"
+    },
+    "idleHide": "不活動時淡出頁面元素",
+    "keepClockVisibleOnIdle": "不活動時保持時鐘和日期可見",
+    "mode": {
+      "alwaysOff": "始終關閉",
+      "alwaysOn": "始終開啟",
+      "dark": "深色模式",
+      "light": "淺色模式",
+      "system": "跟隨系統"
+    },
+    "monet": {
+      "askEnableCache": {
+        "message": "要使用動態主題色，需要啟用線上壁紙快取。啟用快取將儲存來自這個網址的圖片。是否啟用？",
+        "title": "啟用壁紙快取？"
+      },
+      "desc": "源自 Material Design 3，從背景中提取主題色。僅支援圖片背景，搭配「全域色彩」可獲得最佳視覺效果。",
+      "label": "動態主題色（莫內取色）"
+    },
+    "primaryColor": "主題色",
+    "title": "主題"
+  },
+  "title": "設定",
+  "webdavSync": {
+    "conflicts": {
+      "batch": {
+        "prefer": "批次選取"
+      },
+      "both": "保留兩份",
+      "bothNote": "修改項目會取得新的穩定 ID。",
+      "categories": {
+        "blocked-top-sites": "隱藏網站",
+        "search-engines": "搜尋引擎",
+        "settings": "設定",
+        "ui": "介面偏好"
+      },
+      "deleted": "已刪除或不存在",
+      "empty": "找不到待處理衝突",
+      "fields": {
+        "colorMode": "色彩模式",
+        "customSearchEngine": "自訂搜尋引擎",
+        "groupName": "分組名稱",
+        "groupOrder": "分組排序",
+        "linkGroup": "所屬分組",
+        "linkIcon": "連結圖示",
+        "linkOrder": "快速連結排序",
+        "linkTitle": "連結標題",
+        "linkUrl": "連結網址",
+        "quickLink": "快速連結",
+        "quickLinkGroup": "快速連結分組",
+        "searchEngineIcon": "搜尋引擎圖示",
+        "searchEngineName": "搜尋引擎名稱",
+        "searchEngineOrder": "搜尋引擎排序",
+        "searchEngineUrl": "搜尋引擎網址",
+        "wallpaper": "桌布",
+        "wallpaperDark": "深色桌布",
+        "wallpaperFixed": "固定桌布",
+        "wallpaperLight": "淺色桌布",
+        "wallpaperOrder": "桌布排列順序"
+      },
+      "finish": "建立合併版本",
+      "local": "保留本機資料",
+      "notice": "部分內容在不同裝置上有不同修改，請選擇要保留的內容。",
+      "noticeTitle": "請確認同步內容",
+      "remote": "使用雲端資料",
+      "resolved": "衝突已解決並建立新的合併版本",
+      "sourceDevice": "裝置 {{device}}",
+      "sourceLocal": "本機",
+      "sourceRemote": "雲端",
+      "sources": "衝突資料來源",
+      "title": "解決同步衝突",
+      "useDevice": "使用裝置 {{device}} 的資料",
+      "values": {
+        "changed": "已變更",
+        "customIcon": "使用自訂圖示",
+        "disabled": "已關閉",
+        "enabled": "已開啟",
+        "enabledScopeCount": "已啟用 {{count}} 個同步項目",
+        "group": "分組：{{name}}",
+        "groupSummary": "{{name}} · {{count}} 個連結",
+        "itemCount": "{{count}} 項",
+        "noBaseline": "共同基線中沒有此項",
+        "noCustomIcon": "未使用自訂圖示",
+        "orderChanged": "已調整排序",
+        "quickLinksSummary": "{{items}} 個連結 · {{groups}} 個分組",
+        "rootGroup": "未分組",
+        "searchEnginesSummary": "{{count}} 個搜尋引擎",
+        "settingCount": "{{count}} 項設定",
+        "unknownGroup": "其他分組",
+        "untitled": "未命名",
+        "wallpaperCount": "已選擇 {{count}} 張桌布"
+      }
+    },
+    "connectionActions": {
+      "open": "管理連線",
+      "title": "中斷或刪除"
+    },
+    "deviceName": "目前裝置：{{name}}",
+    "devices": {
+      "firstSeen": "首次同步：{{time}}",
+      "stale": "超過 180 天",
+      "title": "已同步裝置",
+      "unknownDescription": "WebDAV 認證資料可能已外洩。請向服務商更換密碼或應用程式密碼，並在可信裝置重新連線。刪除裝置記錄不能撤銷存取權。",
+      "unknownTitle": "看到不認識的裝置？"
+    },
+    "disconnect": {
+      "deleteAction": "永久刪除並中斷",
+      "deleteDescription": "清空同步目錄，預設保留空資料夾；勾選下方選項可同時刪除資料夾",
+      "deleteDirectory": "同時刪除同步目錄資料夾",
+      "deleteTitle": "永久刪除整個雲端同步庫",
+      "deleted": "雲端同步資料已刪除，本機已中斷",
+      "disconnected": "已保留雲端資料並中斷",
+      "impact": "將影響 {{devices}} 台裝置與 {{versions}} 個版本",
+      "keepAction": "保留雲端並中斷",
+      "keepDescription": "清除本機連線設定，其他裝置與雲端資料不受影響。",
+      "keepTitle": "關閉 WebDAV 同步",
+      "title": "管理 WebDAV 連線",
+      "typePrompt": "請輸入「{{text}}」繼續"
+    },
+    "empty": {
+      "title": "尚未設定 WebDAV 同步"
+    },
+    "encrypted": "已使用用戶端加密",
+    "encryption": {
+      "description": "加密密碼與 WebDAV 登入密碼分開；忘記後只能刪除同步庫，無法復原。",
+      "disabled": "加密預設關閉",
+      "enabled": "此同步庫已加密",
+      "fixedMode": "同步庫建立後不能更改加密狀態或加密密碼。",
+      "keyNote": "成功後只保存不可匯出的衍生金鑰；密碼不會上傳、匯出或寫入記錄。",
+      "password": "獨立同步加密密碼",
+      "title": "用戶端加密",
+      "unlock": "解鎖同步庫"
+    },
+    "errors": {
+      "authentication": "密碼不正確或服務商拒絕存取",
+      "permission-required": "需要授權此 WebDAV 伺服器的存取權限",
+      "conflict": "遠端資料發生衝突",
+      "corrupted": "遠端資料損壞",
+      "network": "暫時無法連線伺服器",
+      "redirect-cross-origin": "伺服器嘗試重新導向至其他來源，已停止同步",
+      "redirect-insecure": "伺服器嘗試由 HTTPS 降級至 HTTP，已停止同步",
+      "redirect-required": "伺服器重新導向不安全或無法驗證。僅支援同源重新導向及同一主機由 HTTP 升級至 HTTPS；也可填寫最終的 WebDAV 位址。",
+      "server": "WebDAV 服務暫時發生錯誤",
+      "data-too-large": "資料超出容量限制：單張便箋限 1 MiB，所有便箋限 8 MiB，完整快照限 10 MiB。請在本機或遠端縮減資料後重試。",
+      "storage-full": "WebDAV 空間不足",
+      "timeout": "連線逾時",
+      "unknown": "同步操作失敗，請檢查狀態後再試"
+    },
+    "experimental": {
+      "description": "此功能仍在測試與完善中。啟用前，建議先在「其他設定」中匯出現有設定，以避免遭到覆寫",
+      "title": "實驗性功能"
+    },
+    "history": {
+      "back": "返回歷史清單",
+      "current": "目前本機",
+      "noDifferences": "此版本與目前本機資料相同",
+      "preview": "檢視差異",
+      "reasons": {
+        "import": "匯入",
+        "initial": "初始版本",
+        "local-change": "本機修改",
+        "merge": "自動合併",
+        "repair": "損壞修復",
+        "restore": "歷史還原"
+      },
+      "restore": "還原為新版本",
+      "restoreDescription": "已檢視的舊內容會作為新的最新版本提交；若預覽後本機或雲端發生變更，操作會停止並要求重新比較。",
+      "restoreTitle": "還原已檢視的歷史版本？",
+      "restored": "已從歷史內容建立新的最新版本",
+      "target": "歷史版本",
+      "title": "歷史版本",
+      "truncated": "僅顯示前 200 項差異；還原前仍會完整驗證整個版本。",
+      "wallpaperMissing": "此歷史桌布未保留，將繼續使用目前桌布"
+    },
+    "lastSuccess": "最近成功：{{time}}",
+    "later": "稍後處理",
+    "legacy": {
+      "clearConfirm": "只會清除已停止支援的瀏覽器雲端同步殘留，不影響目前設定或新的 WebDAV 同步。要繼續嗎？",
+      "description": "這是舊版瀏覽器 storage.sync 的殘留資料，不會上傳到 WebDAV。",
+      "found": "發現殘留",
+      "title": "舊版瀏覽器雲端同步資料"
+    },
+    "management": {
+      "devices": "裝置",
+      "history": "歷史",
+      "summary": "歷史、裝置與加密",
+      "title": "同步管理"
+    },
+    "messages": {
+      "syncComplete": "同步檢查已完成"
+    },
+    "never": "尚未成功同步",
+    "omissions": {
+      "aggregate-too-large": "所選圖示總大小超過 8 MB",
+      "item-too-large": "單個所選圖示超過 2 MB",
+      "too-large": "單張桌布超過 20 MB",
+      "unavailable": "無法讀取所選本機圖片",
+      "unsupported": "不同步動畫圖片和影片"
+    },
+    "plaintext": "未啟用用戶端加密",
+    "refresh": "重新整理狀態",
+    "remoteDeleted": {
+      "action": "清除本機連線",
+      "description": "此裝置連線的雲端同步庫已被刪除。清除本機連線後可重新設定同步，不會存取或刪除雲端檔案。",
+      "title": "雲端同步庫已刪除"
+    },
+    "repair": {
+      "action": "建立修復版本",
+      "completed": "損壞版本已隔離並建立修復版本",
+      "corrupted": "最新版本損壞，自動同步已停止",
+      "corruptedDescription": "先下載原始檔案保存，再選擇本機資料或雲端上一份完整版本。",
+      "corruptionTitle": "損壞修復",
+      "deleteEvidenceDescription": "系統會先上傳並驗證新的修復版本；只有成功後才刪除你已下載保存的雲端損壞版本。",
+      "deleteEvidenceTitle": "修復成功後刪除雲端損壞版本？",
+      "download": "下載損壞的原始檔案",
+      "downloaded": "原始檔案已下載",
+      "local": "使用目前本機資料",
+      "missingPayload": "損壞版本的正文已經遺失，無法下載原始檔案。你仍可使用本機資料或上一份完整版本修復。",
+      "previous": "使用雲端上一份完整版本",
+      "removeWallpapersAction": "停止同步桌布並清理雲端圖片",
+      "removeWallpapersCompleted": "已停止同步桌布並清理不再使用的雲端圖片",
+      "removeWallpapersDescription": "系統會發布一個不含桌布的新版本，再清理不再被保留版本引用的雲端圖片。本機桌布不會被刪除。",
+      "removeWallpapersTitle": "停止同步桌布並清理雲端圖片？",
+      "retry": "重新檢查",
+      "revision": "損壞版本：{{id}}",
+      "same": "本機資料與上一完整版本相同，將自動使用上一版本建立修復版本。",
+      "size": "原始檔案大小：{{size}} 位元組",
+      "wallpaperDescription": "超過限制或不支援的圖片會被略過。請關閉對應範圍或選擇較小的圖片；擴充功能不會修改原圖。",
+      "wallpaperTitle": "部分圖片未同步"
+    },
+    "resolve": "處理問題",
+    "scope": {
+      "blockedTopSites": "隱藏的常用網站",
+      "customSearchEngines": "自訂搜尋引擎",
+      "notes": "便箋",
+      "onlineWallpaperUrl": "線上桌布網址",
+      "onlineWallpaperUrlNote": "網址可能包含存取 Token。",
+      "settings": "基本設定",
+      "summary": "只影響此裝置；關閉的類別會保留遠端資料，重新開啟後繼續比較。",
+      "title": "同步範圍",
+      "uiPreferences": "語言與深色模式",
+      "userIcons": "自訂連結圖示",
+      "userIconsNote": "例如自訂的快速存取與自訂搜尋引擎圖示。單個最多 2 MB，總計最多 8 MB。",
+      "wallpapers": "本機圖片桌布",
+      "wallpapersNote": "不含影片桌布，每張最多 20 MB，超出限制的圖片將會略過。"
+    },
+    "setup": {
+      "advanced": "進階設定",
+      "back": "上一步",
+      "compare": {
+        "conflicts": "有 {{count}} 個衝突需要解決",
+        "existing": "遠端已有資料",
+        "existingTitle": "比較本機與雲端",
+        "firstConnectionNote": "本機與雲端都有資料，尚未有共同同步版本。開啟後可在設定中逐項處理，或批量優先選擇本機或雲端；確認後將建立共同基線。",
+        "firstConnectionTitle": "首次接入：選擇要保留的資料",
+        "initialTitle": "確認初始上傳內容",
+        "safe": "本機與遠端資料沒有衝突，可直接安全地啟用同步。"
+      },
+      "confirm": {
+        "autoDevice": "將產生不含精確系統版本的匿名裝置名稱",
+        "description": "只有現在確認後才會建立或更新同步庫。",
+        "encrypted": "已開啟；忘記密碼無法復原",
+        "plaintext": "關閉（預設）",
+        "title": "最終確認"
+      },
+      "connected": "WebDAV 同步已開啟",
+      "connection": {
+        "deviceName": "裝置名稱（可不填）",
+        "deviceNamePlaceholder": "例如：辦公室電腦",
+        "directory": "擴充功能專屬目錄",
+        "password": "密碼或應用程式密碼",
+        "remember": "保存在目前瀏覽器設定檔並允許背景自動同步",
+        "rememberNote": "密碼不會上傳、匯出或寫入記錄。",
+        "sessionNote": "僅限本次使用；關閉瀏覽器後清除，背景自動同步不可用。",
+        "title": "連線您的網路儲存",
+        "url": "伺服器位址",
+        "username": "使用者名稱"
+      },
+      "encryption": {
+        "enable": "使用獨立密碼加密同步內容",
+        "password": "獨立同步加密密碼（至少 8 個字元）"
+      },
+      "errors": {
+        "authentication": "密碼不正確，或服務商拒絕此帳號存取。請檢查使用者名稱、密碼或應用程式密碼。",
+        "encryption": "同步庫已加密，請在進階設定輸入正確的獨立同步加密密碼。",
+        "foreign": "此目錄包含不屬於 Lemon New Tab 的資料。請使用空目錄或正確的專屬目錄。",
+        "format": "同步格式由較新版本的擴充功能建立，請先更新擴充功能。",
+        "network": "瀏覽器未能送出請求。請先在一般分頁開啟伺服器位址，確認位址和 HTTPS 憑證有效，再檢查網路、Proxy 與重新導向設定。",
+        "permission": "未取得此 WebDAV 伺服器的精確存取權限，連線未保存。",
+        "unsupported": "伺服器無法可靠完成 WebDAV 檔案的建立、讀取、列出或刪除。"
+      },
+      "finish": "確認開啟同步",
+      "http": {
+        "accept": "我了解區域網路 HTTP 也可能被同一網路中的人竊聽",
+        "localWarning": "這是區域網路 HTTP 位址。登入資訊與未加密內容仍可能被同一網路中的其他人看到。",
+        "publicUnsupported": "不支援外部公網 HTTP WebDAV 位址。請使用 HTTPS 或區域網路位址。"
+      },
+      "next": "下一步",
+      "scan": {
+        "empty": "目錄為空，可以建立新同步庫",
+        "emptyNote": "只有最終確認後才會建立 LemonNewTab 目錄與第一個版本。",
+        "existing": "找到既有同步庫",
+        "existingNote": "已驗證擁有權標記與版本完整性，下一步將比較本機資料。",
+        "remote-conflict": "遠端有多個版本分支",
+        "remoteConflictNote": "可在此裝置逐項處理這些分支；連線後同步會保持暫停，直到所有衝突解決。",
+        "title": "遠端掃描結果"
+      },
+      "scope": {
+        "description": "只影響此裝置；關閉的類別會保留遠端資料，重新開啟後繼續比較。",
+        "omittedResources": "{{count}} 個過大或不支援的所選圖片將被略過",
+        "required": "請至少開啟一個同步範圍。",
+        "title": "選擇同步範圍"
+      },
+      "steps": {
+        "compare": "比較",
+        "confirm": "確認",
+        "connection": "連線",
+        "scan": "掃描",
+        "scope": "範圍",
+        "test": "測試"
+      },
+      "test": {
+        "action": "測試連線",
+        "notTested": "等待測試",
+        "permissionNote": "點擊測試後，瀏覽器會申請存取此 WebDAV 伺服器及偵測請求的選用權限；前者用於連線伺服器，後者用於判斷本次連線是否安全。",
+        "retry": "重新測試",
+        "scanned": "已成功連線至伺服器。",
+        "success": "連線成功",
+        "title": "測試連線並申請權限"
+      },
+      "title": "設定 WebDAV 同步",
+      "wallpaper": {
+        "oversized": "{{count}} 張桌布超過 20 MB，將被略過",
+        "summary": "不含影片桌布，{{count}} 張共 {{size}}，每張最多 20 MB，超出限制的圖片將會略過。"
+      }
+    },
+    "status": {
+      "authentication": "需要重新登入",
+      "permission": "需要重新授權伺服器存取",
+      "conflict": "有衝突需要處理",
+      "corrupted": "遠端最新版本損壞",
+      "encryptionPassword": "需要同步加密密碼",
+      "formatTooNew": "同步格式較新，請更新擴充功能",
+      "paused": "同步已暫停",
+      "pending": "有待上傳修改",
+      "ready": "已連線，等待首次檢查",
+      "remoteDeleted": "雲端同步資料已被刪除",
+      "dataTooLarge": "資料超出容量限制，請縮減資料後重試",
+      "storageFull": "WebDAV 空間不足",
+      "synced": "已同步",
+      "unconfigured": "未設定",
+      "wallpaperSkipped": "核心資料已同步，桌布未同步",
+      "noSelection": "未選擇同步項目"
+    },
+    "syncNow": "立即同步",
+    "title": "WebDAV 同步",
+    "enabled": "啟用此裝置同步",
+    "credentials": {
+      "title": "更新登入憑證",
+      "username": "使用者名稱（留空保留目前名稱）",
+      "save": "驗證並儲存"
+    }
+  },
+  "yiyan": {
+    "alwaysShow": "總是顯示",
+    "borderRadius": "一言背景圓角",
+    "customLinesLabel": "自定義內容",
+    "customLinesNote": "每一行為一則，行內使用「\\n」表示換行",
+    "customLinesPlaceholder": "每行一條，行內使用 \\n 表示換行",
+    "description": "",
+    "normalyShowTip": "關閉之後僅在搜尋框聚焦時顯示",
+    "provider": "一言來源",
+    "providers": {
+      "custom": {
+        "name": "自定義"
+      },
+      "hitokoto": {
+        "name": "一言（Hitokoto）",
+        "note": "請注意，Hitokoto.cn 的 QPS（每秒請求數）非常嚴格，本擴充功能已做快取，但短時間內來自不同站點請求仍會導致你的 IP 短時間被 Ban"
+      },
+      "jinrishici": {
+        "name": "今日詩詞"
+      }
+    },
+    "shadow": "顯示文字陰影",
+    "title": "一言"
+  }
+}

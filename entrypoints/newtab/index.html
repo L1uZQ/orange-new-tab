@@ -1,0 +1,84 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/x-icon" href="/icon-64.png" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+    <meta name="color-scheme" content="light dark" />
+    <script src="/theme-init.js"></script>
+    <style>
+      html,
+      html.light {
+        background-color: #f2f3f5;
+      }
+
+      html.light {
+        color-scheme: light;
+      }
+
+      html.dark {
+        color-scheme: dark;
+        background-color: #0a0a0a;
+      }
+
+      @media (prefers-color-scheme: light) {
+        html:not(.dark, .light) {
+          color-scheme: light;
+          background-color: #f2f3f5;
+        }
+      }
+
+      @media (prefers-color-scheme: dark) {
+        html:not(.dark, .light) {
+          color-scheme: dark;
+          background-color: #0a0a0a;
+        }
+      }
+    </style>
+    <style>
+      .startup-fallback {
+        box-sizing: border-box;
+        max-width: 720px;
+        padding: 16px;
+        margin: 24px auto;
+        font:
+          14px/1.6 ui-monospace,
+          SFMono-Regular,
+          Menlo,
+          Monaco,
+          Consolas,
+          monospace;
+        color: #c45656;
+        background: #fff5f5;
+        border: 1px solid #f56c6c;
+        border-radius: 8px;
+      }
+
+      .startup-fallback[hidden] {
+        display: none;
+      }
+
+      .startup-fallback pre {
+        margin: 0 0 16px;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+
+      .startup-fallback a {
+        display: inline-block;
+        padding: 8px 12px;
+        color: #fff;
+        text-decoration: none;
+        background: #409eff;
+        border-radius: 6px;
+      }
+    </style>
+  </head>
+  <body>
+    <main id="startup-fallback" class="startup-fallback" hidden>
+      <pre>Lemon New Tab startup failed.</pre>
+      <a href="">Reload page</a>
+    </main>
+  </body>
+  <script type="module" src="./init.ts"></script>
+</html>

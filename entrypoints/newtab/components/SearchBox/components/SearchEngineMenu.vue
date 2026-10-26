@@ -1,0 +1,313 @@
+<script setup lang="ts">
+import { useTimeoutFn } from '@vueuse/core'
+
+import type { TooltipInstance } from 'element-plus'
+import { useTranslation } from 'i18next-vue'
+import Search from '~icons/fa7-solid/magnifying-glass'
+
+import { useSettingsStore } from '@/shared/settings'
+
+import { useAppDialogs } from '@newtab/composables/appDialogs'
+import { useFocusState } from '@newtab/composables/useFocus'
+import usePerfClasses from '@newtab/composables/usePerfClasses'
+import { useCustomSearchEngineStore } from '@newtab/shared/customSearchEngine'
+import { useCustomEngineFavicon } from '@newtab/shared/customSearchEngine/useCustomEngineFavicon'
+import { getVisibleBuiltInSearchEngineKeys, searchEngines } from '@newtab/shared/search'
+
+const { t } = useTranslation()
+
+const props = defineProps<{
+  borderRadius: string
+}>()
+
+const focusStore = useFocusState()
+const settings = useSettingsStore()
+const customSearchEngineStore = useCustomSearchEngineStore()
+const searchEngineMenu = ref<TooltipInstance>()
+const dialogs = useAppDialogs()
+const { getCustomEngineFavicon } = useCustomEngineFavicon()
+const visibleBuiltInKeys = computed(() =>
+  getVisibleBuiltInSearchEngineKeys(
+    settings.search.builtInEngineOrder,
+    settings.search.hiddenBuiltInEngines,
+  ),
+)
+
+const isBuiltInEngine = computed(() => {
+  return settings.search.engine in searchEngines
+})
+
+const currentCustomEngine = computed(() => {
+  if (isBuiltInEngine.value) {
+    return null
+  } else {
+    return customSearchEngineStore.items.find((engine) => engine.id === settings.search.engine)
+  }
+})
+
+function hide() {
+  searchEngineMenu.value?.hide()
+}
+
+function openPreference() {
+  hide()
+  dialogs.open('searchEngines')
+}
+
+const showingToast = ref(false)
+const currentEngineName = ref('')
+const { start: hideToastLater } = useTimeoutFn(() => (showingToast.value = false), 1000, {
+  immediate: false,
+})
+
+function showEngineToast() {
+  // 获取当前搜索引擎的名字
+  if (isBuiltInEngine.value) {
+    const engine = searchEngines[settings.search.engine as keyof typeof searchEngines]
+    currentEngineName.value = t(engine.nameKey)
+  } else {
+    currentEngineName.value = currentCustomEngine.value?.name || ''
+  }
+
+  // 显示提示
+  showingToast.value = true
+  hideToastLater()
+}
+
+const perf = usePerfClasses(() => ({
+  transparent: settings.perf.searchBar.transparent,
+  transparency: settings.perf.searchBar.transparency,
+  blur: settings.perf.searchBar.blur,
+}))
+
+const popperPerfClass = perf('search-engine-menu')
+const popperStyle = computed(() => ({
+  '--search-border-radius': props.borderRadius,
+}))
+
+defineExpose({ hide, showEngineToast })
+</script>
+
+<template>
+  <div :style="{ opacity: focusStore.isFocused || settings.search.showIconAlways ? 1 : 0 }">
+    <el-tooltip
+      ref="searchEngineMenu"
+      trigger="click"
+      :disabled="!focusStore.isFocused && !settings.search.showIconAlways"
+      :show-arrow="false"
+      :popper-class="popperPerfClass"
+      :popper-style="popperStyle"
+      placement="bottom-start"
+      effect="customized"
+    >
+      <template #content>
+        <!-- 内置搜索引擎 -->
+        <div
+          v-for="key in visibleBuiltInKeys"
+          :key="key"
+          class="search-engine-menu-item"
+          :class="{
+            'search-engine-menu-item--active': settings.search.engine === key,
+          }"
+          @click="settings.search.engine = key"
+        >
+          <div style="display: flex; align-items: center">
+            <el-icon class="search-engine-menu-item__icon"
+              ><component :is="searchEngines[key].icon"
+            /></el-icon>
+            <span>{{ t(searchEngines[key].nameKey) }}</span>
+          </div>
+          <div
+            v-if="key === settings.search.engine"
+            style="font-size: 11px; color: var(--el-text-color-secondary)"
+          >
+            {{ t('search.engineMenu.current') }}
+          </div>
+        </div>
+
+        <!-- 自定义搜索引擎 -->
+        <template v-if="customSearchEngineStore.items.length > 0">
+          <el-divider v-if="visibleBuiltInKeys.length > 0" />
+          <div
+            v-for="engine in customSearchEngineStore.items"
+            :key="engine.id"
+            class="search-engine-menu-item"
+            :class="{
+              'search-engine-menu-item--active': settings.search.engine === engine.id,
+            }"
+            @click="settings.search.engine = engine.id"
+          >
+            <div style="display: flex; align-items: center">
+              <div
+                class="search-engine-menu-item__icon search-engine-menu-item__icon--custom"
+                :style="{
+                  backgroundImage: `url(${getCustomEngineFavicon(engine)})`,
+                }"
+              ></div>
+              <span>{{ engine.name }}</span>
+            </div>
+            <div
+              v-if="engine.id === settings.search.engine"
+              style="font-size: 11px; color: var(--el-text-color-secondary)"
+            >
+              {{ t('search.engineMenu.current') }}
+            </div>
+          </div>
+        </template>
+        <div
+          role="button"
+          tabindex="0"
+          class="search-engine-menu__tip"
+          :aria-label="t('menu.searchEnginePreference')"
+          @click.stop="openPreference"
+          @contextmenu.prevent.stop="openPreference"
+          @keydown.enter.prevent="openPreference"
+          @keydown.space.prevent="openPreference"
+        >
+          <span>{{ t('search.engineMenu.tipPrefix') }}</span>
+          <kbd class="search-engine-menu__kbd">Tab</kbd>
+          <span>{{ t('search.engineMenu.tipSuffix') }}</span>
+        </div>
+      </template>
+      <el-icon v-if="isBuiltInEngine" class="search-engine-menu__icon">
+        <component :is="searchEngines[settings.search.engine as keyof typeof searchEngines].icon" />
+      </el-icon>
+      <el-icon v-else-if="!currentCustomEngine" class="search-engine-menu__icon">
+        <search />
+      </el-icon>
+      <div v-else class="search-engine-menu__icon search-engine-menu__icon--custom">
+        <img :src="getCustomEngineFavicon(currentCustomEngine!)" alt="" />
+      </div>
+    </el-tooltip>
+    <transition name="engine-toast" mode="out-in">
+      <div v-if="showingToast" :key="currentEngineName" class="search-engine-menu__toast">
+        {{ currentEngineName }}
+      </div>
+    </transition>
+  </div>
+</template>
+
+<style lang="scss">
+@use '@newtab/styles/mixins/acrylic.scss' as acrylic;
+
+.search-engine-menu {
+  &.is-customized {
+    --search-engine-menu-padding: 5px;
+    --el-popper-border-radius: var(--search-border-radius, 15px);
+
+    left: -5px !important; // 覆盖 element-plus 的 popper 样式 0px
+    min-width: 210px;
+    padding: var(--search-engine-menu-padding);
+    background-color: var(--el-bg-color-overlay);
+    transition:
+      background-color var(--el-transition-duration-fast) ease,
+      opacity var(--el-transition-duration-fast) ease;
+
+    &.search-engine-menu--opacity {
+      background-color: var(--le-bg-color-overlay-search-menu);
+    }
+
+    &.search-engine-menu--blur {
+      @include acrylic.acrylic(var(--le-search-menu-backdrop-blur, 10px));
+    }
+  }
+
+  &-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 8px 18px;
+    overflow: hidden;
+    font-size: var(--el-font-size-extra-small);
+    color: var(--el-text-color-primary);
+    cursor: pointer;
+    border-radius: max(
+      4px,
+      calc(var(--search-border-radius, 15px) - var(--search-engine-menu-padding, 5px))
+    );
+
+    &:hover,
+    &:focus-visible {
+      background: var(--le-bg-color-overlay-search-menu);
+    }
+
+    &--active {
+      background: var(--le-bg-color-overlay-search-menu-active);
+    }
+
+    .search-engine-menu-item__icon {
+      margin-right: 10px;
+      font-size: var(--el-font-size-small);
+      color: var(--el-text-color-regular);
+
+      &.search-engine-menu-item__icon--custom {
+        width: 1em;
+        height: 1em;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: contain;
+      }
+    }
+  }
+
+  &__tip {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 20px;
+    padding: 0 10px;
+    margin-top: 5px;
+    font-size: 11px;
+    color: var(--el-text-color-secondary);
+    cursor: pointer;
+    transition: color var(--el-transition-duration-fast) ease;
+
+    &:hover,
+    &:focus-visible {
+      color: var(--el-color-primary);
+      outline: none;
+    }
+
+    .search-engine-menu__kbd {
+      padding: 2px 4px;
+      margin: 0 3px;
+      font-size: 10px;
+      line-height: 1em;
+      border: solid 1px currentColor;
+      border-radius: 3px;
+    }
+  }
+
+  .el-divider--horizontal {
+    width: calc(100% - 36px);
+    margin: 5px 18px;
+  }
+
+  &__toast {
+    position: absolute;
+    top: 50%;
+    left: 40px;
+    font-size: var(--el-font-size-small);
+    color: var(--el-text-color-regular);
+    transform: translateY(-50%);
+  }
+}
+
+.engine-toast-enter-active {
+  transition: all 0.1s ease-out;
+}
+
+.engine-toast-leave-active {
+  transition: all 0.1s ease-in;
+}
+
+.engine-toast-enter-from {
+  opacity: 0;
+  transform: translateY(-10%);
+}
+
+.engine-toast-leave-to {
+  opacity: 0;
+  transform: translateY(-70%);
+}
+</style>

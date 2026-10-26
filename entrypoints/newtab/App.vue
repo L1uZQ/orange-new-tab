@@ -1,0 +1,277 @@
+<script lang="ts" setup>
+import { useIdle } from '@vueuse/core'
+import { type StyleValue } from 'vue'
+
+import { useTranslation } from 'i18next-vue'
+
+import { BgType } from '@/shared/enums'
+import { DEFAULT_QUICK_LINK_GROUP_ID } from '@/shared/quickLinks'
+import { defaultSettings, useSettingsStore } from '@/shared/settings'
+
+import { FOCUS_STATE, GET_ACTIVE_QUICK_LINK_GROUP_ID } from '@newtab/shared/keys'
+import { isOnlyTouchDevice } from '@newtab/shared/touch'
+
+import BookmarkBtn from './components/ActionBtn/BookmarkBtn.vue'
+import DownloadBgBtn from './components/ActionBtn/DownloadBgBtn.vue'
+import RefreshBgBtn from './components/ActionBtn/RefreshBgBtn.vue'
+import SettingsBtn from './components/ActionBtn/SettingsBtn.vue'
+import AppDialogHost from './components/AppDialogHost.vue'
+import Background from './components/Background.vue'
+import Clock from './components/Clock.vue'
+import Dock from './components/QuickLinks/Dock.vue'
+import QuickLinks from './components/QuickLinks/index.vue'
+import SearchBox from './components/SearchBox/index.vue'
+import YiYan from './components/YiYan.vue'
+import { APP_DIALOGS, createAppDialogs } from './composables/appDialogs'
+import { useAppNotifications } from './composables/useAppNotifications'
+import { useElementLang } from './composables/useElementLang'
+import { createFocusState } from './composables/useFocus'
+import { useQuickLinksBootstrap } from './composables/useQuickLinksBootstrap'
+import { useRetiredCloudSync } from './composables/useRetiredCloudSync'
+import { useThemeWatcher } from './composables/useThemeWatcher'
+
+const BackgroundRef = ref<InstanceType<typeof Background>>()
+const QuickLinksRef = ref<InstanceType<typeof QuickLinks>>()
+const DockRef = ref<InstanceType<typeof Dock>>()
+const { t } = useTranslation()
+
+const dialogs = createAppDialogs()
+provide(APP_DIALOGS, dialogs)
+
+const elLocale = useElementLang()
+const settings = useSettingsStore()
+const { quickLinksReady } = useQuickLinksBootstrap()
+const minimalMode = ref(false)
+const retirement = useRetiredCloudSync()
+
+// 主题/外观 watcher
+useThemeWatcher()
+
+const { idle } = useIdle(5_000, {
+  events: ['mousemove', 'mousedown', 'keydown', 'touchstart', 'wheel'],
+  listenForVisibilityChange: false,
+})
+
+const idleHideEnabled = computed(() => settings.theme.idleHide && !isOnlyTouchDevice.value)
+const idleActive = computed(() => idleHideEnabled.value && idle.value && !minimalMode.value)
+const keepClockVisibleOnIdle = computed(
+  () => idleActive.value && settings.theme.keepClockVisibleOnIdle,
+)
+const idleMainStyle = computed<StyleValue>(() =>
+  idleActive.value && !keepClockVisibleOnIdle.value ? { opacity: 0.2 } : undefined,
+)
+const contentStyle = computed<StyleValue>(() =>
+  keepClockVisibleOnIdle.value ? { opacity: 0.2 } : undefined,
+)
+
+watch(
+  isOnlyTouchDevice,
+  (onlyTouch) => {
+    if (!onlyTouch) return
+    settings.background.parallax = false
+    settings.theme.idleHide = false
+  },
+  { immediate: true },
+)
+
+watch(
+  () => settings.layout.minimalModeOnDoubleClick,
+  (enabled) => {
+    if (!enabled) minimalMode.value = false
+  },
+)
+
+function handleBackgroundContextMenu() {
+  if (
+    settings.dock.enabled &&
+    settings.dock.launchpad.enabled &&
+    settings.dock.launchpad.rightClickToOpen
+  ) {
+    DockRef.value?.toggleLaunchpad()
+  } else if (settings.bookmark.rightClickToOpen) {
+    dialogs.open('bookmark')
+  }
+}
+
+const focusStore = createFocusState()
+provide(FOCUS_STATE, focusStore)
+let backgroundPressDismissesUi = false
+
+function handleBackgroundPointerDown() {
+  // 点击外部会清除焦点、悬停或关闭浮层，需在按下时判断是否用于取消激活。
+  backgroundPressDismissesUi =
+    isOnlyTouchDevice.value &&
+    (focusStore.isFocused ||
+      Array.from(document.querySelectorAll('.yiyan:hover, .yiyan:focus-within, .el-popper')).some(
+        (element) => element.checkVisibility(),
+      ))
+}
+
+function handleBackgroundClick() {
+  if (isOnlyTouchDevice.value && !backgroundPressDismissesUi && !focusStore.isFocused) {
+    handleBackgroundContextMenu()
+  }
+}
+provide(
+  GET_ACTIVE_QUICK_LINK_GROUP_ID,
+  () => QuickLinksRef.value?.getActiveGroupId() ?? DEFAULT_QUICK_LINK_GROUP_ID,
+)
+
+// 应用级通知（欢迎、缓存提示、版本更新）
+useAppNotifications(() => dialogs.open('changelog'))
+
+const bottomDockEnabled = computed(() => settings.dock.enabled && !settings.dock.replaceQuickLinks)
+
+// Dock 占用底部空间时，将操作按钮位置同步为对应的顶部位置，保证渲染与持久化设置一致。
+watch(
+  [bottomDockEnabled, () => settings.layout.actionBtnPosition],
+  ([dockEnabled, actionBtnPosition]) => {
+    if (!dockEnabled || !actionBtnPosition.startsWith('bottom')) return
+    settings.layout.actionBtnPosition = actionBtnPosition.replace(
+      'bottom',
+      'top',
+    ) as typeof actionBtnPosition
+  },
+  { immediate: true },
+)
+
+const actionClass = computed(() => {
+  const perf = settings.perf
+  const enableTransparent = perf.actionBtns.transparent && perf.actionBtns.transparency > 0
+  const enableBlur = perf.actionBtns.blur && enableTransparent
+
+  return {
+    'action-btn-container--tran': enableTransparent,
+    'action-btn-container--blur': enableBlur,
+    [`action-btn-container--${settings.layout.actionBtnPosition}`]: true,
+  }
+})
+
+const quickLinksScrollEnabled = computed(
+  () => settings.quickLinks.enabled && settings.quickLinks.useScroll,
+)
+
+watch(
+  quickLinksScrollEnabled,
+  (enabled) => {
+    if (!enabled || settings.layout.mainPosition.type !== 'center') return
+    settings.layout.mainPosition = {
+      type: 'dvh',
+      value: defaultSettings.layout.mainPosition.value,
+    }
+  },
+  { immediate: true },
+)
+
+const mainClass = computed(() => ({
+  'app--quick-links-scroll': quickLinksScrollEnabled.value,
+  'app--bottom': settings.layout.mainPosition.type.startsWith('bottom-'),
+  'app--minimal': minimalMode.value,
+}))
+
+const mainStyle = computed<StyleValue>(() => {
+  if (quickLinksScrollEnabled.value && settings.layout.mainPosition.type === 'center') {
+    return [
+      { paddingTop: `${defaultSettings.layout.mainPosition.value}vh` },
+      { paddingTop: `${defaultSettings.layout.mainPosition.value}dvh` },
+    ]
+  }
+
+  const pos = settings.layout.mainPosition
+  if (pos.type === 'center') {
+    return { justifyContent: 'center' }
+  }
+  const padding = pos.type.startsWith('bottom-') ? 'paddingBottom' : 'paddingTop'
+  if (pos.type.endsWith('dvh')) {
+    return [{ [padding]: `${pos.value}vh` }, { [padding]: `${pos.value}dvh` }]
+  }
+  return { [padding]: `${pos.value}px` }
+})
+
+async function refreshQuickLinks() {
+  await Promise.all([QuickLinksRef.value?.refresh(), DockRef.value?.refresh()])
+}
+
+function toggleMinimalMode() {
+  if (!settings.layout.minimalModeOnDoubleClick) return
+  minimalMode.value = !minimalMode.value
+}
+</script>
+
+<template>
+  <el-config-provider
+    :locale="elLocale"
+    :dialog="{
+      transition: settings.perf.dialog.animation ? 'dialog' : 'none',
+      alignCenter: true,
+    }"
+    :message="{
+      placement: bottomDockEnabled ? 'top' : 'bottom',
+    }"
+  >
+    <main
+      :style="[mainStyle, idleMainStyle]"
+      class="app"
+      :class="mainClass"
+      :aria-label="t('a11y.main')"
+      @pointerdown.self="handleBackgroundPointerDown"
+      @click.self="handleBackgroundClick"
+      @contextmenu.prevent="handleBackgroundContextMenu"
+      @dblclick.self="toggleMinimalMode"
+    >
+      <clock v-if="settings.clock.enabled" @contextmenu.stop />
+      <div
+        class="app__content"
+        :style="contentStyle"
+        :inert="minimalMode || undefined"
+        @pointerdown.self="handleBackgroundPointerDown"
+        @click.self="handleBackgroundClick"
+        @dblclick.self="toggleMinimalMode"
+      >
+        <search-box v-if="settings.search.enabled" @contextmenu.stop />
+        <quick-links
+          v-if="settings.quickLinks.enabled"
+          ref="QuickLinksRef"
+          :ready="quickLinksReady"
+          @contextmenu.stop
+        />
+        <dock v-if="settings.dock.enabled" ref="DockRef" :ready="quickLinksReady" />
+        <yi-yan v-if="settings.yiyan.enabled" @contextmenu.stop />
+      </div>
+    </main>
+    <background ref="BackgroundRef" />
+    <div
+      class="action-btn-container"
+      :class="actionClass"
+      role="toolbar"
+      :aria-label="t('a11y.actions')"
+    >
+      <settings-btn />
+      <bookmark-btn
+        v-if="settings.bookmark.showBtn"
+        v-show="!minimalMode"
+        @open-bookmark-sidebar="dialogs.open('bookmark')"
+      />
+      <refresh-bg-btn
+        v-if="
+          settings.background.bgType === BgType.Online ||
+          settings.background.bgType === BgType.Local
+        "
+        v-show="!minimalMode"
+        @refresh-background="BackgroundRef?.refreshBackground"
+      >
+      </refresh-bg-btn>
+      <download-bg-btn
+        v-if="
+          settings.background.showDownloadBtn &&
+          ([BgType.Bing, BgType.Online, BgType.Local] as BgType[]).includes(
+            settings.background.bgType,
+          )
+        "
+        v-show="!minimalMode"
+      >
+      </download-bg-btn>
+    </div>
+    <AppDialogHost :retirement="retirement" @quick-links-saved="refreshQuickLinks" />
+  </el-config-provider>
+</template>

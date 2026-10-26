@@ -1,0 +1,311 @@
+{
+  "a11y": {
+    "actions": "Sayfa eylemleri",
+    "addQuickLinksGroup": "Hızlı Bağlantı grubu ekle",
+    "copyYiyan": "Alıntıyı kopyala",
+    "deleteGroup": "{{name}} grubunu sil",
+    "downloadBackground": "Arka planı indir",
+    "goToPage": "{{page}} sayfasına git",
+    "main": "Yeni sekme içeriği",
+    "moveGroupDown": "{{name}} grubunu aşağı taşı",
+    "moveGroupUp": "{{name}} grubunu yukarı taşı",
+    "nextPage": "Sonraki sayfa",
+    "openActionsMenu": "Sayfa eylemleri menüsünü aç",
+    "openBookmarks": "Yer imlerini aç",
+    "previousPage": "Önceki sayfa",
+    "quickLinksGroups": "Hızlı Bağlantı grupları",
+    "quickLinksPagination": "Hızlı Bağlantı sayfalandırması",
+    "refreshBackground": "Arka planı yenile",
+    "renameGroup": "{{name}} grubunu yeniden adlandır",
+    "searchInput": "Anahtar kelimeleri ara",
+    "searchSuggestions": "Arama önerileri"
+  },
+  "about": {
+    "yiyanProvider": "Çin şiiri API'si {api} tarafından sağlanmaktadır"
+  },
+  "bookmark": {
+    "404": "Hiçbir şey bulunamadı",
+    "addToQuickLinks": "Hızlı Bağlantılara Ekle",
+    "added": "Hızlı Bağlantılara eklendi",
+    "collapse": {
+      "all": "Düzeyde Tümünü Daralt",
+      "other": "Düzeyde Diğerlerini Daralt"
+    },
+    "delete": {
+      "confirm": "“{{name}}” öğesini silmek istediğinizden emin misiniz?",
+      "confirmFolder": "“{{name}}” bir klasördür. Silinmesi, içindeki tüm yer imlerini de silecektir. Emin misiniz?",
+      "success": "“{{title}}” silindi"
+    },
+    "expandHint": "Yer imlerini görüntülemek için lütfen yan çubuğu genişletin",
+    "moveError": "Yer imi taşınamadı",
+    "sortBy": "Sıralama ölçütü",
+    "sortMode": {
+      "createdAsc": "En yeni",
+      "createdDesc": "En eski",
+      "nameAsc": "Ada Göre A–Z",
+      "nameDesc": "Ada Göre Z–A",
+      "origin": "Orijinal"
+    },
+    "title": "Yer İmi",
+    "tooSmall": "Yan çubuk çok dar"
+  },
+  "bootstrap": {
+    "invalidVer": {
+      "bak": "Önceki ayarlar sürümünün bir yedeğini indirmek için aşağıdaki düğmeye de tıklayabilirsiniz (bu yedek mevcut sürüme aktarılamaz).",
+      "btn": "Temizle ve Yenile",
+      "msg": "Üzgünüz, ancak desteklenmeyen eski bir ayarlar sürümü tespit edildi. Uzantının düzgün çalışmasını sağlamak için lütfen uzantı verilerini temizleyin ve yenileyin.",
+      "title": "Desteklenmeyen Ayarlar Sürümü"
+    }
+  },
+  "builtinApps": {
+    "add": "Ekle",
+    "hidden": "Uygulama kısayolu gizlendi.",
+    "note": "Not",
+    "remove": "Kaldır",
+    "title": "Yerleşik uygulamalar"
+  },
+  "changelog": {
+    "hideMajor": "Sürüm yükseltmelerinde değişiklik günlüğünü açma",
+    "newVersionMsg": "Başlangıç sayfanız güncellendi!",
+    "otherVersions": {
+      "description": "Yalnızca son 5 sürüm dahildir. Tam sürüm bildirimini görüntülemek için aşağıdaki bağlantılara tıklayın:",
+      "linkEn": "İngilizce",
+      "linkZhCN": "Çince (Basitleştirilmiş)",
+      "title": "Diğer Sürümler?"
+    },
+    "title": "Sürüm Bildirimi"
+  },
+  "common": {
+    "cancel": "İptal",
+    "confirm": "Evet",
+    "delete": "Sil",
+    "edit": "Düzenle",
+    "enable": "Etkinleştir",
+    "icon": "Simge (İsteğe bağlı)",
+    "itemUnavailable": "Bu öğe başka bir yerde silindi. Taslağınız korundu.",
+    "name": "Ad",
+    "no": "Hayır",
+    "save": "Kaydet",
+    "tooLargeImageConfirm": "Bu görsel büyük ({{size}}) ve performansı ve yanıt verme hızını etkileyebilir. Devam edilsin mi?",
+    "undo": "Geri Al",
+    "url": "URL",
+    "warning": "Uyarı"
+  },
+  "customSearchEngine": {
+    "add": "Özel Arama Motoru Ekle",
+    "addDialog": {
+      "invalidUrlError": "Geçersiz URL veya %s yer tutucusu eksik",
+      "nameRequiredError": "Ad boş olamaz",
+      "urlHelp": "URL, arama anahtar kelimeleri için %s yer tutucusunu içermelidir"
+    },
+    "deleteConfirm": "“{{name}}” adlı arama motorunu silmek istediğinizden emin misiniz?",
+    "edit": "Özel Arama Motorunu Düzenle",
+    "title": "Özel Arama Motoru"
+  },
+  "dock": {
+    "launchpad": {
+      "add": "Ekle",
+      "empty": "Sonuç yok",
+      "search": "Ara...",
+      "title": "Başlatıcı"
+    }
+  },
+  "note": {
+    "snapshotTooLarge": "Kaydedilemiyor: tüm yedekleme veya eşitleme verileri 10 MiB sınırını aşıyor. Notları, özel simgeleri veya diğer verileri azaltın; taslağınız korunuyor.",
+    "saveFailed": "Not kaydedilemedi. Değişiklikleriniz düzenleyicide korunuyor.",
+    "conflict": "Bu not başka bir yerde değiştirildi. Taslağınız korunuyor; notu yeniden açmadan önce taslağı kopyalayın.",
+    "deleted": "Bu not başka bir yerde silindi. Taslağınız korunuyor; yeni bir nota kopyalayın.",
+    "tooLarge": "Kaydedilemiyor: her not en fazla 1 MiB, tüm notlar en fazla 8 MiB olabilir. İçeriği kısaltın veya gereksiz notları silin.",
+    "backToList": "Not listesine dön",
+    "create": "Not oluştur",
+    "deleteConfirm": "“{{title}}” silinsin mi?",
+    "discard": "Vazgeç",
+    "edit": "Notu düzenle",
+    "empty": "Listeden bir not seçin veya yeni bir not oluşturun.",
+    "export": "Resmi dışa aktar",
+    "exportFailed": "Not resmi dışa aktarılamadı",
+    "exported": "Not resmi dışa aktarıldı",
+    "listEmpty": "Henüz not yok",
+    "pin": "Sabitle",
+    "time": {
+      "dayBeforeYesterday": "Önceki gün {{time}}",
+      "today": "Bugün {{time}}",
+      "yesterday": "Dün {{time}}"
+    },
+    "title": "Not",
+    "toggleSource": "Kaynak düzenleyiciyi değiştir",
+    "unpin": "Sabitlemeyi kaldır",
+    "unsaved": "Ayrılmadan önce değişiklikler kaydedilsin mi?",
+    "untitled": "Başlıksız not"
+  },
+  "menu": {
+    "about": "Hakkında",
+    "backgroundPreference": "Arka Plan Tercihi",
+    "help": "Yardım / Geri Bildirim",
+    "searchEnginePreference": "Arama Motoru Tercihi",
+    "sponsor": "Destekçi"
+  },
+  "notification": {
+    "bing": {
+      "message": "Geliştirici araçlarında konsol çıktısını kontrol edin.",
+      "title": "Bing duvar kağıdı alınamadı"
+    },
+    "extensionUpdate": {
+      "message": "Yeni bir uzantı sürümü hazır. Güncellemeyi tamamlamak için tarayıcınızı yeniden başlatın.",
+      "title": "Uzantı güncellemesi mevcut",
+      "toast": "Uzantı güncellemesini tamamlamak için tarayıcınızı yeniden başlatın"
+    },
+    "faviconCacheHint": {
+      "message": "Daha hızlı simge yüklemesi için \"Diğer\" ayarlarında favicon önbelleğini etkinleştirin",
+      "title": "İpucu: Favicon önbelleği devre dışı"
+    },
+    "greeting": {
+      "afternoon": [
+        "İyi günler! Günün geri kalanı güzel geçsin.",
+        "İyi günler! Bir yudum su içip biraz soluklanmaya ne dersiniz?",
+        "Umarız bu öğleden sonra küçük bir şey yüzünüzü güldürür.",
+        "Bir süredir yoğun musunuz? Biraz esneyip kendinize zaman ayırın.",
+        "İyi günler! Kendi hızınızda ilerlemenizde hiçbir sakınca yok.",
+        "Günün geri kalanında telaşınız az, keyfiniz bol olsun."
+      ],
+      "dawn": [
+        "Günün bu sakin saatlerinde kendinize iyi bakın.",
+        "Ortalık henüz sessiz. Umarız içiniz de biraz huzur bulur.",
+        "Hâlâ bir şeylerle uğraşıyorsanız dinlenmeye de zaman ayırın.",
+        "İster yeni uyanmış olun ister henüz uyumamış, kendinize nazik davranın.",
+        "Gün başlamadan önce kendinize küçük bir iyilik yapın.",
+        "Bu sakin saatlerde yalnızca size ait bir anınız olsun."
+      ],
+      "dusk": [
+        "Gün sona ererken biraz soluklanın.",
+        "Akşam yaklaşırken kendinize dinlenecek biraz zaman ayırın.",
+        "Gün bitmek üzere. Her şeyi bir anda tamamlamanız gerekmiyor.",
+        "Umarız akşam sizi güzel bir yemek ve gülümsetecek bir şey bekliyordur.",
+        "Uzun bir günün ardından omuzlarınızı gevşetip derin bir nefes alın.",
+        "Hava kararırken kendinize de biraz şefkat gösterin."
+      ],
+      "evening": [
+        "İyi akşamlar! Huzurlu bir akşam geçirin.",
+        "İyi akşamlar! Sevdiğiniz bir şeye biraz zaman ayırın.",
+        "Umarız bu akşam kendinize ayırabileceğiniz sakin bir vaktiniz olur.",
+        "Bu akşam biraz yavaşlayın. Sıcak bir içecek iyi bir başlangıç olabilir.",
+        "İyi akşamlar! Bugünün dertlerini bir süreliğine kenara bırakabilirsiniz.",
+        "Bu akşam güzel bir sohbet ya da küçük bir mutluluk size eşlik etsin."
+      ],
+      "lateNight": [
+        "Geç oldu. Fırsat bulunca biraz dinlenin.",
+        "Umarız günün yorgunluğunu geride bırakıp rahat bir uyku çekersiniz.",
+        "Hâlâ meşgul müsünüz? Gözlerinizi dinlendirip bir yudum su için.",
+        "Bugün yeterince uğraştınız. Birkaç şeyi yarına bırakabilirsiniz.",
+        "Bu gece kaygılarınız az, rüyalarınız güzel olsun.",
+        "İyi geceler. Kendinize iyi bakın; yarın biraz bekleyebilir."
+      ],
+      "morning": [
+        "Günaydın! Umarız gününüz güzel başlar.",
+        "Günaydın! Güzel bir kahvaltıyla güne sakin bir başlangıç yapın.",
+        "Yeni bir gün başladı. Size iyi gelen bir tempoda ilerleyin.",
+        "Umarız bugün hoş bir sürpriz ve küçük mutluluklar sizi bulur.",
+        "Günaydın! Kendinize gülümseyip güne yavaşça başlayın.",
+        "Bugün de kendinize iyi bakın. Her şey gönlünüzce olsun."
+      ],
+      "noon": [
+        "İyi günler! Yoğunluk arasında kısa bir mola vermeyi unutmayın.",
+        "Öğle vakti geldi. İşlere dönmeden önce güzelce yemek yiyip dinlenin.",
+        "Öğle yemeğiniz lezzetli, öğleden sonranız daha hafif geçsin.",
+        "Küçük bir öğle molası iyi gelir. Gözlerinizi dinlendirip biraz soluklanın.",
+        "Yoğun bir sabahtan sonra kendinize biraz zaman ayırın.",
+        "Afiyet olsun! Yemeğiniz keyifli, dertleriniz biraz daha küçük olsun."
+      ]
+    },
+    "wallpaperCache": {
+      "message": "Çevrimiçi duvar kağıdı önbelleğe alınamadı: {error}",
+      "title": "Çevrimiçi duvar kağıdı önbelleğe alınamadı"
+    },
+    "welcome": {
+      "message": "Lemon New Tab'i kurduğunuz için teşekkürler! Yeni sekme sayfanızı ayarlardan (sağ alt köşe) özelleştirin.",
+      "title": "Lemon New Tab'e Hoş Geldiniz"
+    }
+  },
+  "quickLinks": {
+    "addDialog": {
+      "extensionIconTip": "Geçerli sayfayı Hızlı Bağlantılara eklemek için tarayıcı uzantıları menüsündeki simgeye de tıklayabilirsiniz.",
+      "invalidUrlError": "Geçersiz URL. Lütfen yeni bir tane girin",
+      "uploadFaviconAlert": "Bir simge yüklemezseniz, simgeleri otomatik olarak almak için Ayarlar → Diğer → Simge önbelleği seçeneğini etkinleştirmeyi düşünün."
+    },
+    "addLink": "Bağlantı Ekle",
+    "bookmark": {
+      "add": "Yer İmlerine Ekle",
+      "existing": "Bu yer imi zaten mevcut",
+      "success": "“{{folder}}” klasörüne kaydedildi"
+    },
+    "editLink": "Bağlantıyı Düzenle",
+    "groups": {
+      "default": "Varsayılan",
+      "defaultDeleteBlocked": "Varsayılan grup silinemez.",
+      "deleteConfirm": "“{{name}}” grubunu ve içindeki tüm bağlantıları sil?",
+      "moveDown": "Aşağı taşı",
+      "moveTo": "Gruba Taşı",
+      "moveUp": "Yukarı taşı",
+      "rename": "Yeniden adlandır",
+      "selectAddTarget": "Yeni bağlantı için bir grup seçin",
+      "selectMoveTarget": "Taşımak için bir grup seçin",
+      "selectPinTarget": "Kaydetmek için bir grup seçin",
+      "selectTitle": "Grup Seçin",
+      "topSites": "En çok ziyaret edilen",
+      "untitled": "Grup {{index}}"
+    },
+    "hide": "Gizle",
+    "hideTopMessage": {
+      "content": "En çok ziyaret edilen site gizlendi.",
+      "restoreDefault": "Varsayılanı geri yükle",
+      "restoreSuccess": "Varsayılan en çok ziyaret edilen site geri yüklendi"
+    },
+    "moveError": "Taşıma başarısız",
+    "moveLeft": "Sola taşı",
+    "moveRight": "Sağa taşı",
+    "pin": "Sabitle",
+    "unpin": "Sabitlemeyi kaldır",
+    "unpinMessage": "Bağlantının sabitlemesi kaldırıldı.",
+    "fetchingFavicon": "Arka planda simge alınıyor..."
+  },
+  "search": {
+    "browserHistory": "Ziyaretler",
+    "calculationResult": "Sonuç",
+    "calculator": "Hesaplamak",
+    "clickToCopy": "Kopyala",
+    "engineMenu": {
+      "current": "Mevcut",
+      "tipPrefix": "İpucu: Arama motorunu değiştirmek için",
+      "tipSuffix": "tuşuna basın."
+    },
+    "engines": {
+      "baidu": "Baidu",
+      "bing": "Bing",
+      "duckduckgo": "DuckDuckGo",
+      "google": "Google",
+      "yandex": "Yandex"
+    },
+    "extensionSearchHistory": "Aramalar",
+    "mostVisited": "Sık",
+    "navigateTo": "Adrese git",
+    "placeholder": "Ara",
+    "purgeSearchHistory": "Arama Geçmişini Temizle",
+    "savedWebsite": "Kayıtlı",
+    "searchEngineNotFound": "Arama motoru bulunamadı",
+    "searchFor": "Ara"
+  },
+  "sponsor": "Bu uzantı, kendi ihtiyaçlarımı çözmek için boş zamanlarımda tarafımdan oluşturuldu ve size de yardımcı olmasına çok sevindim! Beğendiyseniz, lütfen GitHub'da ⭐ vermeyi düşünün—bu benim için çok değerli. Fikirlerinizi veya geri bildirimlerinizi şu adrese göndermekten çekinmeyin: redlnn@outlook.com. Teşekkür ederim!",
+  "time": {
+    "afternoon": "",
+    "dawn": "",
+    "dusk": "",
+    "evening": "",
+    "lateNight": "",
+    "morning": "",
+    "noon": ""
+  },
+  "title": "Yeni Sekme",
+  "yiyan": {
+    "copied": "Panoya kopyalandı"
+  }
+}

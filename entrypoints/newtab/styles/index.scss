@@ -1,0 +1,152 @@
+@use './element.scss';
+@use './color.scss';
+@use './transitions.scss';
+@use './action-btn.scss';
+@use './radius.scss';
+@use '@/assets/styles/font.scss';
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  background-color: var(--el-bg-color-page);
+  text-rendering: geometricPrecision;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-autospace: normal;
+}
+
+:root {
+  color-scheme: light dark;
+
+  /* 旧浏览器 fallback */
+  --app-vh: 100vh;
+  --app-vw: 100vw;
+}
+
+/* 支持新视口单位的浏览器覆盖 */
+@supports (height: 100dvh) {
+  :root {
+    --app-vh: 100dvh;
+    --app-vw: 100dvw;
+  }
+}
+
+html,
+body {
+  position: relative;
+  width: var(--app-vw);
+  height: var(--app-vh);
+  margin: 0;
+  overflow: hidden;
+  overscroll-behavior: none; // 禁止滚动消失工具栏
+  font-family: var(--el-font-family);
+  font-size: var(--el-font-size-base);
+  color: var(--el-text-color-primary);
+  -webkit-overflow-scrolling: touch; // iOS 让滚动别走主线程
+  text-underline-offset: 0.25em;
+}
+
+.el-dialog,
+.el-message-box {
+  --le-dialog-backdrop-filter: none;
+
+  backdrop-filter: var(--le-dialog-backdrop-filter);
+}
+
+.el-dialog {
+  background-color: var(--le-dialog-background, var(--el-dialog-bg-color));
+}
+
+.el-message-box {
+  background-color: var(--le-dialog-background, var(--el-bg-color-overlay));
+}
+
+html.colorful .el-message-box {
+  --le-dialog-background: var(--el-color-primary-light-9);
+}
+
+html.dialog-transparent .el-dialog,
+html.dialog-transparent .el-message-box {
+  --le-dialog-background: var(
+    --le-dialog-transparent-background,
+    var(--le-bg-color-overlay-dialog)
+  );
+}
+
+html.dialog-acrylic .el-dialog,
+html.dialog-acrylic .el-message-box {
+  --le-dialog-backdrop-filter: blur(var(--le-dialog-backdrop-blur, 10px)) saturate(1.4)
+    brightness(1.1);
+}
+
+.app {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom)
+    env(safe-area-inset-left); // 移动端安全区
+  transition: opacity var(--el-transition-duration) ease-in-out;
+
+  &--quick-links-scroll {
+    justify-content: flex-start;
+    padding-bottom: calc(env(safe-area-inset-bottom) + 96px);
+    overflow: hidden auto;
+    overscroll-behavior-y: contain;
+  }
+
+  &--bottom {
+    justify-content: safe flex-end;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    min-width: 0;
+    transition: opacity var(--el-transition-duration) ease-in-out;
+  }
+
+  &--minimal &__content {
+    pointer-events: none;
+    opacity: 0;
+  }
+
+  &--bottom &__content {
+    flex-shrink: 0;
+  }
+}
+
+html.launchpad-no-blur {
+  .app,
+  .action-btn-container {
+    visibility: hidden;
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.noselect {
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  -khtml-user-select: none;
+  user-select: none;
+}
+
+@keyframes delayedFadeIn {
+  0%,
+  50% {
+    opacity: 0;
+  }
+
+  100% {
+    opacity: 1;
+  }
+}
