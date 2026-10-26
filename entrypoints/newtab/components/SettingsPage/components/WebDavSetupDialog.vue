@@ -36,7 +36,7 @@ const form = reactive({
   username: '',
   password: '',
   deviceName: '',
-  directory: 'LemonNewTab',
+  directory: 'OrangeNewTab',
   rememberPassword: true,
   encrypted: false,
   encryptionPassword: '',
@@ -113,7 +113,7 @@ function createInput(): BrowserWebDavSetupInput {
       password: form.password,
       insecureHttpApproval,
     },
-    directory: form.directory.trim() || 'LemonNewTab',
+    directory: form.directory.trim() || 'OrangeNewTab',
     deviceName: form.deviceName.trim() || undefined,
     encryptionPassword: effectiveEncryption.value
       ? form.encryptionPassword || undefined

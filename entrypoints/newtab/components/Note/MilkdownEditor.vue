@@ -50,11 +50,11 @@ const editorFramePlugin: MilkdownPlugin = (ctx) => {
 
     const footerTitle = document.createElement('span')
     footerTitle.classList.add('note-editor-footer__title')
-    footerTitle.innerHTML = 'Lemon New Tab'
+    footerTitle.innerHTML = 'Orange New Tab'
 
     const footerSubtitle = document.createElement('span')
     footerSubtitle.classList.add('note-editor-footer__subtitle')
-    footerSubtitle.innerHTML = 'Powered by Redlnn'
+    footerSubtitle.innerHTML = 'Built by L1uZQ'
 
     for (let i = 1; i < 5; i++) {
       const span = document.createElement('span')

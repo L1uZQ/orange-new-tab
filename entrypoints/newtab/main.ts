@@ -17,7 +17,7 @@ import { setupAutoSaveSettings } from './shared/autoSaveSettings'
 import { changeTheme } from './shared/theme'
 
 export const main = async () => {
-  const banner = `\n%c Lemon New Tab %c ${version}%c\n\n`
+  const banner = `\n%c Orange New Tab %c ${version}%c\n\n`
 
   console.log(
     banner,

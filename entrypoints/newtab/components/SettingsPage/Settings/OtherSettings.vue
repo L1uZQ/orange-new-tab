@@ -11,7 +11,7 @@ import { downloadBlob } from '@/shared/download'
 import { clearFaviconCache } from '@/shared/media'
 import { NoteSaveError } from '@/shared/notes'
 import { defaultSettings, useSettingsStore } from '@/shared/settings'
-import { clearExtensionData, reloadNewtabTabs } from '@/shared/settings/legacySettingsRecovery'
+import { clearExtensionData, reloadNewtabTabs } from '@/shared/settings/extensionData'
 import { idbClearMany } from '@/shared/storage/idb'
 import { clearWallpaperLibrary } from '@/shared/wallpaperLibrary'
 import { disconnectSyncConnection, getSyncState } from '@/shared/webdavSync/bridge'
@@ -276,7 +276,7 @@ async function exportBackup() {
   const loading = showLoading(t('other.importExport.exporting'))
   try {
     const { json, omissions } = await createBrowserJsonBackup()
-    downloadBlob(new Blob([json], { type: 'application/json' }), 'lemon-new-tab-backup.json')
+    downloadBlob(new Blob([json], { type: 'application/json' }), 'orange-new-tab-backup.json')
     if (omissions.length)
       ElMessage.warning(t('other.importExport.omittedIcons', { count: omissions.length }))
   } catch (error) {

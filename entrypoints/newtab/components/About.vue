@@ -2,9 +2,6 @@
 import { useDateFormat, useNow } from '@vueuse/core'
 
 import { useTranslation } from 'i18next-vue'
-import Chrome from '~icons/fa7-brands/chrome'
-import Edge from '~icons/fa7-brands/edge'
-import Firefox from '~icons/fa7-brands/firefox-browser'
 import Github from '~icons/fa7-brands/github'
 
 import { browser } from 'wxt/browser'
@@ -13,7 +10,6 @@ import { version } from '@/package.json'
 
 import { useSettingsStore } from '@/shared/settings'
 
-import BiliBili from '@newtab/assets/bili.svg?component'
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 import { isProviderKey, yiyanProviders } from '@newtab/shared/yiyan'
 
@@ -38,7 +34,7 @@ const currentYiyanProvider = computed(() => {
   <base-dialog v-model="opened" container-class="about__dialog noselect">
     <section>
       <div class="ext-icon">
-        <a href="https://lemon.redlnn.top" target="_blank">
+        <a href="https://github.com/L1uZQ/orange-new-tab" target="_blank">
           <div class="ext-icon__container"></div>
         </a>
       </div>
@@ -60,37 +56,27 @@ const currentYiyanProvider = computed(() => {
       </div>
       <div class="copyright">
         ©&nbsp;{{ year }}&nbsp;
-        <el-link underline="never" href="https://redlnn.top"> Red_lnn </el-link>
+        <el-link underline="never" href="https://github.com/L1uZQ"> L1uZQ </el-link>
       </div>
       <el-space class="ext-links" :size="12">
-        <el-link
-          :underline="'never'"
-          target="_blank"
-          href="https://chromewebstore.google.com/detail/bhbpmpflnpnkjanfgbjjhldccbckjohb"
-        >
-          <el-icon :size="20"><Chrome /></el-icon>
-        </el-link>
-        <el-link
-          :underline="'never'"
-          target="_blank"
-          href="https://microsoftedge.microsoft.com/addons/detail/keikkgfgidagjlicckkangkfgnbdjdnh"
-        >
-          <el-icon :size="20"><Edge /></el-icon>
-        </el-link>
-        <el-link
-          :underline="'never'"
-          target="_blank"
-          href="https://addons.mozilla.org/firefox/addon/lemon-new-tab/"
-        >
-          <el-icon :size="20"><Firefox /></el-icon>
-        </el-link>
-        <el-link underline="never" target="_blank" href="https://github.com/Redlnn/lemon-new-tab/">
+        <el-link underline="never" target="_blank" href="https://github.com/L1uZQ/orange-new-tab">
           <el-icon :size="20"><Github /></el-icon>
         </el-link>
-        <el-link :underline="'never'" target="_blank" href="https://space.bilibili.com/20858581">
-          <el-icon :size="20"><bili-bili /></el-icon>
-        </el-link>
       </el-space>
+      <div class="upstream">
+        <i18next :translation="t('newtab:about.upstream')">
+          <template #link>
+            <el-link
+              underline="never"
+              target="_blank"
+              type="primary"
+              href="https://github.com/Redlnn/lemon-new-tab"
+            >
+              lemon-new-tab
+            </el-link>
+          </template>
+        </i18next>
+      </div>
     </section>
   </base-dialog>
 </template>
@@ -160,6 +146,17 @@ const currentYiyanProvider = computed(() => {
 
     .el-link:not(:hover) {
       color: inherit;
+    }
+  }
+
+  .upstream {
+    margin-top: 10px;
+    font-size: var(--el-font-size-extra-small);
+    color: var(--el-text-color-secondary);
+    text-align: center;
+
+    .el-link {
+      font-size: var(--el-font-size-extra-small);
     }
   }
 }

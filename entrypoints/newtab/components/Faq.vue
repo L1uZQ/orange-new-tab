@@ -2,18 +2,12 @@
 import '@newtab/styles/github-markdown.css'
 import { TranslationComponent as i18next, useTranslation } from 'i18next-vue'
 import Github from '~icons/fa7-brands/github'
-import EmailRound from '~icons/ic/round-email'
 
 import BaseDialog from '@newtab/components/BaseDialog.vue'
 
 const opened = defineModel<boolean>({ required: true })
 
 const { t } = useTranslation('faq')
-
-function handleEmailClick() {
-  navigator.clipboard.writeText('redlnn@outlook.com')
-  ElMessage.success(t('help.emailCopied'))
-}
 </script>
 
 <template>
@@ -23,7 +17,7 @@ function handleEmailClick() {
       <div class="issue-links">
         <a
           class="issue-link"
-          href="https://github.com/Redlnn/lemon-new-tab/issues/new"
+          href="https://github.com/L1uZQ/orange-new-tab/issues/new"
           target="_blank"
         >
           <span class="issue-link-icon">
@@ -31,12 +25,6 @@ function handleEmailClick() {
           </span>
           <span>{{ t('help.github') }}</span>
         </a>
-        <div class="issue-link" @click="handleEmailClick">
-          <span class="issue-link-icon">
-            <el-icon><EmailRound /></el-icon>
-          </span>
-          <span>{{ t('help.email') }}</span>
-        </div>
       </div>
     </div>
     <div class="faq noselect">
