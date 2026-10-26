@@ -142,8 +142,8 @@
 #### 如果你使用 Chrome 浏览器
 
 ```sh
-git clone https://github.com/Redlnn/lemon-new-tab.git
-cd lemon-new-tab
+git clone https://github.com/L1uZQ/orange-new-tab.git
+cd orange-new-tab
 pnpm install
 # pnpm dev  # 运行开发环境，会启动一个独立的浏览器
 # 构建
@@ -154,13 +154,23 @@ pnpm zip  # 打包 Chrome 扩展
 #### 如果你使用 Firefox 浏览器
 
 ```sh
-git clone https://github.com/Redlnn/lemon-new-tab.git
-cd lemon-new-tab
+git clone https://github.com/L1uZQ/orange-new-tab.git
+cd orange-new-tab
 pnpm install
 # pnpm dev  # 运行开发环境，会启动一个独立的浏览器
 # 构建
 pnpm build:firefox  # 构建为（未打包和签名的）Firefox 扩展
 pnpm zip:firefox  # 打包 Firefox 扩展
+```
+
+#### 与上游同步
+
+本仓库基于 [lemon-new-tab](https://github.com/Redlnn/lemon-new-tab) 开发，`upstream` 远端指向原仓库：
+
+```sh
+git fetch upstream          # 拉取上游更新
+git merge upstream/master   # 将上游更新合并到当前分支
+git push origin master      # 推送到本仓库
 ```
 
 ## 已知问题

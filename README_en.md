@@ -111,8 +111,8 @@ This project is built with Vue 3 (TypeScript) + Element Plus.
 #### For Chrome
 
 ```sh
-git clone https://github.com/Redlnn/lemon-new-tab.git
-cd lemon-new-tab
+git clone https://github.com/L1uZQ/orange-new-tab.git
+cd orange-new-tab
 pnpm install
 # pnpm dev  # Run development mode, opens in a standalone browser
 # Build
@@ -123,13 +123,24 @@ pnpm zip    # Package Chrome extension
 #### For Firefox
 
 ```sh
-git clone https://github.com/Redlnn/lemon-new-tab.git
-cd lemon-new-tab
+git clone https://github.com/L1uZQ/orange-new-tab.git
+cd orange-new-tab
 pnpm install
 # pnpm dev  # Run development mode, opens in a standalone browser
 # Build
 pnpm build:firefox  # Build as (unpacked & unsigned) Firefox extension
 pnpm zip:firefox    # Package Firefox extension
+```
+
+#### Syncing with upstream
+
+This repository is derived from [lemon-new-tab](https://github.com/Redlnn/lemon-new-tab); the `upstream`
+remote points at the original repository:
+
+```sh
+git fetch upstream          # Fetch upstream changes
+git merge upstream/master   # Merge upstream changes into the current branch
+git push origin master      # Push to this repository
 ```
 
 ## Known Issues
