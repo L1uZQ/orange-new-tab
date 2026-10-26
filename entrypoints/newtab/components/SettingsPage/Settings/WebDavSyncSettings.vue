@@ -24,7 +24,6 @@ import { webDavSyncConfigStorage } from '@/shared/webdavSync/localState'
 import { requestExactWebDavPermission } from '@/shared/webdavSync/permissions'
 import type { LocalSyncStateV1, SyncScopePreferences } from '@/shared/webdavSync/types'
 
-import RetiredCloudSyncPanel from '../components/RetiredCloudSyncPanel.vue'
 import { useWebDavSyncState } from '../composables/useWebDavSyncState'
 
 import SettingsSection from './SettingsSection.vue'
@@ -373,8 +372,6 @@ onMounted(() => void refresh())
         </el-collapse-item>
       </el-collapse>
     </template>
-
-    <RetiredCloudSyncPanel />
 
     <el-dialog
       v-model="credentialsVisible"

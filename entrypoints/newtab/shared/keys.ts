@@ -8,9 +8,6 @@ export interface FocusState {
 }
 export const FOCUS_STATE: InjectionKey<FocusState> = Symbol('focusState')
 
-// 打开已退役云同步说明
-export const OPEN_SYNC_RETIREMENT: InjectionKey<() => void> = Symbol('openSyncRetirement')
-
 // 打开书签编辑弹窗
 export const OPEN_BOOKMARK_EDIT_DIALOG: InjectionKey<
   (node: Browser.bookmarks.BookmarkTreeNode) => void

@@ -311,7 +311,7 @@ async function continueApply(pending: PendingApplyV1, scope: SyncScopePreference
           await tx.objectStore('wallpaperLibrary').put(true, `applied:${pending.operationId}`)
         })
       }
-      const channel = new BroadcastChannel('lemon-wallpaper-library')
+      const channel = new BroadcastChannel('orange-wallpaper-library')
       channel.postMessage(null)
       channel.close()
     }

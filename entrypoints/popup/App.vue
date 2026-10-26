@@ -6,21 +6,12 @@ import { browser } from 'wxt/browser'
 import { fetchFaviconWithCache, warmFaviconCache } from '@/shared/media'
 import { DEFAULT_QUICK_LINK_GROUP_ID, useQuickLinksStore } from '@/shared/quickLinks'
 import { useSettingsStore } from '@/shared/settings'
-import {
-  clearExtensionData,
-  downloadLegacySettingsBackup,
-  reloadNewtabTabs,
-} from '@/shared/settings/legacySettingsRecovery'
 import { normalizeUrlForDedup } from '@/shared/url'
 
 import { isValidUrl } from '@newtab/shared/utils'
 
-const props = defineProps<{
-  hasInvalidSettings: boolean
-}>()
 const { t } = useTranslation()
 
-const legacyT = (key: string) => t(`newtab:bootstrap.invalidVer.${key}`)
 const quickLinksStore = useQuickLinksStore()
 const settings = useSettingsStore()
 
@@ -35,9 +26,6 @@ const isLoading = ref(true)
 const isAdded = ref(false)
 const isAlreadyExists = ref(false)
 const groupingEnabled = computed(() => settings.quickLinks.grouping)
-const isResetting = ref(false)
-const resetError = shallowRef<Error | null>(null)
-const includeSync = ref(false)
 
 /** 从激活页的 DOM 中读取 favicon href（通过注入 content script）。 */
 async function getFaviconFromTabDOM(tabId: number): Promise<string | null> {
@@ -98,8 +86,6 @@ watchEffect(async () => {
 })
 
 onMounted(async () => {
-  if (props.hasInvalidSettings) return
-
   try {
     await settings.init()
     const [tabs] = await Promise.all([
@@ -163,89 +149,10 @@ async function addCurrentPage() {
   isAdded.value = true
 }
 
-async function resetLegacySettings() {
-  isResetting.value = true
-  resetError.value = null
-
-  try {
-    await clearExtensionData({ includeSync: includeSync.value })
-    await reloadNewtabTabs()
-    window.close()
-  } catch (error) {
-    isResetting.value = false
-    resetError.value = error instanceof Error ? error : new Error(String(error))
-    console.error('Failed to clear data:', resetError.value)
-  }
-}
-
-function reloadPage() {
-  location.reload()
-}
 </script>
 
 <template>
   <main class="popup">
-    <section v-if="resetError" class="popup__recovery popup__recovery--error" role="alert">
-      <svg class="popup__recovery-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M0 0h24v24H0z" fill="none" />
-        <path
-          fill="currentColor"
-          fill-rule="evenodd"
-          d="M12 2a10 10 0 1 0 0 20a10 10 0 0 0 0-20m0 5a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0V8a1 1 0 0 1 1-1m0 9a1.25 1.25 0 1 1 0 2.5a1.25 1.25 0 0 1 0-2.5"
-          clip-rule="evenodd"
-        />
-      </svg>
-      <h1 class="popup__recovery-title">{{ t('settings:other.purge.failed.title') }}</h1>
-      <p>{{ resetError.message }}</p>
-      <button type="button" class="popup__button popup__button--primary" @click="reloadPage">
-        {{ t('settings:other.purge.failed.refresh') }}
-      </button>
-    </section>
-    <section v-else-if="props.hasInvalidSettings" class="popup__recovery" :aria-busy="isResetting">
-      <svg class="popup__recovery-icon" viewBox="0 0 24 24" aria-hidden="true">
-        <path d="M0 0h24v24H0z" fill="none" />
-        <path
-          fill="currentColor"
-          fill-rule="evenodd"
-          d="M22 12c0-5.523-4.477-10-10-10S2 6.477 2 12s4.477 10 10 10s10-4.477 10-10M12 7a1 1 0 0 1 1 1v5a1 1 0 1 1-2 0V8a1 1 0 0 1 1-1m-1 9a1 1 0 0 1 1-1h.008a1 1 0 1 1 0 2H12a1 1 0 0 1-1-1"
-          clip-rule="evenodd"
-        />
-      </svg>
-      <h1 class="popup__recovery-title">{{ legacyT('title') }}</h1>
-      <p>{{ legacyT('msg') }}</p>
-      <p>{{ legacyT('bak') }}</p>
-      <label class="popup__recovery-sync">
-        <input v-model="includeSync" type="checkbox" :disabled="isResetting" />
-        {{ t('settings:other.purge.confirm.data.includeSync') }}
-      </label>
-      <div class="popup__recovery-actions">
-        <button type="button" class="popup__button" @click="downloadLegacySettingsBackup">
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path
-              fill="currentColor"
-              d="M11.625 15.513q-.175-.063-.325-.213l-3.6-3.6q-.3-.3-.288-.7t.288-.7q.3-.3.713-.312t.712.287L11 12.15V5q0-.425.288-.712T12 4t.713.288T13 5v7.15l1.875-1.875q.3-.3.713-.288t.712.313q.275.3.288.7t-.288.7l-3.6 3.6q-.15.15-.325.213t-.375.062t-.375-.062M6 20q-.825 0-1.412-.587T4 18v-2q0-.425.288-.712T5 15t.713.288T6 16v2h12v-2q0-.425.288-.712T19 15t.713.288T20 16v2q0 .825-.587 1.413T18 20z"
-            />
-          </svg>
-          Download
-        </button>
-        <button
-          type="button"
-          class="popup__button popup__button--primary"
-          :disabled="isResetting"
-          @click="resetLegacySettings"
-        >
-          <span
-            v-if="isResetting"
-            class="popup__spinner popup__spinner--small"
-            aria-hidden="true"
-          />
-          {{ legacyT('btn') }}
-        </button>
-      </div>
-    </section>
-
-    <template v-else>
       <div class="popup__header">
         <!-- <pin12-regular /> -->
         <svg class="popup__icon popup__icon--primary" aria-hidden="true" viewBox="0 0 12 12">
@@ -330,7 +237,7 @@ function reloadPage() {
         </svg>
         <span>{{ t('popup:cannotAdd') }}</span>
       </div>
-    </template>
+
   </main>
 </template>
 

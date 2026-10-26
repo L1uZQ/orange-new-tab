@@ -1,4 +1,4 @@
-import type { SettingsSchemaV12 } from './types'
+import type { SettingsSchema } from './types'
 
-export type CURRENT_CONFIG_SCHEMA = SettingsSchemaV12
-export const CURRENT_CONFIG_VERSION: CURRENT_CONFIG_SCHEMA['version'] = 12
+export type CURRENT_CONFIG_SCHEMA = SettingsSchema
+export const CURRENT_CONFIG_VERSION: CURRENT_CONFIG_SCHEMA['version'] = 1

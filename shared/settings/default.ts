@@ -181,10 +181,6 @@ export const defaultSettings = {
     },
   },
 
-  sync: {
-    enabled: false,
-  },
-
   yiyan: {
     enabled: true,
     alwaysShow: true,

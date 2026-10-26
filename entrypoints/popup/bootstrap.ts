@@ -4,7 +4,7 @@ import { createPinia } from 'pinia'
 import { createVaporApp } from 'vue'
 
 import { i18n, initI18n } from '@/shared/i18n'
-import { isSettingsCompatible, useSettingsStore } from '@/shared/settings'
+import { useSettingsStore } from '@/shared/settings'
 import {
   applyStoredMonetColors,
   changeTheme,
@@ -32,17 +32,11 @@ watch(
 export async function bootstrapPopup() {
   await initI18n()
 
-  const isCompatible = await isSettingsCompatible()
-  const app = createVaporApp(App, { hasInvalidSettings: !isCompatible })
+  const app = createVaporApp(App)
   const pinia = createPinia()
 
   app.use(pinia)
   i18n(app)
-
-  if (!isCompatible) {
-    app.mount('#app')
-    return
-  }
 
   await useSettingsStore().init()
   const settings = useSettingsStore()

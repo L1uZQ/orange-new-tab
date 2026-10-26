@@ -22,6 +22,3 @@ export const AddQuickLinkDialog = defineAsyncComponent(
 export const PermissionDialog = defineAsyncComponent(
   () => import('../components/PermissionDialog.vue'),
 )
-export const SyncRetirementDialog = defineAsyncComponent(
-  () => import('../components/SyncRetirementDialog.vue'),
-)

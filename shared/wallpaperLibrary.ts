@@ -1,7 +1,7 @@
 import type { IDBPTransaction } from 'idb'
 
 import { sha256Hex } from './json'
-import { getDB, idbGet, type LemonDBSchema } from './storage/idb'
+import { getDB, idbGet, type OrangeDBSchema } from './storage/idb'
 
 export type WallpaperVariant = 'light' | 'dark'
 export interface WallpaperItem {
@@ -37,7 +37,7 @@ export async function updateWallpaperLibrary(
   update: (
     library: WallpaperLibrary,
     tx: IDBPTransaction<
-      LemonDBSchema,
+      OrangeDBSchema,
       ('wallpaperLibrary' | 'wallpaper' | 'wallpaperDark')[],
       'readwrite'
     >,

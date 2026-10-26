@@ -3,7 +3,7 @@ function renderStartupError(error: unknown) {
   const fallback = document.getElementById('startup-fallback')
   const detail = fallback?.querySelector('pre')
   if (detail)
-    detail.textContent = `Lemon New Tab startup failed.\n${message}\nSee console for details.`
+    detail.textContent = `Orange New Tab startup failed.\n${message}\nSee console for details.`
   fallback?.removeAttribute('hidden')
 }
 
@@ -14,14 +14,8 @@ async function bootstrapNewtab() {
       setupOnlineSyncTrigger()
     },
   )
-  const [{ initI18n }, { shouldStartApp }] = await Promise.all([
-    import('@/shared/i18n'),
-    import('@/shared/settings/bootstrap'),
-  ])
-  const [, canStartApp] = await Promise.all([initI18n(), shouldStartApp(), syncStartupTask])
-  if (!canStartApp) {
-    return
-  }
+  const { initI18n } = await import('@/shared/i18n')
+  await Promise.all([initI18n(), syncStartupTask])
 
   const dayjsTask = import('./shared/dayjs').then(({ initDayjs }) => initDayjs())
   const mainModuleTask = import('./main')

@@ -1,5 +1,4 @@
 import { assertNoteSnapshotSize, NoteSaveError, projectNote } from '../notes/model.ts'
-import { migrateSyncSettings } from '../settings/migrate/sync.ts'
 
 import { pruneInlineImages } from './apply.ts'
 import { SYNC_SCOPE_KEYS } from './domains.ts'
@@ -23,10 +22,7 @@ export function decodeSyncSnapshot(
 ): SyncSnapshotV1 {
   requireSupportedSource(source, pluginVersion)
   const snapshot: SyncSnapshotV1 = { scope: fields(value.scope, SYNC_SCOPE_KEYS) }
-  if (value.settings)
-    snapshot.settings = pickSyncSettings(
-      migrateSyncSettings(value.settings, source.settingsSchemaVersion),
-    )
+  if (value.settings) snapshot.settings = pickSyncSettings(value.settings)
   if (value.quickLinks)
     snapshot.quickLinks = {
       items: value.quickLinks.items.map((item) =>

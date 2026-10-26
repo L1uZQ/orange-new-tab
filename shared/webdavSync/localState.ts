@@ -170,11 +170,11 @@ async function readSyncState(): Promise<LocalSyncStateV1> {
 }
 
 export function getOrCreateSyncState(): Promise<LocalSyncStateV1> {
-  return navigator.locks.request('lemon-webdav-state', readSyncState)
+  return navigator.locks.request('orange-webdav-state', readSyncState)
 }
 
 export async function patchSyncState(patch: Partial<LocalSyncStateV1>): Promise<LocalSyncStateV1> {
-  return navigator.locks.request('lemon-webdav-state', async () => {
+  return navigator.locks.request('orange-webdav-state', async () => {
     const current = await readSyncState()
     const next = { ...current, ...patch }
     await webDavSyncStateStorage.setValue(next)

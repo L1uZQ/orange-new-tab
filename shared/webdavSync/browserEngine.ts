@@ -1265,7 +1265,7 @@ async function inspectBrowserWebDavSetup(input: BrowserWebDavSetupInput): Promis
     createBrowserWebDavRequestObserver(input.connection.baseUrl),
   )
   const repository = new WebDavVaultRepository(client, input.directory)
-  return navigator.locks.request('lemon-webdav-setup', () =>
+  return navigator.locks.request('orange-webdav-setup', () =>
     inspectBrowserWebDavSetupLocked(input, client, repository),
   )
 }
@@ -1409,7 +1409,7 @@ export async function connectBrowserWebDav(
       )
       encryptionKey = encryption.key
       metadata = {
-        product: 'lemon-new-tab',
+        product: 'orange-new-tab',
         formatVersion: 1,
         vaultId,
         generationId,
@@ -1418,7 +1418,7 @@ export async function connectBrowserWebDav(
       }
     } else {
       metadata = {
-        product: 'lemon-new-tab',
+        product: 'orange-new-tab',
         formatVersion: 1,
         vaultId,
         generationId,

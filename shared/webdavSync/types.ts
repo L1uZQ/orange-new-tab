@@ -123,7 +123,7 @@ export interface CommitRecordV1 {
 }
 
 export interface VaultMetadataV1 {
-  product: 'lemon-new-tab'
+  product: 'orange-new-tab'
   formatVersion: 1
   vaultId: string
   generationId: string

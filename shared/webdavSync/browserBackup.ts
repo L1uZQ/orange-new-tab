@@ -1,40 +1,23 @@
-import { customSearchEngineStorage } from '@/shared/customSearchEngines/storage'
 import { withNotesLock } from '@/shared/notes'
-import {
-  ensureQuickLinksStableIds,
-  getQuickLinksStorageValue,
-  quickLinksStorage,
-  type QuickLink,
-  type QuickLinksData,
-} from '@/shared/quickLinks'
-import { migrateSettingsToCurrent, type MigratableSettings } from '@/shared/settings'
 import { withSyncWriteLock } from '@/shared/storage/syncWrite'
-import { getUiPreferences } from '@/shared/uiPreferences'
 
 import { mergeImportedSnapshot } from './apply.ts'
 import { parseJsonBackup, serializeJsonBackup, type ParsedLocalBackup } from './backupFormat.ts'
 import {
+  applyPreparedBrowserSnapshot,
   captureBrowserSyncSnapshotResult,
   prepareBrowserApply,
-  applyPreparedBrowserSnapshot,
 } from './browserData.ts'
-import { captureSyncSnapshot, deduplicateInlineImages } from './capture.ts'
 import { JSON_BACKUP_SCOPE } from './catalog.ts'
-import { DEFAULT_SYNC_SCOPE } from './domains.ts'
 import type { SyncScopePreferences, SyncSnapshotV1 } from './types.ts'
 
 const MAX_JSON_BACKUP_BYTES = 25 * 1024 * 1024
 const textDecoder = new TextDecoder('utf-8', { fatal: true })
+const PRODUCT_ID = 'orange-new-tab'
 
 export interface PreparedBrowserImport extends ParsedLocalBackup {
-  source: 'json-v1' | 'legacy-json'
+  source: 'json-v1'
   scope: SyncScopePreferences
-  legacyIcons?: LegacyLocalIcons
-}
-
-interface LegacyLocalIcons {
-  quickLinks: Record<string, { favicon: string; url: string }>
-  searchEngines: Record<string, { icon: string; url: string }>
 }
 
 export async function createBrowserJsonBackup() {
@@ -45,6 +28,7 @@ export async function createBrowserJsonBackup() {
   }
 }
 
+/** 全新项目只接受自有格式的 JSON 备份。 */
 export async function prepareBrowserImport(file: Blob): Promise<PreparedBrowserImport> {
   if (file.size > MAX_JSON_BACKUP_BYTES) throw new TypeError('JSON backup is too large')
   let value: unknown
@@ -53,15 +37,15 @@ export async function prepareBrowserImport(file: Blob): Promise<PreparedBrowserI
   } catch {
     throw new TypeError('JSON backup is invalid')
   }
-  if (isRecord(value) && value.product === 'lemon-new-tab') {
-    const parsed = parseJsonBackup(value, browser.runtime.getManifest().version)
-    return {
-      ...parsed,
-      source: 'json-v1',
-      scope: inferImportScope(parsed.snapshot),
-    }
+  if (!isRecord(value) || value.product !== PRODUCT_ID) {
+    throw new TypeError('Backup format is unsupported')
   }
-  return prepareLegacyImport(value)
+  const parsed = parseJsonBackup(value, browser.runtime.getManifest().version)
+  return {
+    ...parsed,
+    source: 'json-v1',
+    scope: inferImportScope(parsed.snapshot),
+  }
 }
 
 export async function applyPreparedBrowserImport(
@@ -86,7 +70,6 @@ export async function applyPreparedBrowserImport(
           'import',
         ),
       )
-      if (input.legacyIcons) await restoreLegacyIcons(input.legacyIcons)
     }),
   )
 }
@@ -105,182 +88,6 @@ function inferImportScope(snapshot: SyncSnapshotV1): SyncScopePreferences {
   }
 }
 
-async function prepareLegacyImport(value: unknown): Promise<PreparedBrowserImport> {
-  if (!value || typeof value !== 'object' || Array.isArray(value)) {
-    throw new TypeError('Legacy backup must be an object')
-  }
-  const record = value as Record<string, unknown>
-  const quickLinksValue =
-    record.quickLinks ?? record.bookmark ?? record.bookmarks ?? record.shortcuts
-  const hasKnownField =
-    record.settings !== undefined ||
-    quickLinksValue !== undefined ||
-    record.customSearchEngines !== undefined
-  if (!hasKnownField) throw new TypeError('Backup format is unsupported')
-
-  const [current, currentEngines, ui] = await Promise.all([
-    captureBrowserSyncSnapshotResult({ ...DEFAULT_SYNC_SCOPE }).then((result) => result.snapshot),
-    customSearchEngineStorage.getValue(),
-    getUiPreferences(),
-  ])
-  let settings: unknown = current.settings
-  if (record.settings !== undefined) {
-    if (!isRecord(record.settings) || !Number.isSafeInteger(record.settings.version)) {
-      throw new TypeError('Legacy settings version is invalid')
-    }
-    settings = migrateSettingsToCurrent(record.settings as unknown as MigratableSettings).settings
-  }
-  let quickLinks: QuickLinksData = materializeLegacyQuickLinks(current)
-  if (quickLinksValue !== undefined) {
-    if (!isQuickLinksData(quickLinksValue)) throw new TypeError('Legacy Quick Links are invalid')
-    quickLinks = ensureQuickLinksStableIds(structuredClone(quickLinksValue)).value
-  }
-  let customSearchEngines = currentEngines
-  if (record.customSearchEngines !== undefined) {
-    if (!isCustomSearchEngines(record.customSearchEngines)) {
-      throw new TypeError('Legacy custom search engines are invalid')
-    }
-    customSearchEngines = structuredClone(record.customSearchEngines)
-  }
-  const snapshot = captureSyncSnapshot({
-    settings,
-    quickLinks,
-    customSearchEngines,
-    ui: {
-      language: ui.language || current.ui?.language || 'en',
-      colorMode: ui.colorMode || current.ui?.colorMode || 'auto',
-    },
-    scope: { ...DEFAULT_SYNC_SCOPE, userIcons: false },
-  })
-  await deduplicateInlineImages(snapshot)
-  return {
-    snapshot,
-    source: 'legacy-json',
-    scope: { ...DEFAULT_SYNC_SCOPE, userIcons: false },
-    legacyIcons: collectLegacyIcons(quickLinks, customSearchEngines),
-  }
-}
-
-function collectLegacyIcons(
-  quickLinks: QuickLinksData,
-  searchEngines: { items: Array<{ id: string; icon?: string; url: string }> },
-): LegacyLocalIcons {
-  const items = quickLinks.groups?.length
-    ? quickLinks.groups.flatMap((group) => group.items)
-    : quickLinks.items
-  return {
-    quickLinks: Object.fromEntries(
-      items.flatMap((item) =>
-        item.id && item.favicon ? [[item.id, { favicon: item.favicon, url: item.url }]] : [],
-      ),
-    ),
-    searchEngines: Object.fromEntries(
-      searchEngines.items.flatMap((item) =>
-        item.icon ? [[item.id, { icon: item.icon, url: item.url }]] : [],
-      ),
-    ),
-  }
-}
-
-async function restoreLegacyIcons(icons: LegacyLocalIcons): Promise<void> {
-  const [quickLinks, searchEngines] = await Promise.all([
-    getQuickLinksStorageValue(true),
-    customSearchEngineStorage.getValue(),
-  ])
-  let quickLinksChanged = false
-  const restoreQuickLink = (item: QuickLink) => {
-    const icon = item.id ? icons.quickLinks[item.id] : undefined
-    if (!icon || icon.url !== item.url || item.favicon === icon.favicon) return item
-    quickLinksChanged = true
-    const restored = { ...item, favicon: icon.favicon }
-    delete restored.faviconSource
-    return restored
-  }
-  const restoredQuickLinks = {
-    items: quickLinks.items.map(restoreQuickLink),
-    groups: quickLinks.groups?.map((group) => ({
-      ...group,
-      items: group.items.map(restoreQuickLink),
-    })),
-  }
-  let searchEnginesChanged = false
-  const restoredSearchEngines = {
-    items: searchEngines.items.map((item) => {
-      const icon = icons.searchEngines[item.id]
-      if (!icon || icon.url !== item.url || item.icon === icon.icon) return item
-      searchEnginesChanged = true
-      return { ...item, icon: icon.icon }
-    }),
-  }
-  await Promise.all([
-    quickLinksChanged ? quickLinksStorage.raw.setValue(restoredQuickLinks) : undefined,
-    searchEnginesChanged
-      ? customSearchEngineStorage.raw.setValue(restoredSearchEngines)
-      : undefined,
-  ])
-}
-
-function materializeLegacyQuickLinks(snapshot: SyncSnapshotV1): QuickLinksData {
-  const quickLinks = snapshot.quickLinks ?? { items: [], rootOrder: [], groups: [], groupOrder: [] }
-  const items = new Map(quickLinks.items.map((item) => [item.id, { ...item }]))
-  return quickLinks.groups.length
-    ? {
-        items: quickLinks.items.map((item) => ({ ...item })),
-        groups: quickLinks.groupOrder.map((id) => {
-          const group = quickLinks.groups.find((item) => item.id === id)!
-          return {
-            id: group.id,
-            name: group.name,
-            items: group.itemIds.map((itemId) => items.get(itemId)!),
-          }
-        }),
-      }
-    : {
-        items: quickLinks.rootOrder.map((id) => items.get(id)!),
-        groups: [],
-      }
-}
-
 function isRecord(value: unknown): value is Record<string, unknown> {
   return Boolean(value && typeof value === 'object' && !Array.isArray(value))
 }
-
-function isQuickLinksData(value: unknown): value is QuickLinksData {
-  if (!isRecord(value) || !Array.isArray(value.items)) return false
-  const itemsValid = value.items.every(
-    (item) => isRecord(item) && typeof item.url === 'string' && typeof item.title === 'string',
-  )
-  const groupsValid =
-    value.groups === undefined ||
-    (Array.isArray(value.groups) &&
-      value.groups.every(
-        (group) =>
-          isRecord(group) &&
-          typeof group.id === 'string' &&
-          typeof group.name === 'string' &&
-          Array.isArray(group.items) &&
-          group.items.every(
-            (item) =>
-              isRecord(item) && typeof item.url === 'string' && typeof item.title === 'string',
-          ),
-      ))
-  return itemsValid && groupsValid
-}
-
-function isCustomSearchEngines(
-  value: unknown,
-): value is { items: Array<{ id: string; name: string; url: string; icon?: string }> } {
-  return (
-    isRecord(value) &&
-    Array.isArray(value.items) &&
-    value.items.every(
-      (item) =>
-        isRecord(item) &&
-        typeof item.id === 'string' &&
-        typeof item.name === 'string' &&
-        typeof item.url === 'string' &&
-        (item.icon === undefined || typeof item.icon === 'string'),
-    )
-  )
-}
-import { browser } from 'wxt/browser'

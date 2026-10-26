@@ -33,7 +33,7 @@ export function createEncryptionAad(input: {
   objectId: string
 }): Uint8Array<ArrayBuffer> {
   return encoder.encode(
-    `lemon-new-tab\0v1\0${input.vaultId}\0${input.generationId}\0${input.objectType}\0${input.objectId}`,
+    `orange-new-tab\0v1\0${input.vaultId}\0${input.generationId}\0${input.objectType}\0${input.objectId}`,
   )
 }
 
@@ -121,7 +121,7 @@ export async function createVaultEncryption(
   const key = await deriveEncryptionKey(password, salt, iterations)
   const keyCheck = await encryptSyncBytes(
     key,
-    encoder.encode('lemon-new-tab-key-check-v1'),
+    encoder.encode('orange-new-tab-key-check-v1'),
     createEncryptionAad({ vaultId, generationId, objectType: 'key-check', objectId: 'v1' }),
   )
   return {
@@ -156,7 +156,7 @@ export async function unlockVaultEncryption(
     base64ToBytes(metadata.keyCheck),
     createEncryptionAad({ vaultId, generationId, objectType: 'key-check', objectId: 'v1' }),
   )
-  if (new TextDecoder().decode(plaintext) !== 'lemon-new-tab-key-check-v1') {
+  if (new TextDecoder().decode(plaintext) !== 'orange-new-tab-key-check-v1') {
     throw new Error('Encryption password is incorrect or data was modified')
   }
   return key

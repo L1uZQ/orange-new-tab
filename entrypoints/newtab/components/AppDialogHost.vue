@@ -5,13 +5,10 @@ import {
   appDialogComponents,
   AddQuickLinkDialog,
   PermissionDialog,
-  SyncRetirementDialog,
 } from '../composables/appDialogRegistry'
 import { useAppDialogs, type SimpleDialogName } from '../composables/appDialogs'
 import { usePermission } from '../composables/usePermission'
-import type { useRetiredCloudSync } from '../composables/useRetiredCloudSync'
 
-defineProps<{ retirement: ReturnType<typeof useRetiredCloudSync> }>()
 defineEmits<{ quickLinksSaved: [] }>()
 const dialogs = useAppDialogs()
 const names = Object.keys(appDialogComponents) as SimpleDialogName[]
@@ -61,13 +58,5 @@ watch(
     :only-all="currentOnlyAll"
     :context="currentContext"
     @result="onPermissionDialogResult"
-  />
-  <SyncRetirementDialog
-    v-if="retirement.dialogLoaded.value"
-    :model-value="retirement.dialogVisible.value"
-    @update:model-value="!$event && retirement.closeDialog()"
-    :acknowledgement-only="retirement.dialogAcknowledgementOnly.value"
-    @download="retirement.downloadCloudData"
-    @delete="retirement.deleteCloudData"
   />
 </template>

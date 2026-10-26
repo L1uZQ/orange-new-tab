@@ -29,10 +29,10 @@ export function useQuickLinksBootstrap() {
     initTask = (async () => {
       // 与快捷链接存储并行读取，避免等待 Top Sites 增加初始化耗时。
       const topSitesTask = loadTopSites()
-      const legacy = await browser.storage.local.get(['quickLinks', 'bookmark'])
+      const existing = await browser.storage.local.get('quickLinks')
       await quickLinksStore.init()
-      // 仅没有任何历史快速导航存储的新安装才注入，删除入口后不会再次出现。
-      if (!legacy.quickLinks && !legacy.bookmark && quickLinksStore.items.length === 0) {
+      // 仅全新安装注入内置便签，删除入口后不会再次出现。
+      if (!existing.quickLinks && quickLinksStore.items.length === 0) {
         await quickLinksStore.setBuiltInAppEnabled('note', true)
       }
       await topSitesTask

@@ -1,7 +1,6 @@
 import type { Component } from 'vue'
 
 import { storage } from '#imports'
-import { browser } from 'wxt/browser'
 
 import { coordinateStorage, withSyncWriteLock } from '@/shared/storage/syncWrite'
 
@@ -79,18 +78,6 @@ export async function getQuickLinksStorageValue(lockHeld = false): Promise<Quick
     const normalized = ensureQuickLinksStableIds(current)
     if (normalized.changed) await quickLinksStorage.raw.setValue(normalized.value)
     return normalized.value
-  }
-
-  const legacy = await browser.storage.local.get('bookmark')
-  const legacyValue = legacy.bookmark
-  if (
-    legacyValue &&
-    typeof legacyValue === 'object' &&
-    Array.isArray((legacyValue as QuickLinksData).items)
-  ) {
-    const migrated = ensureQuickLinksStableIds(legacyValue as QuickLinksData).value
-    await quickLinksStorage.raw.setValue(migrated)
-    return migrated
   }
 
   const empty = structuredClone(defaultQuickLinksData)

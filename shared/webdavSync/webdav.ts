@@ -25,7 +25,7 @@ const MAX_PROPFIND_ENTRIES = 2048
 const METADATA_TIMEOUT_MS = 30_000
 const ASSET_TIMEOUT_MS = 120_000
 const MAX_REDIRECTS = 3
-const PRODUCT_ID = 'lemon-new-tab'
+const PRODUCT_ID = 'orange-new-tab'
 const UUID_PATTERN = /^[0-9a-f]{8}-[0-9a-f]{4}-4[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i
 const textEncoder = new TextEncoder()
 const textDecoder = new TextDecoder('utf-8', { fatal: true })
@@ -581,7 +581,7 @@ export class WebDavVaultRepository {
   readonly directory: string
   private readonly client: WebDavClient
 
-  constructor(client: WebDavClient, directory = 'LemonNewTab') {
+  constructor(client: WebDavClient, directory = 'OrangeNewTab') {
     this.client = client
     this.directory = normalizeVaultDirectory(directory)
   }

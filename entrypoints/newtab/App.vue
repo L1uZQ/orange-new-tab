@@ -27,7 +27,6 @@ import { useAppNotifications } from './composables/useAppNotifications'
 import { useElementLang } from './composables/useElementLang'
 import { createFocusState } from './composables/useFocus'
 import { useQuickLinksBootstrap } from './composables/useQuickLinksBootstrap'
-import { useRetiredCloudSync } from './composables/useRetiredCloudSync'
 import { useThemeWatcher } from './composables/useThemeWatcher'
 
 const BackgroundRef = ref<InstanceType<typeof Background>>()
@@ -42,8 +41,6 @@ const elLocale = useElementLang()
 const settings = useSettingsStore()
 const { quickLinksReady } = useQuickLinksBootstrap()
 const minimalMode = ref(false)
-const retirement = useRetiredCloudSync()
-
 // 主题/外观 watcher
 useThemeWatcher()
 
@@ -272,6 +269,6 @@ function toggleMinimalMode() {
       >
       </download-bg-btn>
     </div>
-    <AppDialogHost :retirement="retirement" @quick-links-saved="refreshQuickLinks" />
+    <AppDialogHost @quick-links-saved="refreshQuickLinks" />
   </el-config-provider>
 </template>

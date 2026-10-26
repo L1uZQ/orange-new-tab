@@ -1,19 +1,6 @@
 import { browser, storage } from '#imports'
 
-export async function downloadLegacySettingsBackup() {
-  const { downloadJSON } = await import('@/shared/download')
-
-  const settings = await browser.storage.local.get('settings')
-  const quickLinksData = await browser.storage.local.get(['quickLinks', 'bookmark'])
-  const customSearchEngine = await browser.storage.local.get('customSearchEngine')
-
-  downloadJSON(
-    { ...settings, ...quickLinksData, ...customSearchEngine },
-    `lemon-new-tab-backup-${new Date().toISOString()}.json`,
-  )
-}
-
-/** 清除扩展持久化数据；默认保留历史云端数据，避免用户未选择时一并删除。 */
+/** 清空本扩展的持久化数据。 */
 export async function clearExtensionData({ includeSync = false }: { includeSync?: boolean } = {}) {
   const { idbClearAll } = await import('@/shared/storage/idb')
   const { clearWallpaperLibrary } = await import('@/shared/wallpaperLibrary')

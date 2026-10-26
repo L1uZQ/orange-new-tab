@@ -158,7 +158,7 @@ export async function downloadBrowserCorruptedPayload(input: {
   }
   return {
     base64: bytesToBase64(bytes),
-    filename: `lemon-corrupted-${commit.revisionId}.${commit.encrypted ? 'bin' : 'json'}`,
+    filename: `orange-corrupted-${commit.revisionId}.${commit.encrypted ? 'bin' : 'json'}`,
   }
 }
 

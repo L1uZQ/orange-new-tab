@@ -7,6 +7,7 @@ import { validateStoredSyncSnapshot } from './validation.ts'
 import { requireSupportedSource, type SyncSource } from './version.ts'
 
 const FORMAT_VERSION = 1
+const PRODUCT_ID = 'orange-new-tab'
 
 export interface ParsedLocalBackup {
   snapshot: SyncSnapshotV1
@@ -28,7 +29,7 @@ function validateSnapshot(value: unknown): SyncSnapshotV1 {
 
 export function serializeJsonBackup(snapshot: SyncSnapshotV1, pluginVersion: string): string {
   return canonicalJson({
-    product: 'lemon-new-tab',
+    product: PRODUCT_ID,
     formatVersion: FORMAT_VERSION,
     pluginVersion,
     settingsSchemaVersion: CURRENT_CONFIG_VERSION,
@@ -50,7 +51,7 @@ export function parseJsonBackup(value: unknown, pluginVersion: string): ParsedLo
   }
   const record = value as Record<string, unknown>
   requireSupportedSource(record as unknown as SyncSource, pluginVersion)
-  if (record.product !== 'lemon-new-tab' || record.formatVersion !== FORMAT_VERSION) {
+  if (record.product !== PRODUCT_ID || record.formatVersion !== FORMAT_VERSION) {
     throw new TypeError('Backup format is unsupported')
   }
   return {
