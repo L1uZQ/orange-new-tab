@@ -59,6 +59,8 @@ export interface SettingsSchema {
     style: { shadow: boolean; border: boolean }
     placeholder: string
     expandWidth: number
+    boxWidth: number
+    boxHeight: number
     borderRadius: number
   }
 

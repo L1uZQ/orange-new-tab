@@ -96,16 +96,14 @@ const isWindowFocused = useWindowFocus()
 const activeElement = useActiveElement()
 const { addHistory } = useSearchHistoryCache()
 const activeEngine = computed(() => props.engine || settings.search.engine)
-const searchWidth = computed(() =>
-  props.width ? `${props.width}px` : `${settings.search.expandWidth}px`,
-)
-const searchHeight = computed(() => (props.height ? `${props.height}px` : '44px'))
+const searchWidth = computed(() => `${settings.search.boxWidth}px`)
+const searchHeight = computed(() => `${settings.search.boxHeight}px`)
 const searchBoxClass = computed(() => [
   'search-box',
   props.className,
   {
     'search-box--compact': props.compact,
-    'search-box--custom-size': Boolean(props.width || props.height),
+    'search-box--custom-size': true,
   },
 ])
 
@@ -380,7 +378,7 @@ onMounted(() => {
       :search-form-width="searchFormWidth"
       :engine="activeEngine"
       :height="props.height"
-      :floating="Boolean(props.width || props.height)"
+      :floating="true"
       @do-search-with-text="doSearchWithText"
       @navigate-to-url="navigateToUrl"
       @active-option-change="activeSuggestionOptionId = $event"

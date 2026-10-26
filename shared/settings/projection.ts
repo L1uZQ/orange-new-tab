@@ -52,6 +52,8 @@ const INTEGER_RANGES: Record<string, readonly [number, number]> = {
   'clock.dateSize': [10, 50],
   'clock.style.transparency': TRANSPARENCY_RANGE,
   'search.borderRadius': [0, 50],
+  'search.boxWidth': [180, 1200],
+  'search.boxHeight': [32, 160],
   'search.browserHistoryLimit': [1, 5],
   'quickLinks.iconBorderRadius': [0, 50],
   'yiyan.borderRadius': [0, 40],

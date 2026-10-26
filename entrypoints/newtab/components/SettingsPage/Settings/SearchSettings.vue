@@ -250,26 +250,6 @@ function syncWidgetEngine(engine: string) {
           </el-select>
         </div>
         <div v-if="selectedSearchWidget" class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('newtab:layout.searchWidth') }}</div>
-          <el-input-number
-            v-model="selectedSearchWidget.width"
-            :min="180"
-            :max="1200"
-            :step="10"
-            controls-position="right"
-          />
-        </div>
-        <div v-if="selectedSearchWidget" class="settings__item settings__item--horizontal">
-          <div class="settings__label">{{ t('newtab:layout.searchHeight') }}</div>
-          <el-input-number
-            v-model="selectedSearchWidget.height"
-            :min="32"
-            :max="160"
-            :step="1"
-            controls-position="right"
-          />
-        </div>
-        <div v-if="selectedSearchWidget" class="settings__item settings__item--horizontal">
           <div class="settings__label">{{ t('newtab:layout.searchEngine') }}</div>
           <el-select
             :model-value="selectedSearchWidget.engine"
@@ -311,6 +291,30 @@ function syncWidgetEngine(engine: string) {
             :min="300"
             :max="900"
             :step="10"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('newtab:layout.searchWidth') }}</div>
+          <el-slider
+            v-model="settings.search.boxWidth"
+            :min="180"
+            :max="1200"
+            :step="10"
+            show-input
+            :show-input-controls="false"
+            :show-tooltip="false"
+          />
+        </div>
+        <div class="settings__item settings__item--vertical">
+          <div class="settings__label">{{ t('newtab:layout.searchHeight') }}</div>
+          <el-slider
+            v-model="settings.search.boxHeight"
+            :min="32"
+            :max="160"
+            :step="1"
             show-input
             :show-input-controls="false"
             :show-tooltip="false"

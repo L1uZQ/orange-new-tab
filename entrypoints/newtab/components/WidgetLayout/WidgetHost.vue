@@ -30,8 +30,6 @@ const emit = defineEmits<{
     <search-box
       v-if="widget.type === 'search'"
       :engine="widget.engine"
-      :width="widget.width"
-      :height="widget.height"
       class-name="layout-widget__search"
       @update:engine="emit('updateEngine', widget.id, $event)"
       @contextmenu.stop.prevent="$emit('contextmenu', $event)"

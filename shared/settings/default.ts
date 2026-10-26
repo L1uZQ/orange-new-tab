@@ -74,6 +74,8 @@ export const defaultSettings = {
 
     placeholder: '',
     expandWidth: 500,
+    boxWidth: 500,
+    boxHeight: 44,
     borderRadius: 50,
   },
   background: {
