@@ -8,6 +8,15 @@ import { defaultSettings } from './default'
 import { normalizeCurrentSettings } from './normalize'
 import { settingsStorage } from './settingsStorage'
 
+function deepToRaw<T>(obj: T): T {
+  if (obj === null || typeof obj !== 'object') return obj
+  if (Array.isArray(obj)) return obj.map(deepToRaw) as T
+  const raw = toRaw(obj)
+  const result: Record<string, unknown> = {}
+  for (const key of Object.keys(raw)) result[key] = deepToRaw((raw as Record<string, unknown>)[key])
+  return result as T
+}
+
 export const useSettingsStore = defineStore('option', () => {
   const state = reactive(structuredClone(defaultSettings as CURRENT_CONFIG_SCHEMA))
   let unwatchStorage: (() => void) | null = null
@@ -16,7 +25,7 @@ export const useSettingsStore = defineStore('option', () => {
 
   const writer = createDraftWriter(
     settingsStorage.raw,
-    () => toRaw(state),
+    () => deepToRaw(state),
     (value) => {
       applyingStorage = true
       try {
@@ -25,7 +34,7 @@ export const useSettingsStore = defineStore('option', () => {
         applyingStorage = false
       }
     },
-    toRaw(state),
+    deepToRaw(state),
   )
 
   const init = async () => {

@@ -285,18 +285,6 @@ function syncWidgetEngine(engine: string) {
           <el-switch v-model="settings.perf.searchBar.launchAnim" />
         </div>
         <div class="settings__item settings__item--vertical">
-          <div class="settings__label">{{ t('search.expandWidth') }}</div>
-          <el-slider
-            v-model="settings.search.expandWidth"
-            :min="300"
-            :max="900"
-            :step="10"
-            show-input
-            :show-input-controls="false"
-            :show-tooltip="false"
-          />
-        </div>
-        <div class="settings__item settings__item--vertical">
           <div class="settings__label">{{ t('newtab:layout.searchWidth') }}</div>
           <el-slider
             v-model="settings.search.boxWidth"
