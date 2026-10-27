@@ -427,7 +427,9 @@
     "suggestionProviders": "Öneri sağlayıcıları",
     "tip": "Yeni bir sekme açarken arama girişini etkinleştirmek mi istiyorsunuz? Sayfanın sağ alt kısmındaki düğme menüsündeki \"Yardım ve Geri Bildirim\" bölümüne bakın.",
     "title": "Arama",
-    "browserHistoryLimit": "Tarayıcı geçmişi öneri sayısı"
+    "browserHistoryLimit": "Tarayıcı geçmişi öneri sayısı",
+    "boxWidth": "Arama kutusu genişliği",
+    "boxHeight": "Arama kutusu yüksekliği"
   },
   "sync": {
     "availability": {

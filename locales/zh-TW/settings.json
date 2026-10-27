@@ -427,7 +427,9 @@
     "suggestionProviders": "建議提供器",
     "tip": "想要打開新分頁就讓搜尋框取得焦點？請查看頁面右下角按鈕菜單的「幫助和反饋」",
     "title": "搜尋",
-    "browserHistoryLimit": "瀏覽器歷史建議數量"
+    "browserHistoryLimit": "瀏覽器歷史建議數量",
+    "boxWidth": "搜尋框寬度",
+    "boxHeight": "搜尋框高度"
   },
   "sync": {
     "availability": {

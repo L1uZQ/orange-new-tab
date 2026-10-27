@@ -427,7 +427,9 @@
     "suggestionProviders": "建议提供器",
     "tip": "想要打开新标签页就激活搜索输入？请查看页面右下角按钮菜单的「帮助和反馈」",
     "title": "搜索",
-    "browserHistoryLimit": "浏览器历史建议数量"
+    "browserHistoryLimit": "浏览器历史建议数量",
+    "boxWidth": "搜索框宽度",
+    "boxHeight": "搜索框高度"
   },
   "sync": {
     "availability": {

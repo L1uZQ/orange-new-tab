@@ -427,7 +427,9 @@
     "suggestionProviders": "Suggestion providers",
     "tip": "Want to activate the search input when opening a new tab? Check the “Help and Feedback” in the button menu at the bottom right of the page.",
     "title": "Search",
-    "browserHistoryLimit": "Browser history suggestion count"
+    "browserHistoryLimit": "Browser history suggestion count",
+    "boxWidth": "Search box width",
+    "boxHeight": "Search box height"
   },
   "sync": {
     "availability": {
